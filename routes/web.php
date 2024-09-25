@@ -28,3 +28,6 @@ Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 Route::resource('evenement_collectes', EvenementCollecteController::class);
 Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
 Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');
+
+
+Route::resource('/sondage',\App\Http\Controllers\SondageController::class);
