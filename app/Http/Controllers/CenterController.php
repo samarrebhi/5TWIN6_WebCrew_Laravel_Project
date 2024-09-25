@@ -25,7 +25,7 @@ class CenterController extends Controller
      */
     public function create()
     {
-        //
+        return view('Front.Centers.createCenter');
     }
 
     /**
@@ -36,7 +36,9 @@ class CenterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $center=Center::create($request->all());
+        $center->save();
+        return redirect()->route('center.index');
     }
 
     /**
@@ -59,7 +61,8 @@ class CenterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $center =Center::find($id);
+        return view ('Front.Centers.edit',compact('center'));
     }
 
     /**
@@ -71,7 +74,14 @@ class CenterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $center=['name'=>$request->name,
+        'description'=>$request->description,
+        'address'=>$request->address,
+        'phone'=>$request->phone,
+        "email"=>$request->email];
+        Center::whereId($id)->update($center);
+        //$center->save();
+        return redirect()->route('center.index');
     }
 
     /**
