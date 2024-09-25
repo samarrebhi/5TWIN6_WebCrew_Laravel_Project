@@ -385,11 +385,19 @@
 /*** vesitable End ***/
 
 
-/*** Banner Section Start ***/
+/*** center Section Start ***/
 .banner .banner-btn:hover {
     background: var(--bs-primary);
 }
-/*** Banner Section End ***/
+.centersection {
+    background-color: rgb(207, 228, 207);
+   
+}
+.button{
+    background-color:rgb(137, 171, 137);
+}
+/*** center Section End ***/
+
 
 
 /*** Facts Start ***/
