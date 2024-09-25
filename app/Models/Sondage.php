@@ -12,11 +12,11 @@ class Sondage extends Model
     public $timestamps = true;
 
     // Default values for certain attributes
-    protected $attributes = [
-        'response_count' => 0, // Default value for response count
-    ];
+    //protected $attributes = [
+      //  'response_count' => 0, // Default value for response count
+    //];
     protected $fillable = [
-        'titre',              // Title of the survey
+        'title',              // Title of the survey
         'description',        // Description of the survey
         'questions',          // Array or JSON format for questions
         'start_date',         // Survey start date

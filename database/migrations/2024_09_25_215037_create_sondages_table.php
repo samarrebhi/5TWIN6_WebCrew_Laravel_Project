@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255);
             $table->string('location', 255);
-            $table->string('category', 8);
-            $table->string('questions');
-            $table->string('description', 255);
+            $table->text('category');
+            $table->text('questions',255);
+            $table->string('description');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();
