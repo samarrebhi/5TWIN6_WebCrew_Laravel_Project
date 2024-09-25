@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evenement_collectes', function (Blueprint $table) {
+        Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->timestamps(); // Garde cette ligne pour created_at et updated_at
-            $table->string('nom', 100);
-            $table->dateTime('date');
-            $table->string('lieu', 255);
-            $table->foreignId('organisateur_id')->constrained('utilisateurs')->onDelete('cascade');
+            $table->string('name', 255);
+            $table->string('address', 255);
+            $table->string('phone', 8); 
+            $table->string('email');
+            $table->string('description', 255);
+            $table->timestamps();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evenement_collectes');
+        Schema::dropIfExists('centers');
     }
 };
