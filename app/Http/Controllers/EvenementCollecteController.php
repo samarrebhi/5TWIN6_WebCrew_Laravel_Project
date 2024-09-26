@@ -38,7 +38,7 @@ class EvenementCollecteController extends Controller
         }
 
         // Redirect with success message
-        return redirect()->route('evenement_collectes.index')->with('success', 'Événement ajouté avec succès.');
+        return redirect()->route('evenement_collecte.list')->with('success', 'Événement ajouté avec succès.');
     }
 public function edit($id)
 {
@@ -62,7 +62,7 @@ public function edit($id)
         }
 
         // Redirect with success message
-        return redirect()->route('evenement_collectes.index')->with('success', 'Événement mis à jour avec succès.');
+        return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
     }
 
     public function show(EvenementCollecte $evenement)
@@ -71,16 +71,39 @@ public function edit($id)
         return view('evenement_collecte.show', compact('evenement'));
     }
 
-    public function destroy(EvenementCollecte $evenement)
+   
+/*    public function destroy(EvenementCollecte $evenement)
     {
-        // Delete the old image and event
-        $this->deleteOldImage($evenement->image);
+        try {
+            // Optionally delete the old image if you have a method for it
+            $this->deleteOldImage($evenement->image);
+            $evenement->delete(); // Delete the evenement
+    
+            // Return success response
+            return response()->json(['message' => 'Événement supprimé avec succès.'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de la suppression de l\'événement: '.$e->getMessage());
+            return response()->json(['message' => 'Erreur lors de la suppression de l\'événement.'], 500);
+        }
+    }
+*/
+    public function destroy($id)
+    {
+        $evenement = EvenementCollecte::findOrFail($id);
         $evenement->delete();
-        
-        // Return success response
-        return response()->json(['message' => 'Événement supprimé avec succès.'], 200);
+        return response()->json(['message' => 'Événement supprimé avec succès.']);
     }
     
+    // Helper method to delete the old image
+    private function deleteOldImage($imageName)
+    {
+        if ($imageName) {
+            $path = public_path('uploads/evenements/' . $imageName);
+            if (file_exists($path)) {
+                unlink($path); // Delete the image file
+            }
+        }
+    }
     private function validateEvent(Request $request)
     {
         // Validate the incoming request
@@ -100,11 +123,4 @@ public function edit($id)
         return $image->store('uploads/evenements', 'public');
     }
 
-    private function deleteOldImage($imageName)
-    {
-        // Delete the old image file if it exists
-        if ($imageName && Storage::disk('public')->exists('uploads/evenements/' . $imageName)) {
-            Storage::disk('public')->delete('uploads/evenements/' . $imageName);
-        }
-    }
 }

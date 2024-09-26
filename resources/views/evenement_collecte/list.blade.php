@@ -1,15 +1,15 @@
 @extends('Back/dashboard')
 
 @section('content') 
-<div class="container ">
-<h1 class="text-center mt-3" style="color: green;">Liste des événements</h1>
-    <a href="{{ route('evenement_collectes.create') }}" class="btn btn-primary">Créer un nouvel événement</a>
-    <!-- Bootstrap Table with Header Dark -->
+<div class="container">
+    <h1 class="text-center mt-3 mb-3 " style="color: green;">Event List</h1>
+    <a href="{{ route('evenement_collectes.create') }}" class="btn btn-primary" style="background-color: #287233; border-color: #287233; color: white;">Create Event</a>
+    
     <div class="card mt-4">
         <div class="table-responsive text-nowrap">
             <table class="table">
-                <thead class="table-dark">
-                    <tr>
+            <thead style="background-color: #89AC76; color: black;">
+            <tr>
                         <th>ID</th>
                         <th>Titre</th>
                         <th>Description</th>
@@ -57,7 +57,6 @@
             </table>
         </div>
     </div>
-    <!--/ Bootstrap Table with Header Dark -->
 
     {{ $evenements->links() }} <!-- Pagination -->
 </div>
@@ -68,21 +67,21 @@
 <script>
     $(document).on('click', '.delete-event', function() {
         var id = $(this).data('id');
-        var row = $(this).closest('tr'); // Get the closest row to remove
+        var row = $(this).closest('tr');
 
         if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
             $.ajax({
                 url: '/evenement_collectes/' + id,
                 type: 'DELETE',
                 data: {
-                    "_token": "{{ csrf_token() }}" // Add CSRF token for security
+                    "_token": "{{ csrf_token() }}"
                 },
                 success: function(response) {
-                    alert(response.message); // Display success message
-                    row.fadeOut(); // Remove the row from the table with fade out effect
+                    alert(response.message);
+                    row.fadeOut();
                 },
                 error: function(xhr) {
-                    alert('Erreur lors de la suppression de l\'événement.');
+                    alert('Erreur lors de la suppression de l\'événement: ' + xhr.responseJSON.message);
                 }
             });
         }
