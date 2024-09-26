@@ -1,3 +1,8 @@
+@extends('Back/dashboard')
+@section('content')
+<head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <h2>Selected Poll Details (ID: {{ $sondage->id }})</h2>
 <hr>
 <p><strong>Title:</strong> {{ $sondage->title }}</p>
@@ -14,3 +19,4 @@
     @endforeach
 </ul>
 <p><strong>Location:</strong> {{ $sondage->location }}</p>
+@endsection

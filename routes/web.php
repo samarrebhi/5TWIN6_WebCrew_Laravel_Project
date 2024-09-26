@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
-
 use App\Http\Controllers\EvenementCollecteController;
+use App\Http\Controllers\FrontControllers\HomeController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BackControllers\cd;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Route::get('/evenement_collectes/create', [EvenementCollecteController::class, '
 Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');
 
 /////routees for sondages entity
-Route::resource('/sondage',\App\Http\Controllers\SondageController::class)->names([
+Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
     'index' => 'sondage.index',
     'create' => 'sondage.create.form',
     'store' => 'sondage.store',

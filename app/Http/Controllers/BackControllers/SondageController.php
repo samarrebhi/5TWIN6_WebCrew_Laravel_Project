@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\BackControllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Sondage;
+use Illuminate\Http\Request;
+
 class SondageController extends Controller
 {
 
@@ -11,12 +13,12 @@ class SondageController extends Controller
     public function index()
     {
         $sondages=Sondage::all();
-        return view('Front.Sondages.listsondage',compact('sondages'));
+        return view('Back.Sondages.listsondage',compact('sondages'));
     }
 /// pour add
     public function create()
     {
-        return view('Front.Sondages.createsondage');
+        return view('Back.Sondages.createsondage');
     }
 
 
@@ -37,7 +39,7 @@ class SondageController extends Controller
     public function show($id)
     {
         $sondage=sondage::find($id);
-        return view('Front.Sondages.showsondage',compact('sondage'));
+        return view('Back.Sondages.showsondage',compact('sondage'));
     }
 
     /**
@@ -49,7 +51,7 @@ class SondageController extends Controller
     public function edit($id)
     {
         $sondage =Sondage::find($id);
-        return view ('Front.Sondages.editsondage',compact('sondage'));
+        return view ('Back.Sondages.editsondage',compact('sondage'));
     }
 
     /**

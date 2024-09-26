@@ -1,3 +1,6 @@
+<head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <form method="post"  action="{{route('sondage.update',$sondage->id)}}">
     @csrf
     @method('PUT')

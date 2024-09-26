@@ -571,7 +571,7 @@
           </nav>
 
           <!-- / Navbar -->
-          
+
 
 
 @yield('content')
