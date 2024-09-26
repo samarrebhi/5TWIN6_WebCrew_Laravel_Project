@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\BackControllers\BlogController;
-
-
+use App\Http\Controllers\EvenementCollecteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +23,7 @@ use App\Http\Controllers\BackControllers\BlogController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
+
 Route::get('admin/listBlog', [BlogController::class, 'index'])->name('admin.listBlog');
 Route::get('admin/createBlog', [BlogController::class, 'create'])->name('admin.createBlog');
 Route::post('admin/store', [BlogController::class, 'store'])->name('admin.store');
@@ -32,4 +32,8 @@ Route::put('admin/listBlog/{blog}', [BlogController::class, 'update'])->name('ad
 Route::delete('admin/listBlog/{blog}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
 
 
+//Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
+//Route::get('/evenement_collectes/{id}', [EvenementCollecteController::class, 'show'])->name('evenement_collectes.show');
 
+
+Route::resource('evenement_collectes', EvenementCollecteController::class);
