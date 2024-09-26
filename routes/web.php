@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\BackControllers\BlogController;
+use App\Http\Controllers\FrontControllers\BlogControllerFront;
 use App\Http\Controllers\EvenementCollecteController;
 
 /*
@@ -30,6 +31,10 @@ Route::post('admin/store', [BlogController::class, 'store'])->name('admin.store'
 Route::get('admin/listBlog/{blog}/edit', [BlogController::class, 'edit'])->name('admin.blog.edit');
 Route::put('admin/listBlog/{blog}', [BlogController::class, 'update'])->name('admin.blog.update');
 Route::delete('admin/listBlog/{blog}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
+
+Route::get('home/blogs', [BlogControllerFront::class, 'indexFront'])->name('Front.Blog.list');
+
+
 
 
 //Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
