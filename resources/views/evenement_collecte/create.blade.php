@@ -1,6 +1,5 @@
-@extends('Front/layout')
-
-@section('content')
+@extends('Back/dashboard')
+@section('content') 
 <div class="container">
     <h1>Créer un Nouvel Événement</h1>
 
