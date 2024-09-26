@@ -1,3 +1,5 @@
+@extends('Back/dashboard')
+@section('content')
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -30,9 +32,10 @@
                     <input type="email" class="form-control" placeholder="name@example.com" name="email" />
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-success">Add Center</button>
+                    <button class="btn btn-outline-success ">Add Center</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@endsection

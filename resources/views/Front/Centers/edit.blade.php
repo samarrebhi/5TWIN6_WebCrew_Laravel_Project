@@ -1,4 +1,3 @@
-
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -32,7 +31,7 @@
                     <input type="email" class="form-control" name="email" value="{{ $center->email }}" />
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-success">Edit Center</button>
+                    <button class="btn btn-outline-success">Edit Center</button>
                 </div>
             </form>
         </div>

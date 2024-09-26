@@ -26,7 +26,7 @@ Route::get('home', [HomeController::class, 'index'])->name('homepage');
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
-
+Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
 Route::resource('evenement_collectes', EvenementCollecteController::class);
 Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
 Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');

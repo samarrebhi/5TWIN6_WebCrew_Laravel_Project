@@ -11,13 +11,9 @@
                         <p class="card-text text-muted">
                             Address: {{ $center->address }} <br>
                         </p>
-                        <a href="{{ route('center.show', $center->id) }}" class="btn btn-outline-success btn-sm">Details</a>
-                        <a href="{{ route('center.edit', $center->id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                        <form method="POST" action="{{ route('center.destroy', $center->id) }}" style="display: inline-block;">
-                            @csrf 
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this center?')">Delete</button>
-                        </form>
+                        <div class="d-flex justify-content-center"> 
+                            <a href="{{ route('center.show', $center->id) }}" class="btn btn-outline-success btn-sm">Details</a>
+                        </div>
                     </div>
                 </div>
             </div>

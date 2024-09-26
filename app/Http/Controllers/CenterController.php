@@ -18,6 +18,13 @@ class CenterController extends Controller
         return view('Front.Centers.centers',compact('centers'));
     }
 
+
+    public function showCenters()
+    {
+        $centers = Center::all(); 
+        return view('Back.showcenters', compact('centers'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +45,7 @@ class CenterController extends Controller
     {
         $center=Center::create($request->all());
         $center->save();
-        return redirect()->route('center.index');
+        return redirect()->route('centers.index');
     }
 
     /**
@@ -81,7 +88,7 @@ class CenterController extends Controller
         "email"=>$request->email];
         Center::whereId($id)->update($center);
         //$center->save();
-        return redirect()->route('center.index');
+        return redirect()->route('centers.index');
     }
 
     /**
@@ -94,7 +101,7 @@ class CenterController extends Controller
     {
         $center=Center::find($id);
         $center->delete();
-        return redirect()->route('center.index')
+        return redirect()->route('centers.index')
         ->with('success','Center deleted successuflly');
 
     }
