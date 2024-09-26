@@ -43,17 +43,17 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../back/assets/vendor/fonts/boxicons.css" />
+      <link rel="stylesheet" href="{{ asset('back/assets/vendor/fonts/boxicons.css')}}" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../back/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../back/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../back/assets/css/demo.css" />
+      <!-- Core CSS -->
+      <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
+      <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
+      <link rel="stylesheet" href="{{ asset('back/assets/css/demo.css')}}" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+      <!-- Vendors CSS -->
+      <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
 
-    <link rel="stylesheet" href="../back/assets/vendor/libs/apex-charts/apex-charts.css" />
+      <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
 
     <!-- Page CSS -->
 
@@ -141,12 +141,19 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item ">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
+              <li class="menu-item active">
+                  <a href="{{ route('sondage.index') }}" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-poll"></i>
+                      <div data-i18n="Polls Management">Polls Management</div>
+                  </a>
+              </li>
+
 
             <!-- Layouts -->
             <li class="menu-item">
