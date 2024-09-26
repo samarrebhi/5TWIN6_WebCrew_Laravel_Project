@@ -44,11 +44,11 @@
         </div>
 
         <div class="form-group">
-            <label for="image">Image (optionnel)</label>
-            <input type="file" class="form-control" name="image" accept="image/*">
+            <label for="image">Image</label>
+            <input type="file" class="form-control-file" name="image">
         </div>
 
-        <button type="submit" class="btn btn-primary">Créer Événement</button>
+        <button type="submit" class="btn btn-primary">Créer</button>
     </form>
 </div>
 @endsection

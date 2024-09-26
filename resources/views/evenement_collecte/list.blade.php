@@ -2,13 +2,13 @@
 
 @section('content') 
 <div class="container">
-    <h1 class="text-center mt-3 mb-3 " style="color: green;">Event List</h1>
+    <h1 class="text-center mt-4 mb-3 " style="color: green;">Event List</h1>
     <a href="{{ route('evenement_collectes.create') }}" class="btn btn-primary" style="background-color: #287233; border-color: #287233; color: white;">Create Event</a>
     
     <div class="card mt-4">
         <div class="table-responsive text-nowrap">
             <table class="table">
-            <thead style="background-color: #89AC76; color: black;">
+<thead style="background-color: #89AC76; color: black;">
             <tr>
                         <th>ID</th>
                         <th>Titre</th>
