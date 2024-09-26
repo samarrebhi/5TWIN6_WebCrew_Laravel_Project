@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Front/layout')
 
 @section('content')
 <div class="container">
@@ -37,11 +37,7 @@
                 </td>
                 <td>
                     <a href="{{ route('evenement_collectes.edit', $evenement->id) }}" class="btn btn-warning">Modifier</a>
-                    <form action="{{ route('evenement_collectes.destroy', $evenement->id) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">Supprimer</button>
-                    </form>
+                    <button class="btn btn-danger delete-event" data-id="{{ $evenement->id }}">Supprimer</button>
                 </td>
             </tr>
             @endforeach
@@ -50,4 +46,31 @@
 
     {{ $evenements->links() }}
 </div>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).on('click', '.delete-event', function() {
+        var id = $(this).data('id');
+        var row = $(this).closest('tr'); // Get the closest row to remove
+
+        if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
+            $.ajax({
+                url: '/evenement_collectes/' + id,
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}" // Add CSRF token for security
+                },
+                success: function(response) {
+                    alert(response.message); // Display success message
+                    row.fadeOut(); // Remove the row from the table with fade out effect
+                },
+                error: function(xhr) {
+                    alert('Erreur lors de la suppression de l\'événement.');
+                }
+            });
+        }
+    });
+</script>
 @endsection

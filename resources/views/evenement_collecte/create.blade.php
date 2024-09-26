@@ -1,58 +1,55 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un Événement</title>
-</head>
-<body>
-    <h1>Créer un Événement</h1>
+@extends('Front/layout')
+
+@section('content')
+<div class="container">
+    <h1>Créer un Nouvel Événement</h1>
+
+    @if (session('success'))
+        <script>
+            swal("Succès!", "{{ session('success') }}", "success");
+        </script>
+    @endif
 
     @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        <script>
+            swal("Erreur!", "{{ implode(', ', $errors->all()) }}", "error");
+        </script>
     @endif
 
     <form action="{{ route('evenement_collectes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div>
-            <label for="titre">Titre:</label>
-            <input type="text" name="titre" id="titre" value="{{ old('titre') }}" required>
+
+        <div class="form-group">
+            <label for="titre">Titre</label>
+            <input type="text" class="form-control" name="titre" value="{{ old('titre') }}" required>
         </div>
 
-        <div>
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" required>{{ old('description') }}</textarea>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" required>{{ old('description') }}</textarea>
         </div>
 
-        <div>
-            <label for="lieu">Lieu:</label>
-            <input type="text" name="lieu" id="lieu" value="{{ old('lieu') }}" required>
+        <div class="form-group">
+            <label for="lieu">Lieu</label>
+            <input type="text" class="form-control" name="lieu" value="{{ old('lieu') }}" required>
         </div>
 
-        <div>
-            <label for="date">Date:</label>
-            <input type="date" name="date" id="date" value="{{ old('date') }}" required>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" name="date" value="{{ old('date') }}" required>
         </div>
 
-        <div>
-            <label for="heure">Heure:</label>
-            <input type="time" name="heure" id="heure" value="{{ old('heure') }}" required>
+        <div class="form-group">
+            <label for="heure">Heure</label>
+            <input type="time" class="form-control" name="heure" value="{{ old('heure') }}" required>
         </div>
 
-        <div>
-            <label for="image">Image:</label>
-            <input type="file" name="image" id="image" accept="image/*">
+        <div class="form-group">
+            <label for="image">Image (optionnel)</label>
+            <input type="file" class="form-control" name="image" accept="image/*">
         </div>
 
-        <div>
-            <button type="submit">Créer Événement</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Créer Événement</button>
     </form>
-</body>
-</html>
+</div>
+@endsection

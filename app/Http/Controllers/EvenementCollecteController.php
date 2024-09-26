@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\EvenementCollecte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
 class EvenementCollecteController extends Controller
 {
- 
     /**
      * Lister les événements avec pagination
      *
@@ -15,28 +17,15 @@ class EvenementCollecteController extends Controller
      */
     public function index()
     {
-        $evenements = EvenementCollecte::all(); // Récupère tous les événements
-
         $evenements = EvenementCollecte::orderBy('id', 'DESC')->paginate(50);
         return view('evenement_collecte.list', ['evenements' => $evenements]);
     }
 
-    /**
-     * Afficher le formulaire de création d'événement
-     *
-     * @return \Illuminate\View\View
-     */
     public function create()
     {
         return view('evenement_collecte.create');
     }
-
-    /**
-     * Enregistrer un nouvel événement
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    
     public function store(Request $request)
     {
         // Validation des données du formulaire
@@ -46,39 +35,40 @@ class EvenementCollecteController extends Controller
             'lieu' => 'required|max:255',
             'date' => 'required|date',
             'heure' => 'required',
-            'image' => 'sometimes|image:gif,png,jpeg,jpg'
+            'image' => 'sometimes|mimes:gif,png,jpeg,jpg'
         ]);
-
+    
         if ($validator->passes()) {
             // Création de l'événement
             $evenement = EvenementCollecte::create($request->post());
-
+    
             // Gestion du téléchargement d'image
-            if ($request->image) {
+            if ($request->hasFile('image')) {
                 $ext = $request->image->getClientOriginalExtension();
                 $newFileName = time() . '.' . $ext;
                 $request->image->move(public_path() . '/uploads/evenements/', $newFileName);
-
+    
                 $evenement->image = $newFileName;
                 $evenement->save();
             }
-
+    
             return redirect()->route('evenement_collectes.index')->with('success', 'Événement ajouté avec succès.');
         } else {
             // Retourner avec des erreurs
             return redirect()->route('evenement_collectes.create')->withErrors($validator)->withInput();
         }
     }
-
+    
     /**
      * Afficher le formulaire de modification
      *
-     * @param EvenementCollecte $evenement
+     * @param int $id
      * @return \Illuminate\View\View
      */
-    public function edit(EvenementCollecte $evenement)
+    public function edit($id)
     {
-        return view('evenement_collecte.edit', ['evenement' => $evenement]);
+        $evenement = EvenementCollecte::findOrFail($id); // Ensure you get the correct instance
+        return view('evenement_collecte.edit', compact('evenement'));
     }
 
     /**
@@ -97,7 +87,7 @@ class EvenementCollecteController extends Controller
             'lieu' => 'required|max:255',
             'date' => 'required|date',
             'heure' => 'required',
-            'image' => 'sometimes|image:gif,png,jpeg,jpg'
+            'image' => 'sometimes|mimes:gif,png,jpeg,jpg'
         ]);
 
         if ($validator->passes()) {
@@ -105,7 +95,7 @@ class EvenementCollecteController extends Controller
             $evenement->fill($request->post())->save();
 
             // Gestion du téléchargement d'une nouvelle image
-            if ($request->image) {
+            if ($request->hasFile('image')) {
                 $oldImage = $evenement->image;
 
                 $ext = $request->image->getClientOriginalExtension();
@@ -116,7 +106,9 @@ class EvenementCollecteController extends Controller
                 $evenement->save();
 
                 // Suppression de l'ancienne image
-                File::delete(public_path() . '/uploads/evenements/' . $oldImage);
+                if ($oldImage && File::exists(public_path() . '/uploads/evenements/' . $oldImage)) {
+                    File::delete(public_path() . '/uploads/evenements/' . $oldImage);
+                }
             }
 
             return redirect()->route('evenement_collectes.index')->with('success', 'Événement mis à jour avec succès.');
@@ -125,26 +117,33 @@ class EvenementCollecteController extends Controller
             return redirect()->route('evenement_collectes.edit', $evenement->id)->withErrors($validator)->withInput();
         }
     }
-    public function show($id)
+
+    /**
+     * Afficher un événement
+     *
+     * @param EvenementCollecte $evenement_collecte
+     * @return \Illuminate\View\View
+     */
+    public function show(EvenementCollecte $evenement_collecte)
     {
-        $evenementCollecte = EvenementCollecte::findOrFail($id); // Assuming you have a model named EvenementCollecte
-        return view('evenement_collectes.show', compact('evenementCollecte'));
+        return view('evenement_collecte.show', compact('evenement_collecte'));
     }
-    
+
     /**
      * Supprimer un événement
      *
-     * @param EvenementCollecte $evenement
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(EvenementCollecte $evenement)
+    public function destroy($id)
     {
-        // Suppression de l'image associée
-        File::delete(public_path() . '/uploads/evenements/' . $evenement->image);
-
-        // Suppression de l'événement
-        $evenement->delete();
-
-        return redirect()->route('evenement_collectes.index')->with('success', 'Événement supprimé avec succès.');
+        $evenement = EvenementCollecte::find($id);
+    
+        if ($evenement) {
+            $evenement->delete();
+            return response()->json(['message' => 'Événement supprimé avec succès.'], 200);
+        } else {
+            return response()->json(['message' => 'Événement non trouvé.'], 404);
+        }
     }
 }
