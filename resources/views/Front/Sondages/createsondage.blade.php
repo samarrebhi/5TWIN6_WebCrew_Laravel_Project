@@ -1,16 +1,17 @@
+
 <form method="post" action="{{route('sondage.store')}}">
     @csrf
     <label>Title</label>
-    <input type="text" name="titre"/><br>
+    <input type="text" name="title"/><br>
 
     <label>Location</label>
-    <input type="text" name="Location"/><br>
+    <input type="text" name="location"/><br>
 
     <label>Description</label>
     <textarea name="description"></textarea><br>
 
     <label>Category</label>
-    <input type="text" name="Category"/><br>
+    <input type="text" name="category"/><br>
 
     <label>Start Date</label>
     <input type="date" name="start_date"/><br>

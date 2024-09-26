@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('sondages', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255);
-            $table->string('location', 255);
+            $table->string('title', 10);
+            $table->string('location', 10);
             $table->text('category');
             $table->text('questions',255);
             $table->string('description');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

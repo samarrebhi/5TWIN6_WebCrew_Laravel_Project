@@ -1,6 +1,6 @@
 <h2>Selected Poll Details (ID: {{ $sondage->id }})</h2>
 <hr>
-<p><strong>Title:</strong> {{ $sondage->titre }}</p>
+<p><strong>Title:</strong> {{ $sondage->title }}</p>
 <p><strong>Description:</strong> {{ $sondage->description }}</p>
 <p><strong>Category:</strong> {{ $sondage->category }}</p>
 <p><strong>Creation Date:</strong> {{ \Carbon\Carbon::parse($sondage->created_at)->format('d/m/Y H:i') }}</p>

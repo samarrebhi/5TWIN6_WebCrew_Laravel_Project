@@ -4,25 +4,27 @@
 
 
     <label>Title</label>
-    <input type="text" name="titre"/><br>
+    <input type="text" name="title" value="{{$sondage->title}}"/><br>
 
     <label>Location</label>
-    <input type="text" name="Location" value="{{$sondage->titre}}"/><br>
+    <input type="text" name="location" value="{{$sondage->location}}"/><br>
 
     <label>Description</label>
-    <textarea name="description" value="{{$sondage->description}}"></textarea><br>
+    <textarea name="description">{{$sondage->description}}></textarea><br>
 
     <label>Category</label>
-    <input type="text" name="Category" value="{{$sondage->category}}"/><br>
+    <input type="text" name="category" value="{{$sondage->category}}"/><br>
 
     <label>Start Date</label>
-    <input type="date" name="start_date" value="{{$sondage->start_date}}"/><br>
+    <input type="date" name="start_date" value="{{ $sondage->start_date }}"><br>
+
 
     <label>End Date</label>
-    <input type="date" name="end_date" value="{{$sondage->end_date}}"/><br>
+    <input type="date" name="end_date" value="{{$sondage->end_date}}"><br>
 
     <label>Poll questions</label>
-    <textarea name="questions" value="{{$sondage->questions}}" placeholder="Enter your poll questions, separated by commas or new lines..." ></textarea><br>
+
+    <textarea name="questions">{{$sondage->questions}}></textarea><br>
 
     <button>Edit Poll </button>
 </form>

@@ -29,5 +29,12 @@ Route::resource('evenement_collectes', EvenementCollecteController::class);
 Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
 Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');
 
+/////routees for sondages entity
+Route::resource('/sondage',\App\Http\Controllers\SondageController::class)->names([
+    'index' => 'sondage.index',
+    'create' => 'sondage.create.form',
+    'store' => 'sondage.store',
+]);
 
-Route::resource('/sondage',\App\Http\Controllers\SondageController::class);
+
+

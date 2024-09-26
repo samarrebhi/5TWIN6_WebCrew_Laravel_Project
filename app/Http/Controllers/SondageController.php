@@ -24,6 +24,7 @@ class SondageController extends Controller
     {
         $sondage=Sondage::create($request->all());
         $sondage->save();
+        session()->flash('success', 'Poll created successfully!');
         return redirect()->route('sondage.index');
     }
 
@@ -60,18 +61,18 @@ class SondageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sondage=['titre'=>$request->titre,
+        $sondage=['title'=>$request->title,
             'description'=>$request->description,
             'questions'=>$request->questions,
-            'created_at'=>$request->created_at,
+
             "start_date"=>$request->start_date,
             "end_date"=>$request->end_date,
-            "response_count"=>$request->response_count
-            ,"category"=>$request->category,
+            //"response_count"=>$request->response_count,
+            "category"=>$request->category,
             "location"=>$request->location
         ];
         Sondage::whereId($id)->update($sondage);
-        //sondage->save();
+
         return redirect()->route('sondage.index');
     }
 
@@ -85,7 +86,7 @@ class SondageController extends Controller
     {
         $sondage=Sondage::find($id);
         $sondage->delete();
-        return redirect()->route('$sondage.index')
+        return redirect()->route('sondage.index')
             ->with('success','Sondage deleted successuflly');
 
     }
