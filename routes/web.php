@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
-
 use App\Http\Controllers\EvenementCollecteController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +28,7 @@ Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 Route::resource('evenement_collectes', EvenementCollecteController::class);
 Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
 Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');
+
+
+Route::resource('Categories', CategoryController::class);
+

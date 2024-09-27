@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,13 +12,28 @@ return new class extends Migration
      */
     public function up()
     {
+   
+
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('quantity');
+            $table->string('state');
+            $table->string('environmental_impact');
+            $table->timestamps();
+        });
+
         Schema::create('evenement_collectes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps(); // Garde cette ligne pour created_at et updated_at
-            $table->string('nom', 100);
-            $table->dateTime('date');
-            $table->string('lieu', 255);
-            $table->foreignId('organisateur_id')->constrained('utilisateurs')->onDelete('cascade');
+            $table->string('titre');
+            $table->text('description');
+            $table->string('lieu');
+            $table->date('date');
+            $table->time('heure');
+            $table->integer('participants')->default(0); // Nombre de participants par défaut
+            $table->string('image')->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -31,5 +45,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('evenement_collectes');
+        Schema::dropIfExists('categories');
     }
 };

@@ -7,7 +7,7 @@ class EvenementCollecteController extends Controller
 {
     public function create()
     {
-        return view('create'); // Ensure this matches your view file name
+        return view('Front.create'); // Ensure this matches your view file name
     }
 
     public function store(Request $request)

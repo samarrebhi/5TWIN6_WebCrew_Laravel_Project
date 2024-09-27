@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Front/layout')
 
 @section('content')
     <h1>Ajouter un Événement de Collecte</h1>
