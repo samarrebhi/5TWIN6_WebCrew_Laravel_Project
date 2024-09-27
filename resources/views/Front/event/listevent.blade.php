@@ -2,6 +2,15 @@
 <html lang="en">
 
     <head>
+        <!-- Lightbox CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+
+<!-- jQuery (required for Lightbox) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Lightbox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
         <meta charset="utf-8">
         <title>WebCrew_Laravel</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -90,119 +99,121 @@
         </div>
         <!-- Navbar End -->
         <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-6"></div>
+                            <div class="col-xl-3">
+                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                                    <label for="fruits">Default Sorting:</label>
+                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
+                                        <option value="volvo">Nothing</option>
+                                        <option value="saab">Popularity</option>
+                                        <option value="opel">Organic</option>
+                                        <option value="audi">Fantastic</option>
+                                    </select>
+                                </div>
+                            </div>
         <!-- Modal Search End -->
-
-<!-- Single Page Header start -->
-       <!-- Single Page Header start -->
-       <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Features</h1>
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Event Details</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                 <li class="breadcrumb-item active text-white">Collect Events Available</li>
             </ol>
         </div>
-        <div class="container-fluid py-5">
+<!-- Single Page Header start -->
+       <!-- Single Page Header start -->
+<!-- Events Start -->
+<div class="container-fluid fruite  py-5">
     <div class="container py-5">
-    
-        
-        
-        <div class="table-responsive">
-            <table class="table">
-                <thead >
-                    <tr>
-                    <th>Image</th>
+        <h1 class="mb-4">Upcoming Events</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                            <input type="search" name="search" class="form-control p-3" placeholder="Search events..." aria-describedby="search-icon-1" value="{{ request()->query('search') }}">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                            <label for="sorting">Default Sorting:</label>
+                            <select id="sorting" name="sorting" class="border-0 form-select-sm bg-light me-3" form="sortform">
+                                <option value="nothing">Location</option>
+                                <option value="popularity">Popularity</option>
+                                <option value="date">Date</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($evenements as $evenement)
-                    <tr>
-                        <!-- Titre -->
-                        <td>
-                            @if($evenement->image)
-                                <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" alt="Image" 
-                                     class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
-                            @else
-                                <p class="mb-0 mt-4">Pas d'image</p>
-                            @endif
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->titre }}</p>
-                        </td>
-                        
-                        <!-- Description -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->description }}</p>
-                        </td>
-                        
-                        <!-- Lieu -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->lieu }}</p>
-                        </td>
-                        
-                        <!-- Date -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->date }}</p>
-                        </td>
-                        
-                        <!-- Heure -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->heure }}</p>
-                        </td>
-                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-
-                        <td>
-                        <a href="{{ route('show', $evenement->id) }}" class="text-primary" title="View Details">
-    <i class="fas fa-eye"></i> <!-- Eye icon from FontAwesome -->
-</a>
-
-        </td>
-                        <!-- Image with Rounded Style -->
-                     
-                        
-                        <!-- Actions -->
-                        <td>
-                        <td>
- <!-- Actions -->
-
-
-</td>
-
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="row g-4">
+            @foreach($evenements as $evenement)
+            <div class="col-md-6 col-lg-4">
+                <div class="rounded position-relative fruite-item">
+                    <div class="fruite-img" style="overflow: hidden;"> <!-- Added overflow hidden -->
+                        @if($evenement->image)
+                            <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
+                        @else
+                            <img src="path/to/default-image.jpg" class="img-fluid w-100 rounded-top img-clickable" alt="No Image Available">
+                        @endif
+                    </div>
+                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                        <h4 class="text-primary">{{ $evenement->titre }}</h4>
+                        <p class="mb-0">{{ $evenement->description }}</p>
+                        <p class="text-muted mb-0">Location: {{ $evenement->lieu }}</p>
+                        <p class="text-muted mb-0">Date: {{ $evenement->date }} | Time: {{ $evenement->heure }}</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap mt-3">
+                            <a href="{{ route('show', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-4">
             {{ $evenements->links() }}
         </div>
     </div>
 </div>
+
+<style>
+    /* CSS for enlarging effect */
+    .img-clickable {
+        transition: transform 0.3s ease; /* Smooth transition */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+    .img-clickable.enlarged {
+        transform: scale(1.2); /* Scale the image */
+        z-index: 10; /* Bring it to the front */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // JavaScript to handle the click event
+        const images = document.querySelectorAll('.img-clickable');
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                // Remove the 'enlarged' class from all images
+                images.forEach(img => img.classList.remove('enlarged'));
+                
+                // Add the 'enlarged' class to the clicked image
+                image.classList.toggle('enlarged');
+            });
+        });
+    });
+</script>
+
+
+
 
 <!-- jQuery for Deletion Logic -->
 
