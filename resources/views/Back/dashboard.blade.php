@@ -183,8 +183,8 @@
                     <div data-i18n="Container">New Notifications</div>
                   </a>
                 </li>
-                
-               
+
+
               </ul>
             </li>
 
@@ -479,7 +479,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
               <div class="navbar-nav align-items-center">
-               
+
               </div>
               <!-- /Search -->
 
@@ -561,7 +561,7 @@
           </nav>
 
           <!-- / Navbar -->
-          
+
 
 
 @yield('content')
