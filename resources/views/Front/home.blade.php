@@ -69,11 +69,14 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="featurs-item text-center rounded bg-light p-4">
                             <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                <i class="fas fa-car-side fa-3x text-white"></i>
+                                <i class="fas fa-recycle fa-3x text-white"></i>
                             </div>
                             <div class="featurs-content text-center">
-                                <h5>Free Collection</h5>
-                                <p class="mb-0">Free waste collection on orders over $300 for community events</p>
+                            <a href="{{ route('event.listevent') }}" title="Check Event List">
+    <h5>Evenement Collecte</h5>
+</a>
+
+                                <p class="mb-0"> Lets users create and join waste collection events with key details like title, date, and location.</p>
                             </div>
                         </div>
                     </div>

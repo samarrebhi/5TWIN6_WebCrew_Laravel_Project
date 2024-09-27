@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EvenementCollecte extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'nom', 'date', 'lieu', 'organisateur_id'
+        'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image'
     ];
-    public function organisateur()
-    {
-        return $this->belongsTo(Utilisateur::class, 'organisateur_id');
-    }
+
 }
