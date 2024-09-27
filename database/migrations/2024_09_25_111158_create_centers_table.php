@@ -21,19 +21,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('description', 255);
             $table->string('image')->nullable();
-
-            $table->string('titre');
-            $table->text('description');
-            $table->string('lieu');
-            $table->date('date');
-            $table->time('heure');
-            $table->integer('participants')->default(0); // Nombre de participants par défaut
-            $table->string('image')->nullable();
-
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
