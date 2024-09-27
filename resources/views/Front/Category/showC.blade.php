@@ -2,12 +2,12 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <div class="container my-5">
-    <div class="card shadow-lg border-info">
-        <div class="card-header bg-info text-white text-center">
+    <div class="card shadow-lg border-success">
+        <div class="card-header bg-success text-white text-center">
             <h2 class="mb-0">Details of the Waste Category</h2>
         </div>
         <div class="card-body">
-            <h4 class="card-title text-info">{{ $Category->name }}</h4>
+            <h4 class="card-title text-success">{{ $Category->name }}</h4>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <strong>Quantity:</strong> {{ $Category->quantity }}
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="card-footer text-center bg-white">
-            <a href="{{ route('Categories.index') }}" class="btn btn-info">Back to Categories</a>
+            <a href="{{ route('Categories.index') }}" class="btn btn-success">Back to Categories</a>
         </div>
     </div>
 </div>

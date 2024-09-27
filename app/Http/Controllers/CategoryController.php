@@ -47,7 +47,7 @@ class CategoryController extends Controller
         Category::create($request->all());
 
         // Redirect back with a success message
-        return redirect()->route('categories.index')->with('success', 'Category added successfully!');
+        return redirect()->route('Categories.index')->with('success', 'Category added successfully!');
     }
     /**
      * Display the specified resource.
