@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>WebCrew_Laravel</title>
 
     <meta name="description" content="" />
 
@@ -129,7 +129,9 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <a href="{{ url('/admin') }}" class="app-brand-text demo menu-text fw-bolder ms-2">
+    WebCrew
+</a>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -147,40 +149,42 @@
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
             <!-- Layouts -->
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
-              </a>
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons fas fa-recycle"></i> <!-- Recycling Icon -->
+        <div data-i18n="Layouts">Evenement Collecte</div>
+    </a>
+
 
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Without menu</div>
-                  </a>
+                 <a href="{{ route('evenement_collecte.list') }}" class="menu-link">
+    <div data-i18n="Without menu"> Event list</div>
+</a>
+
                 </li>
                 <li class="menu-item">
+    <a href="{{ route('evenement_collecte.create') }}" class="menu-link">
+        <div data-i18n="Without navbar">Add New Event</div>
+    </a>
+</li>
+
+                <li class="menu-item">
                   <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Without navbar</div>
+                    <div data-i18n="Without navbar">Check participants</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
+                    <div data-i18n="Container">New Notifications</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
-                  </a>
-                </li>
+                
+               
               </ul>
             </li>
 
@@ -510,7 +514,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
+                            <span class="fw-semibold d-block"></span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
