@@ -18,9 +18,14 @@ use App\Http\Controllers\EvenementCollecteController;
 */
 
 // Home page routes
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
+
+Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('show');
 
 // Event Collection Routes
 Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(function () {
@@ -37,6 +42,9 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
 Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('update');
 
     Route::delete('/{id}', [EvenementCollecteController::class, 'destroy'])->name('destroy');
-    Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
-    Route::get('/events/{id}', [EventController::class, 'sh'])->name('event.details'); // This line is correct
+    
+
+
+
+    
 });

@@ -58,7 +58,3 @@
 
     {{ $evenements->links() }} <!-- Pagination -->
 </div>
-
-//
-
-@endsection

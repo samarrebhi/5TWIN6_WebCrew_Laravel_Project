@@ -14,7 +14,7 @@ class EventController extends Controller
         return view('front.event.listevent', compact('evenements'));
     }
 
-    public function sh($id)
+    public function show($id)
     {
         // Find the event by ID
         $event = EvenementCollecte::findOrFail($id); // Correct model here
