@@ -58,3 +58,4 @@
 
     {{ $evenements->links() }} <!-- Pagination -->
 </div>
+//////////////////////////////
