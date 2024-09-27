@@ -62,3 +62,54 @@
 
     {{ $evenements->links() }} <!-- Pagination -->
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '.delete-event', function() {
+        var id = $(this).data('id');
+        var row = $(this).closest('tr');
+
+        // Utiliser SweetAlert2 pour afficher une boîte de confirmation plus élégante
+        Swal.fire({
+            title: 'Are you sure you want to delete this event?',
+            text: "This action is irreversible!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete !',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si l'utilisateur confirme la suppression
+                $.ajax({
+                    url: '/evenement_collectes/' + id,
+                    type: 'DELETE',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        Swal.fire(
+                            'Delete!',
+                            'The event has been deleted successfully',
+                            'success'
+                        );
+                        row.fadeOut(); // Supprime la ligne de la table
+                    },
+                    error: function(xhr) {
+                        Swal.fire(
+                            'Erreur',
+                            'Erreur lors de la suppression de l\'événement: ' + xhr.responseJSON.message,
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+@endsection

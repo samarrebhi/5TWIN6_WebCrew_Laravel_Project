@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\FrontControllers\EventController; // Adjust the controller path as needed
 use App\Http\Controllers\EvenementCollecteController;
+use App\Http\Controllers\CenterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Route::get('home', [HomeController::class, 'index'])->name('homepage');
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 
 Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
-Route::get('/events/{id}', [EventController::class, 'show'])->name('show');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details');
 
 // Event Collection Routes
 Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(function () {
@@ -49,3 +50,9 @@ Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('updat
 
     
 });
+    Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
+    Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details'); // This line is correct
+Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+Route::get('/center', [CenterController::class, 'index'])->name('center.index');
+Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
+Route::resource('/center',CenterController::class);

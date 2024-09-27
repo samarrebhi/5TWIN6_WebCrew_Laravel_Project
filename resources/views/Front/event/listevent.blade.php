@@ -167,7 +167,7 @@
                         <p class="text-muted mb-0">Location: {{ $evenement->lieu }}</p>
                         <p class="text-muted mb-0">Date: {{ $evenement->date }} | Time: {{ $evenement->heure }}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap mt-3">
-                            <a href="{{ route('show', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
+                            <a href="{{ route('event.details', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
                         </div>
                     </div>
                 </div>
