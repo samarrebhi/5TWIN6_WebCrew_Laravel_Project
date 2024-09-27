@@ -11,8 +11,8 @@ class EvenementCollecteFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            //'title' => $this->faker->sentence,
+            //'description' => $this->faker->paragraph,
             // Ajoutez d'autres champs ici selon votre modèle
         ];
     }

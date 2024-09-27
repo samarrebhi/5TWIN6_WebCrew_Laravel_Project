@@ -8,9 +8,35 @@ use Illuminate\Support\Facades\File;
 
 class EvenementCollecteController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $evenements = EvenementCollecte::paginate(10); // Adjust pagination as needed
+        $query = EvenementCollecte::query();
+
+        // Apply filters if search fields are provided
+        if ($request->filled('titre')) {
+            $query->where('titre', 'like', '%' . $request->input('titre') . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->input('description') . '%');
+        }
+
+        if ($request->filled('lieu')) {
+            $query->where('lieu', 'like', '%' . $request->input('lieu') . '%');
+        }
+
+        if ($request->filled('date')) {
+            $query->whereDate('date', $request->input('date'));
+        }
+
+        // Paginate the filtered results
+        $evenements = $query->paginate(10);
+
+        if ($request->ajax()) {
+            return view('evenement_collecte.partials.event_table', compact('evenements'));
+        }
+
         return view('evenement_collecte.list', compact('evenements'));
     }
 
@@ -23,16 +49,16 @@ class EvenementCollecteController extends Controller
     {
         // Validate the request
         $this->validateEvent($request);
-
+    
         // Create new event
         $evenement = EvenementCollecte::create($request->except('image'));
-
+    
         // Handle image upload
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
-            $evenement->save();
+            $evenement->save(); // Ensure save after image assignment
         }
-
+    
         return redirect()->route('evenement_collecte.list')->with('success', 'Événement ajouté avec succès.');
     }
 
@@ -41,32 +67,17 @@ class EvenementCollecteController extends Controller
         $evenement = EvenementCollecte::findOrFail($id);
         return view('evenement_collecte.edit', compact('evenement'));
     }
-
-    public function update(Request $request, EvenementCollecte $evenement)
-    {
-        // Validate the request
-        $this->validateEvent($request);
-
-        // Update event details
-        $evenement->fill($request->except('image'))->save();
-
-        // Handle new image upload
-        if ($request->hasFile('image')) {
-            $this->deleteOldImage($evenement->image);
-            $evenement->image = $this->uploadImage($request->file('image'));
-            $evenement->save();
-        }
-
-        return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
-    }
-
+    
     public function destroy($id)
     {
         $evenement = EvenementCollecte::findOrFail($id);
-        $this->deleteOldImage($evenement->image);
-        $evenement->delete();
+        $this->deleteOldImage($evenement->image); // Delete the old image
+        $evenement->delete(); // Then delete the event
         return response()->json(['message' => 'Événement supprimé avec succès.']);
     }
+        
+
+   
 
     private function validateEvent(Request $request)
     {
@@ -98,4 +109,39 @@ class EvenementCollecteController extends Controller
             }
         }
     }
-}
+    public function update(Request $request, $id)
+    {
+        // Valider la requête entrante
+        $request->validate([
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'lieu' => 'required|string',
+            'date' => 'required|date',
+            'heure' => 'required|date_format:H:i',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+    
+        // Trouver la ressource par ID et la mettre à jour
+        $evenementCollecte = EvenementCollecte::findOrFail($id);
+    
+        // Mettre à jour tous les champs
+        $evenementCollecte->titre = $request->input('titre');
+        $evenementCollecte->description = $request->input('description');
+        $evenementCollecte->lieu = $request->input('lieu');
+        $evenementCollecte->date = $request->input('date');
+        $evenementCollecte->heure = $request->input('heure');
+    
+        if ($request->hasFile('image')) {
+            // Supprimer l'ancienne image si une nouvelle est téléchargée
+            $this->deleteOldImage($evenementCollecte->image);
+            // Télécharger la nouvelle image
+            $evenementCollecte->image = $this->uploadImage($request->file('image'));
+        }
+    
+        // Sauvegarder les données mises à jour
+        $evenementCollecte->save();
+    
+        // Rediriger ou retourner une réponse
+        return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
+    }
+}    

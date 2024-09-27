@@ -3,17 +3,23 @@
 namespace App\Http\Controllers\FrontControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\EvenementCollecte;
+use App\Models\EvenementCollecte; // Correctly importing your model
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
     public function index()
     {
-        // Use pagination
-        $evenements = EvenementCollecte::paginate(10); // Adjust the number of items per page as needed
+        $evenements = EvenementCollecte::paginate(10);
+        return view('front.event.listevent', compact('evenements'));
+    }
 
-        // Pass the paginated events to the view
-        return view('Front.event.listevent', compact('evenements'));
+    public function sh($id)
+    {
+        // Find the event by ID
+        $event = EvenementCollecte::findOrFail($id); // Correct model here
+        
+        // Return the view with event data
+        return view('Front.event.details', compact('event')); // Ensure the view is also correct
     }
 }

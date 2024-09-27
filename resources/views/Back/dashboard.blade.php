@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>WebCrew_Dashboard</title>
+    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
 
@@ -43,26 +43,26 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../back/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/vendor/fonts/boxicons.css')}}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../back/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../back/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../back/assets/css/demo.css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/css/demo.css')}}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
 
-    <link rel="stylesheet" href="../back/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../back/assets/vendor/js/helpers.js"></script>
+    <script src="{{ asset('back/assets/vendor/js/helpers.js')}}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../back/assets/js/config.js"></script>
+    <script src="{{ asset('back/assets/js/config.js')}}"></script>
   </head>
 
   <body>
@@ -129,7 +129,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">WebCrew</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -152,23 +152,35 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Collect Event</div>
+                <div data-i18n="Layouts">Layouts</div>
               </a>
 
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Create  Event</div>
+                    <div data-i18n="Without menu">Without menu</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Event List</div>
+                    <div data-i18n="Without navbar">Without navbar</div>
                   </a>
                 </li>
-              
-              
-              
+                <li class="menu-item">
+                  <a href="layouts-container.html" class="menu-link">
+                    <div data-i18n="Container">Container</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="layouts-fluid.html" class="menu-link">
+                    <div data-i18n="Fluid">Fluid</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="layouts-blank.html" class="menu-link">
+                    <div data-i18n="Blank">Blank</div>
+                  </a>
+                </li>
               </ul>
             </li>
 
@@ -357,17 +369,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
-                <div data-i18n="Extended UI">Extended UI</div>
+                <div data-i18n="Extended UI">Blog</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-                    <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="extended-ui-text-divider.html" class="menu-link">
-                    <div data-i18n="Text Divider">Text Divider</div>
+                    <div data-i18n="Perfect Scrollbar">Liste</div>
                   </a>
                 </li>
               </ul>
@@ -468,7 +474,9 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
-            
+              <div class="navbar-nav align-items-center">
+               
+              </div>
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
