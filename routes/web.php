@@ -29,18 +29,6 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
     Route::get('/create', [EvenementCollecteController::class, 'create'])->name('create');
     Route::post('/', [EvenementCollecteController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [EvenementCollecteController::class, 'edit'])->name('edit');
-   
-   
-
-Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
-
-Route::get('/center', [CenterController::class, 'index'])->name('center.index');
-Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
-Route::resource('evenement_collectes', EvenementCollecteController::class);
-Route::get('/evenement_collectes/create', [EvenementCollecteController::class, 'create'])->name('evenement_collectes.create');
-Route::post('/evenement_collectes', [EvenementCollecteController::class, 'store'])->name('evenement_collectes.store');
-Route::resource('/center',CenterController::class);
-
 
 Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('update');
 
@@ -48,3 +36,7 @@ Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('updat
     Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
     Route::get('/events/{id}', [EventController::class, 'sh'])->name('event.details'); // This line is correct
 });
+Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+Route::get('/center', [CenterController::class, 'index'])->name('center.index');
+Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
+Route::resource('/center',CenterController::class);
