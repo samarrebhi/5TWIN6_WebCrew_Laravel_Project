@@ -25,6 +25,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 
+
+Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
 Route::resource('evenement_collectes', EvenementCollecteController::class);

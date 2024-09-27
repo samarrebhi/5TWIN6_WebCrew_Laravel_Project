@@ -28,13 +28,16 @@
                             <td>{{ $center->phone }}</td>
                             <td>{{ $center->email }}</td>
                             <td>
-                                <a href="{{ route('center.edit', $center->id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <form action="{{ route('center.destroy', $center->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this center?')">Delete</button>
-                                </form>
-                            </td>
+                                <div class="d-flex gap-2"> 
+                                    <a href="{{ route('center.show.details', $center->id) }}" class="btn btn-outline-secondary btn-sm">Details</a>
+                                    <a href="{{ route('center.edit', $center->id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                    <form action="{{ route('center.destroy', $center->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this center?')">Delete</button>
+            </form>
+    </div>
+</td>
                         </tr>
                     @endforeach
                 </tbody>

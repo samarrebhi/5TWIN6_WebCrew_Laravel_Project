@@ -14,5 +14,6 @@ class Center extends Model
         'email',
         'phone',
         'address',
+        'image',
     ];
 }

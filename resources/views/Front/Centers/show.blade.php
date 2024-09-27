@@ -9,6 +9,11 @@
         </div>
         <div class="card-body">
             <h4 class="card-title text-success">{{ $center->name }}</h4>
+            <div class="flex justify-center mb-4">
+            @if($center->image)
+            <img src="{{ asset('storage/' . $center->image) }}" class="img-fluid mx-auto d-block" alt="{{ $center->name }}" style="max-width: 200px; height: auto;" />
+            @endif
+        </div>
             <ul class="list-group list-group-flush">
             <li class="list-group-item">
             <strong>Description:</strong> {{ $center->description }}

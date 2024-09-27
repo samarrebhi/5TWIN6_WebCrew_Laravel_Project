@@ -25,6 +25,12 @@ class CenterController extends Controller
         return view('Back.showcenters', compact('centers'));
     }
 
+    public function showDetails($id)
+    {
+    $center = Center::findOrFail($id); 
+    return view('Back.detailscenter', compact('center')); 
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,8 +49,30 @@ class CenterController extends Controller
      */
     public function store(Request $request)
     {
-        $center=Center::create($request->all());
-        $center->save();
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $center = new Center(); 
+
+        $center->name = $request->name;
+        $center->address = $request->address;
+        $center->description = $request->description;
+        $center->phone = $request->phone;
+        $center->email = $request->email;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('img', 'public');
+            $center->image = $imagePath; 
+        }    
+
+        $center->save(); 
+
         return redirect()->route('centers.index');
     }
 
@@ -81,14 +109,34 @@ class CenterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $center=['name'=>$request->name,
-        'description'=>$request->description,
-        'address'=>$request->address,
-        'phone'=>$request->phone,
-        "email"=>$request->email];
-        Center::whereId($id)->update($center);
-        //$center->save();
-        return redirect()->route('centers.index');
+       
+       $request->validate([
+        'name' => 'sometimes|required',
+        'address' => 'sometimes|required',
+        'description' => 'sometimes|required',
+        'phone' => 'sometimes|required',
+        'email' => 'sometimes|required|email',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $center = Center::findOrFail($id); 
+
+    
+    $center->name = $request->name ?? $center->name;
+    $center->address = $request->address ?? $center->address;
+    $center->description = $request->description ?? $center->description;
+    $center->phone = $request->phone ?? $center->phone;
+    $center->email = $request->email ?? $center->email;
+
+    
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('img', 'public');
+        $center->image = $imagePath;
+    }
+
+    $center->save(); 
+
+    return redirect()->route('centers.index');
     }
 
     /**
