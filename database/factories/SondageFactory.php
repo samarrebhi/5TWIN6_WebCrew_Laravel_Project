@@ -18,14 +18,14 @@ class SondageFactory extends Factory
     {
         return [
 
-            'title' => $this->faker->sentence(3), // Generates a title with 3 words
+            'title' => $this->faker->text(10), // Generates a title with 3 words
             'description' => $this->faker->text(100), // Description up to 100 characters
             'questions' => $this->generateRandomQuestions(), // Random questions generated
             'start_date' => $this->faker->date('Y-m-d', strtotime('+1 week')),  // Random start date within the next week
             'end_date' => $this->faker->date('Y-m-d', strtotime('+1 month')), // Random end date within a month after start
          //   'response_count' => 0, // Default value for response count
             'category' => $this->faker->word(), // Random category
-            'location' => $this->faker->address(),
+           // 'location' => $this->faker->address(),
 
 
         ];

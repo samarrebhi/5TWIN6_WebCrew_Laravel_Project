@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('sondages', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 10);
-            $table->string('location', 10);
+            $table->string('title');
+            //$table->string('location', 255);  // or any length you want
+
             $table->text('category');
             $table->text('questions',255);
             $table->string('description');

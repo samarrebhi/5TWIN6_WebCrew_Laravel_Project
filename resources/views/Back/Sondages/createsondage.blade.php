@@ -26,19 +26,6 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="poll-location">Poll Target Location</label>
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text"><i class="bx bx-map"></i></span>
-                                <input
-                                    type="text"
-                                    id="poll-location"
-                                    name="location"
-                                    class="form-control"
-                                    placeholder="Enter location"
-                                />
-                            </div>
-                        </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="poll-description">Description</label>

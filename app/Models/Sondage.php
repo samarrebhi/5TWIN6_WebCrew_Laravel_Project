@@ -22,7 +22,7 @@ class Sondage extends Model
         'start_date',         // Survey start date
         'end_date',           // Survey end date
         'category',         //e.g., Recycling, Waste Management, Environmental Awareness)
-        'location',
+      //  'location',
 
 
     ];

@@ -21,7 +21,7 @@
                         <li>{{ $question }}</li>
                     @endforeach
                 </ul>
-                <p><strong>Location:</strong> {{ $sondage->location }}</p>
+
             </div>
         </div>
     </div>
