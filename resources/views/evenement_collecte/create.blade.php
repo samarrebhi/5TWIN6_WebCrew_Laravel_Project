@@ -1,6 +1,7 @@
 @extends('Back/dashboard')
 
 @section('content') 
+
 <div class="container-xxl flex-grow-1 container-p-y">
     <h1 class="text-center mt-1 mb-3" style="color: green;">Add Event</h1>
 
@@ -79,6 +80,7 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @section('scripts')
 <script>

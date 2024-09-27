@@ -58,31 +58,7 @@
 
     {{ $evenements->links() }} <!-- Pagination -->
 </div>
-////////
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).on('click', '.delete-event', function() {
-        var id = $(this).data('id');
-        var row = $(this).closest('tr');
+//
 
-        if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-            $.ajax({
-                url: '/evenement_collectes/' + id,
-                type: 'DELETE',
-                data: {
-                    "_token": "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                    alert(response.message);
-                    row.fadeOut();
-                },
-                error: function(xhr) {
-                    alert('Erreur lors de la suppression de l\'événement: ' + xhr.responseJSON.message);
-                }
-            });
-        }
-    });
-</script>
 @endsection
