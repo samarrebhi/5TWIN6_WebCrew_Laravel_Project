@@ -1,9 +1,8 @@
 
+@extends('Front/layout')
+@section('content') 
 
-<head>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<div class="container my-5">
+<div class="container  mt-5" style="padding-top: 120px;">
     <div class="card shadow-lg border-success ">
         <div class="card-header bg-green text-white text-center">
             <h2 class="mb-0 text-green ">Details of the Recycling Center</h2>
@@ -30,3 +29,4 @@
         </div>
     </div>
 </div>
+@endsection

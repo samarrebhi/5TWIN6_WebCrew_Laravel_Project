@@ -1,3 +1,5 @@
+@extends('Back/dashboard')
+@section('content')
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -37,3 +39,4 @@
         </div>
     </div>
 </div>
+@endsection
