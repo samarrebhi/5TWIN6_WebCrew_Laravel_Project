@@ -52,7 +52,7 @@
 
 
 
-                    @if(Session::has('success'))
+                 @if(Session::has('success'))
 <div class="alert alert-success">
     {{ Session::get('success') }}
 </div>
