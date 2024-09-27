@@ -33,7 +33,8 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
     Route::get('/create', [EvenementCollecteController::class, 'create'])->name('create');
     Route::post('/', [EvenementCollecteController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [EvenementCollecteController::class, 'edit'])->name('edit');
-   
+    Route::get('/{id}', [EvenementCollecteController::class, 'show'])->name('evenement_collecte.showDet');
+
    
    
 

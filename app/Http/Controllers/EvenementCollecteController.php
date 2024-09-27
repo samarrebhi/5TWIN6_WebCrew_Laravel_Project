@@ -145,4 +145,13 @@ class EvenementCollecteController extends Controller
         // Redirect back to the list view with a success message
         return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
     }
+
+
+
+    public function show($id)
+{
+    $evenement = EvenementCollecte::findOrFail($id);
+    return view('evenement_collecte.showDet', compact('evenement'));
+}
+
 }    
