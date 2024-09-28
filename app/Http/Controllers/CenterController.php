@@ -158,4 +158,5 @@ class CenterController extends Controller
         $center->delete();
         return response()->json(['message' => 'Center deleted successfully']);
     }
+    
 }

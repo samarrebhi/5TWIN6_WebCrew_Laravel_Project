@@ -2,6 +2,15 @@
 <html lang="en">
 
     <head>
+        <!-- Lightbox CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+
+<!-- jQuery (required for Lightbox) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Lightbox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
         <meta charset="utf-8">
         <title>WebCrew_Laravel</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -90,112 +99,142 @@
         </div>
         <!-- Navbar End -->
         <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-6"></div>
+                            <div class="col-xl-3">
+                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                                    <label for="fruits">Default Sorting:</label>
+                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
+                                        <option value="volvo">Nothing</option>
+                                        <option value="saab">Popularity</option>
+                                        <option value="opel">Organic</option>
+                                        <option value="audi">Fantastic</option>
+                                    </select>
+                                </div>
+                            </div>
         <!-- Modal Search End -->
-
-<!-- Single Page Header start -->
-       <!-- Single Page Header start -->
-       <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Features</h1>
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Event Details</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                 <li class="breadcrumb-item active text-white">Collect Events Available</li>
             </ol>
         </div>
-        <div class="container-fluid py-5">
+<!-- Single Page Header start -->
+       <!-- Single Page Header start -->
+       <div class="container-fluid fruite py-5">
     <div class="container py-5">
-    
-        
-        
-        <div class="table-responsive">
-            <table class="table">
-                <thead >
-                    <tr>
-                    <th>Image</th>
-
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($evenements as $evenement)
-                    <tr>
-                        <!-- Titre -->
-                        <td>
-                            @if($evenement->image)
-                                <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" alt="Image" 
-                                     class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
-                            @else
-                                <p class="mb-0 mt-4">Pas d'image</p>
-                            @endif
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->titre }}</p>
-                        </td>
-                        
-                        <!-- Description -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->description }}</p>
-                        </td>
-                        
-                        <!-- Lieu -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->lieu }}</p>
-                        </td>
-                        
-                        <!-- Date -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->date }}</p>
-                        </td>
-                        
-                        <!-- Heure -->
-                        <td>
-                            <p class="mb-0 mt-4">{{ $evenement->heure }}</p>
-                        </td>
-                        
-                        <!-- Image with Rounded Style -->
-                     
-                        
-                        <!-- Actions -->
-                        <td>
-                        <td>
- <!-- Actions -->
-
-
-</td>
-
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <h1 class="mb-4">Upcoming Events</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                            <input type="search" name="search" class="form-control p-3" placeholder="Search events..." aria-describedby="search-icon-1" value="{{ request()->query('search') }}">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                        <!-- Filter Options -->
+                        <div class="mb-4">
+                            <label><input type="radio" name="filter" value="title" checked> Title</label>
+                            <label><input type="radio" name="filter" value="location"> Location</label>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                            <label for="sorting">Default Sorting:</label>
+                            <select id="sorting" name="sorting" class="border-0 form-select-sm bg-light me-3">
+                                <option value="nothing">Title</option>
+                                <option value="location">Location</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            {{ $evenements->links() }}
+        <div class="row g-4" id="event-container">
+            @foreach($evenements as $evenement)
+            <div class="col-md-6 col-lg-4 fruite-item" data-title="{{ $evenement->titre }}" data-location="{{ $evenement->lieu }}">
+                <div class="rounded position-relative">
+                    <div class="fruite-img" style="overflow: hidden;">
+                        <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
+                    </div>
+                    <div class="p-4 border-secondary border-top-0 rounded-bottom">
+                        <h4 class="text-primary">{{ $evenement->titre }}</h4>
+                        <p class="mb-0">{{ $evenement->description }}</p>
+                        <p class="text-muted mb-0">Location: {{ $evenement->lieu }}</p>
+                        <p class="text-muted mb-0">Date: {{ $evenement->date }} | Time: {{ $evenement->heure }}</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap mt-3">
+                            <a href="{{ route('event.details', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination Links -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $evenements->links() }} <!-- This generates the pagination links -->
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.querySelector('input[name="search"]');
+        const eventItems = document.querySelectorAll('.fruite-item');
+        const filterOptions = document.querySelectorAll('input[name="filter"]');
+        const sortingSelect = document.getElementById('sorting');
+
+        // Function to filter and sort events
+        const filterAndSortEvents = () => {
+            const query = searchInput.value.toLowerCase(); // Get the search query
+            const selectedFilter = Array.from(filterOptions).find(option => option.checked).value; // Get selected filter option
+
+            // Filter events based on search input and selected filter
+            eventItems.forEach(item => {
+                const title = item.querySelector('h4').textContent.toLowerCase();
+                const description = item.querySelector('p').textContent.toLowerCase();
+                const location = item.querySelector('p.text-muted.mb-0:nth-of-type(2)').textContent.toLowerCase(); // Get location from the second <p>
+
+                let isVisible = false; // Default visibility status
+
+                // Check based on selected filter
+                if (selectedFilter === 'title' && (title.includes(query) || description.includes(query))) {
+                    isVisible = true; // Show if title matches
+                } else if (selectedFilter === 'location' && location.includes(query)) {
+                    isVisible = true; // Show if location matches
+                }
+
+                // Show or hide item based on visibility status
+                item.style.display = isVisible ? '' : 'none';
+            });
+
+            // Sort visible items
+            const visibleItems = Array.from(eventItems).filter(item => item.style.display !== 'none');
+            if (sortingSelect.value !== 'nothing') {
+                const sortBy = sortingSelect.value; // Get selected sorting option
+                visibleItems.sort((a, b) => {
+                    const aValue = (sortBy === 'location') ? a.dataset[sortBy] : a.querySelector('h4').textContent.toLowerCase(); // Get title for sorting
+                    const bValue = (sortBy === 'location') ? b.dataset[sortBy] : b.querySelector('h4').textContent.toLowerCase(); // Get title for sorting
+                    return aValue.localeCompare(bValue); // Compare values
+                });
+
+                // Append sorted items back to the container
+                const container = document.getElementById('event-container');
+                visibleItems.forEach(item => container.appendChild(item));
+            }
+        };
+
+        // Event listeners for search input, filter options, and sorting select
+        searchInput.addEventListener('input', filterAndSortEvents);
+        filterOptions.forEach(option => option.addEventListener('change', filterAndSortEvents));
+        sortingSelect.addEventListener('change', filterAndSortEvents);
+    });
+</script>
+
 
 <!-- jQuery for Deletion Logic -->
 
