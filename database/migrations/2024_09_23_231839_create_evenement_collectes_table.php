@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,19 +13,9 @@ return new class extends Migration {
      */
     public function up()
     {
-   
-
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('quantity');
-            $table->string('state');
-            $table->string('environmental_impact');
-            $table->timestamps();
-        });
-
         Schema::create('evenement_collectes', function (Blueprint $table) {
             $table->id();
+
             $table->string('titre');
             $table->text('description');
             $table->string('lieu');
@@ -37,6 +28,7 @@ return new class extends Migration {
         });
     }
 
+
     /**
      * Reverse the migrations.
      *
@@ -44,7 +36,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('evenement_collectes');
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('centers');
     }
 };

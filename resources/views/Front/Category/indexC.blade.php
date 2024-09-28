@@ -15,11 +15,23 @@
                         </p>
                         <div class="d-flex justify-content-center"> 
                             <a href="{{ route('Categories.show', $category->id) }}" class="btn btn-outline-success btn-sm">Details</a>
+                            <a href="{{ route('Categories.edit', $category->id) }}" class="btn btn-primary btn-sm ms-2">Edit</a>
+
+                            <!-- Delete Button -->
+                            <form action="{{ route('Categories.destroy', $category->id) }}" method="POST" class="ms-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+</div>
+<!-- Go back to the form Button -->
+<div class="mb-4">
+    <a href="{{ route('Categories.create') }}" class="btn btn-primary text-white" style="left;">Go back to the form</a>
 </div>
 @endsection

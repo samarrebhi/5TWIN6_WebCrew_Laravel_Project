@@ -1,4 +1,5 @@
-
+@extends('Back/dashboard')
+@section('content') 
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -41,5 +42,6 @@
         <button type="submit" class="btn btn-primary">Add Category</button>
     </form>
 </div>
+@endsection
 
 
