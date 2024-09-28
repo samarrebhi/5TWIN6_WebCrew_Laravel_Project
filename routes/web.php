@@ -40,3 +40,11 @@ Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('cen
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
 Route::resource('/center',CenterController::class);
+
+
+/////routees for sondages entity
+Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
+    'index' => 'sondage.index',
+    'create' => 'sondage.create.form',
+    'store' => 'sondage.store',
+]);

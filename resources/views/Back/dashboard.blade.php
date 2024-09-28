@@ -187,8 +187,34 @@
 
               </ul>
             </li>
+              <li class="menu-item active">
+                  <a href="javascript:void(0);"  class="menu-link menu-toggle">
+                      <i class="menu-icon tf-icons bx bx-poll"></i>
+                      <div data-i18n="Layouts">Polls Management</div>
+                  </a>
 
-            <li class="menu-header small text-uppercase">
+                  <ul class="menu-sub">
+                      <li class="menu-item">
+                          <a href="{{ route('sondage.index') }}" class="menu-link">
+                              <div data-i18n="Without menu">List of polls</div>
+                          </a>
+                      </li>
+                      <li class="menu-item">
+                          <a href="{{ route('sondage.create.form') }}" class="menu-link">
+                              <div data-i18n="Without navbar">Create poll</div>
+                          </a>
+                      </li>
+
+                  </ul>
+              </li>
+              <li class="menu-item">
+                  <a href="{{ route('centers.index') }}" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-collection"></i>
+                      <div data-i18n="Basic">Centers</div>
+                  </a>
+              </li>
+
+              <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
             <li class="menu-item">
