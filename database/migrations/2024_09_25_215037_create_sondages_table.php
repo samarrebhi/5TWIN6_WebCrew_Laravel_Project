@@ -13,21 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evenement_collectes', function (Blueprint $table) {
+        Schema::create('sondages', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            //$table->string('location', 255);  // or any length you want
 
-            $table->string('titre');
-            $table->text('description');
-            $table->string('lieu');
-            $table->date('date');
-            $table->time('heure');
-            $table->integer('participants')->default(0); // Nombre de participants par défaut
-            $table->string('image')->nullable();
-
+            $table->text('category');
+            $table->text('questions',255);
+            $table->string('description');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centers');
+        Schema::dropIfExists('sondages');
     }
 };

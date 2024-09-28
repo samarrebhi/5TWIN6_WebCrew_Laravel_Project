@@ -13,21 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evenement_collectes', function (Blueprint $table) {
+        Schema::create('centers', function (Blueprint $table) {
             $table->id();
-
-            $table->string('titre');
-            $table->text('description');
-            $table->string('lieu');
-            $table->date('date');
-            $table->time('heure');
-            $table->integer('participants')->default(0); // Nombre de participants par défaut
+            $table->string('name', 255);
+            $table->string('address', 255);
+            $table->string('phone', 8);
+            $table->string('email');
+            $table->string('description', 255);
             $table->string('image')->nullable();
-
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
