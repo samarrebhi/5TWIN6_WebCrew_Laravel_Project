@@ -6,17 +6,8 @@ use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\FrontControllers\EventController; // Adjust the controller path as needed
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
+use App\Http\Controllers\CategoryController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // Home page routes
 
@@ -59,3 +50,23 @@ Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('cen
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
 Route::resource('/center',CenterController::class);
+
+
+
+
+
+
+
+
+
+
+
+Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
+    'index' => 'sondage.index',
+    'create' => 'sondage.create.form',
+    'store' => 'sondage.store',
+]);
+
+
+Route::resource('Categories', CategoryController::class);
+

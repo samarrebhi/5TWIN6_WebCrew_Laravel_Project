@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CenterSeeder::class);
         // \App\Models\User::factory(10)->create();
+        $this->call(SondageSeeder::class);
+      // samar $this->call(GuideBPSeeder::class);
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

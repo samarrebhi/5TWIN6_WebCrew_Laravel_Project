@@ -11,18 +11,16 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+ public function up()
     {
-        Schema::create('centers', function (Blueprint $table) {
+     /*   Schema::create('categories', function (Blueprint $table) { // Use 'categories' here
             $table->id();
-            $table->string('name', 255);
-            $table->string('address', 255);
-            $table->string('phone', 8);
-            $table->string('email');
-            $table->string('description', 255);
-            $table->string('image')->nullable();
+            $table->string('name');
+            $table->integer('quantity');
+            $table->string('state');
+            $table->string('environmental_impact');
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -32,6 +30,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centers');
+      Schema::dropIfExists('categories');
+
     }
 };
