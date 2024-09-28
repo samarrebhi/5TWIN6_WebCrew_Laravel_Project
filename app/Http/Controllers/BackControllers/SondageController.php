@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 class SondageController extends Controller
 {
 
+
     ////pour get all
     public function index()
     {
         $sondages=Sondage::all();
         return view('Back.Sondages.listsondage',compact('sondages'));
+
     }
 /// pour add
     public function create()
@@ -92,6 +94,7 @@ class SondageController extends Controller
             ->with('success','Sondage deleted successuflly');
 
     }
+    ////for the front  polls listing
 
 
 }

@@ -22,6 +22,7 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Description</th>
+                                    <th>Category</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -29,7 +30,8 @@
                                 @foreach($sondages as $sondage)
                                     <tr>
                                         <td><strong>{{ $sondage->title }}</strong></td>
-                                        <td>{{ $sondage->description }}</td>
+                                        <td>{{ Str::limit($sondage->description, 60) }}</td>
+                                        <td>{{ $sondage->category}}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="{{ route('sondage.show', $sondage->id) }}" class="btn btn-info btn-sm me-2">Details</a>

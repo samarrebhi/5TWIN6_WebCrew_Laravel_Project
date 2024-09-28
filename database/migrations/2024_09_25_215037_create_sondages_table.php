@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->text('category');
             $table->text('questions',255);
-            $table->string('description');
+            $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
