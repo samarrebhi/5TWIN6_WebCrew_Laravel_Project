@@ -42,7 +42,7 @@ Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageControl
 ]);
 Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
     'index' => 'sondage.listing',
-
+'show'=>'sondage.details',
 ]);
 
 

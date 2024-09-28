@@ -48,7 +48,7 @@
                                 <p class="card-text mb-4">{{ Str::limit($sondage->description, 200) }}</p>
                                 <p class="card-text mb-4"><strong>Poll's Category: </strong> {{ $sondage->category }}</p>
                                 <div class="mt-auto">
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-eye me-2 text-primary"></i> View details</a>
+                                    <a href="{{ route('sondage.details', $sondage->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-eye me-2 text-primary"></i> View details</a>
                                     <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-poll me-2 text-primary"></i> Take poll</a>
                                 </div>
                             </div>

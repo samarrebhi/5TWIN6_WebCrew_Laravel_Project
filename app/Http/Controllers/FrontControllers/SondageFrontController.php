@@ -14,12 +14,12 @@ class SondageFrontController extends Controller
         return view('Front.Sondages affichage.getallsondage',compact('sondages'));
     }
 
-    public function sh($id)
+    public function show($id)
     {
         // Find the event by ID
-        $event = EvenementCollecte::findOrFail($id); // Correct model here
+        $sondage=sondage::find($id);
 
         // Return the view with event data
-        return view('Front.event.details', compact('event')); // Ensure the view is also correct
+        return view('Front.Sondages affichage.detailssondage', compact('sondage')); // Ensure the view is also correct
     }
 }
