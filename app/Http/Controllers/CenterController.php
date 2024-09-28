@@ -145,12 +145,17 @@ class CenterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+       public function destroy($id)
     {
-        $center=Center::find($id);
+        \Log::info('Attempting to delete center with ID: ' . $id);
+        
+        $center = Center::find($id); 
+        if (!$center) {
+            \Log::error('Center not found with ID: ' . $id);
+            return response()->json(['message' => 'Center not found'], 404);
+        }
+    
         $center->delete();
-        return redirect()->route('centers.index')
-        ->with('success','Center deleted successuflly');
-
+        return response()->json(['message' => 'Center deleted successfully']);
     }
 }
