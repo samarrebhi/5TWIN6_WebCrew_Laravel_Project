@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('description', 255);
             $table->string('image')->nullable();
+
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

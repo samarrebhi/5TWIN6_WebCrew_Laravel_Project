@@ -122,8 +122,7 @@
         </div>
 <!-- Single Page Header start -->
        <!-- Single Page Header start -->
-<!-- Events Start -->
-<div class="container-fluid fruite  py-5">
+       <div class="container-fluid fruite py-5">
     <div class="container py-5">
         <h1 class="mb-4">Upcoming Events</h1>
         <div class="row g-4">
@@ -134,15 +133,19 @@
                             <input type="search" name="search" class="form-control p-3" placeholder="Search events..." aria-describedby="search-icon-1" value="{{ request()->query('search') }}">
                             <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                         </div>
+                        <!-- Filter Options -->
+                        <div class="mb-4">
+                            <label><input type="radio" name="filter" value="title" checked> Title</label>
+                            <label><input type="radio" name="filter" value="location"> Location</label>
+                        </div>
                     </div>
                     <div class="col-6"></div>
                     <div class="col-xl-3">
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                             <label for="sorting">Default Sorting:</label>
-                            <select id="sorting" name="sorting" class="border-0 form-select-sm bg-light me-3" form="sortform">
-                                <option value="nothing">Location</option>
-                                <option value="popularity">Popularity</option>
-                                <option value="date">Date</option>
+                            <select id="sorting" name="sorting" class="border-0 form-select-sm bg-light me-3">
+                                <option value="nothing">Title</option>
+                                <option value="location">Location</option>
                             </select>
                         </div>
                     </div>
@@ -150,18 +153,14 @@
             </div>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4" id="event-container">
             @foreach($evenements as $evenement)
-            <div class="col-md-6 col-lg-4">
-                <div class="rounded position-relative fruite-item">
-                    <div class="fruite-img" style="overflow: hidden;"> <!-- Added overflow hidden -->
-                        @if($evenement->image)
-                            <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
-                        @else
-                            <img src="path/to/default-image.jpg" class="img-fluid w-100 rounded-top img-clickable" alt="No Image Available">
-                        @endif
+            <div class="col-md-6 col-lg-4 fruite-item" data-title="{{ $evenement->titre }}" data-location="{{ $evenement->lieu }}">
+                <div class="rounded position-relative">
+                    <div class="fruite-img" style="overflow: hidden;">
+                        <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
                     </div>
-                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <div class="p-4 border-secondary border-top-0 rounded-bottom">
                         <h4 class="text-primary">{{ $evenement->titre }}</h4>
                         <p class="mb-0">{{ $evenement->description }}</p>
                         <p class="text-muted mb-0">Location: {{ $evenement->lieu }}</p>
@@ -175,44 +174,66 @@
             @endforeach
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination Links -->
         <div class="d-flex justify-content-center mt-4">
-            {{ $evenements->links() }}
+            {{ $evenements->links() }} <!-- This generates the pagination links -->
         </div>
     </div>
 </div>
 
-<style>
-    /* CSS for enlarging effect */
-    .img-clickable {
-        transition: transform 0.3s ease; /* Smooth transition */
-        cursor: pointer; /* Change cursor to pointer */
-    }
-
-    .img-clickable.enlarged {
-        transform: scale(1.2); /* Scale the image */
-        z-index: 10; /* Bring it to the front */
-    }
-</style>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // JavaScript to handle the click event
-        const images = document.querySelectorAll('.img-clickable');
+        const searchInput = document.querySelector('input[name="search"]');
+        const eventItems = document.querySelectorAll('.fruite-item');
+        const filterOptions = document.querySelectorAll('input[name="filter"]');
+        const sortingSelect = document.getElementById('sorting');
 
-        images.forEach(image => {
-            image.addEventListener('click', () => {
-                // Remove the 'enlarged' class from all images
-                images.forEach(img => img.classList.remove('enlarged'));
-                
-                // Add the 'enlarged' class to the clicked image
-                image.classList.toggle('enlarged');
+        // Function to filter and sort events
+        const filterAndSortEvents = () => {
+            const query = searchInput.value.toLowerCase(); // Get the search query
+            const selectedFilter = Array.from(filterOptions).find(option => option.checked).value; // Get selected filter option
+
+            // Filter events based on search input and selected filter
+            eventItems.forEach(item => {
+                const title = item.querySelector('h4').textContent.toLowerCase();
+                const description = item.querySelector('p').textContent.toLowerCase();
+                const location = item.querySelector('p.text-muted.mb-0:nth-of-type(2)').textContent.toLowerCase(); // Get location from the second <p>
+
+                let isVisible = false; // Default visibility status
+
+                // Check based on selected filter
+                if (selectedFilter === 'title' && (title.includes(query) || description.includes(query))) {
+                    isVisible = true; // Show if title matches
+                } else if (selectedFilter === 'location' && location.includes(query)) {
+                    isVisible = true; // Show if location matches
+                }
+
+                // Show or hide item based on visibility status
+                item.style.display = isVisible ? '' : 'none';
             });
-        });
+
+            // Sort visible items
+            const visibleItems = Array.from(eventItems).filter(item => item.style.display !== 'none');
+            if (sortingSelect.value !== 'nothing') {
+                const sortBy = sortingSelect.value; // Get selected sorting option
+                visibleItems.sort((a, b) => {
+                    const aValue = (sortBy === 'location') ? a.dataset[sortBy] : a.querySelector('h4').textContent.toLowerCase(); // Get title for sorting
+                    const bValue = (sortBy === 'location') ? b.dataset[sortBy] : b.querySelector('h4').textContent.toLowerCase(); // Get title for sorting
+                    return aValue.localeCompare(bValue); // Compare values
+                });
+
+                // Append sorted items back to the container
+                const container = document.getElementById('event-container');
+                visibleItems.forEach(item => container.appendChild(item));
+            }
+        };
+
+        // Event listeners for search input, filter options, and sorting select
+        searchInput.addEventListener('input', filterAndSortEvents);
+        filterOptions.forEach(option => option.addEventListener('change', filterAndSortEvents));
+        sortingSelect.addEventListener('change', filterAndSortEvents);
     });
 </script>
-
-
 
 
 <!-- jQuery for Deletion Logic -->

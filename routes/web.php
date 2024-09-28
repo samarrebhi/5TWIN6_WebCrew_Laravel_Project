@@ -52,6 +52,9 @@ Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('updat
 });
     Route::get('/events', [EventController::class, 'index'])->name('event.listevent');
     Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details'); // This line is correct
+
+Route::get('/event/{id}/export-pdf', [EventController::class, 'exportPdf'])->name('event.exportPdf');
+
 Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');

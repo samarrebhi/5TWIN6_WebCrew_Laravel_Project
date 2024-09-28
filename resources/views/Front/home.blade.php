@@ -72,9 +72,10 @@
                                 <i class="fas fa-recycle fa-3x text-white"></i>
                             </div>
                             <div class="featurs-content text-center">
-                            <a href="" title="Check Event List">
+                            <a href="{{ route('event.listevent') }}" title="Check Event List">
     <h5>Evenement Collecte</h5>
 </a>
+
 
                                 <p class="mb-0"> Lets users create and join waste collection events with key details like title, date, and location.</p>
                             </div>
@@ -1013,3 +1014,4 @@
 
 
 @endsection 
+

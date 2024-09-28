@@ -1,6 +1,8 @@
 @extends('Back/dashboard')
 
-@section('content') 
+@section('content') <head>
+<!-- Add this in your <head> section -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script></head>
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <h1 class="text-center mt-1 mb-3" style="color: green;">Add Event</h1>

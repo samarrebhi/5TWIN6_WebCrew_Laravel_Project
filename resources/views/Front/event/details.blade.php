@@ -19,6 +19,7 @@
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                 <li class="breadcrumb-item active text-white">Details Available</li>
+
             </ol>
         </div>
 <div class="container d-flex justify-content-center align-items-center min-vh-100 mt-5" style="padding-top: px;"> <!-- Increased padding-top -->
@@ -38,9 +39,16 @@
                 <p class="mb-3" style="margin-top: 20px;"><strong>Date:</strong> {{ $event->date }}</p> <!-- Date -->
                 <p class="mb-3" style="margin-top: 20px;"><strong>Time:</strong> {{ $event->heure }}</p> <!-- Time -->
                 <div class="d-flex mb-4">
-                    <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Participate
-                    </a>
+                    
+                    <div class="d-flex mb-4">
+    <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+        <i class="fa fa-shopping-bag me-2 text-primary"></i> Participate
+    </a>
+    <a href="{{ route('event.exportPdf', $event->id) }}" class="btn btn-success rounded-pill px-4 py-2 mb-4 text-white">
+        <i class="fa fa-file-pdf me-2"></i> Export PDF
+    </a>
+</div>
+
                 </div>
             </div>
         </div>

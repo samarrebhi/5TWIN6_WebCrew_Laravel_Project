@@ -28,12 +28,10 @@ class Handler extends ExceptionHandler
     {
         // Check if the exception is a NotFoundHttpException
         if ($exception instanceof NotFoundHttpException) {
-            // Log the error for debugging
             \Log::error('Not Found Exception: ' . $exception->getMessage());
-
-            // Return the 404 view with a 404 status code
             return response()->view('404', [], 404);
         }
+        
 
         // Call the parent render method for other exceptions
         return parent::render($request, $exception);
