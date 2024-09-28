@@ -13,14 +13,14 @@ return new class extends Migration
      */
  public function up()
     {
-     /*   Schema::create('categories', function (Blueprint $table) { // Use 'categories' here
+        Schema::create('categories', function (Blueprint $table) { // Use 'categories' here
             $table->id();
             $table->string('name');
             $table->integer('quantity');
             $table->string('state');
             $table->string('environmental_impact');
             $table->timestamps();
-        });*/
+        });
     }
 
     /**

@@ -31,7 +31,7 @@ class EvenementCollecteController extends Controller
         }
 
         // Paginate the filtered results
-        $evenements = $query->paginate(10);
+        $evenements = $query->paginate();
 
         if ($request->ajax()) {
             return view('evenement_collecte.partials.event_table', compact('evenements'));
@@ -39,6 +39,7 @@ class EvenementCollecteController extends Controller
 
         return view('evenement_collecte.list', compact('evenements'));
     }
+
 
     public function create()
     {
