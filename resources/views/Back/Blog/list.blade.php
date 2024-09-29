@@ -37,66 +37,77 @@
                 </div>
 
                 @if(Session::has('success'))
-                <div class="alert alert-success">
-                  {{ Session::get('success') }}
-                </div>
-                @endif
-                <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
-                  
-                        <h5 class="card-header m-0 me-2 pb-3">Blogs</h5>
-                        <!-- <div class="card border-0 shadow-lg">
-                            <div class="card-body"> -->
-                        <table class="table table-striped table-hover mx-auto col-lg-12" style="width: 80%;">
-                        <tr>
-                                <th>ID</th>
-                                <th>Image</th>
-                                <th>Titre</th>
-                                <th>Texte</th>
-                                <th>Support</th>
-                                <th>Action</th>
+    <div class="alert alert-success">
+        {{ Session::get('success') }}
+    </div>
+@endif
 
-                            </tr>
-                            
-                            @if($blogs->isNotEmpty())
-                            @foreach ( $blogs as $blog )
-                            <tr valign="middle">
-                                <td>{{ $blog->id }}</td>
-                                <td>
-                                  @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.
-                                  $blog->image))
-                                  <img src="{{ url('uploads/blogs/'.$blog->image) }}" alt="" height="40" 
-                                  width="40" class="rounded-circle">
-                                  @else
-                                  <img src="{{ url('back/assets/img/no-image.jpg') }}" alt="" height="40" 
-                                  width="40" class="rounded-circle">
-                                  @endif
-                                </td>
-                                <td>{{ $blog->titre }}</td>
-                                <td>{{ $blog->texte }}</td>
-                                <td>{{ $blog->support }}</td>
-                                <td>
-                                    <a href="{{ route('admin.blog.edit',$blog->id) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                    <a href="#" onclick="deleteBlog({{ $blog->id }})" class="btn btn-danger btn-sm">Supprimer</a>
-                                    <form id="blog-edit-action-{{ $blog->id }}" action="{{ route('admin.blog.destroy' ,$blog->id) }}" method="post">
-                                      @csrf
-                                      @method('delete')
-                                    </form>  
-                                </td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                              <td colspan="6" class="text-center">Aucun blog trouvé</td>
-                            </tr>
-                            @endif
-                        </table>
-               
-                        <div class="mt-3">
-                  {{ $blogs->links() }}
-                </div>
-                </div>
+<div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
+    <h5 class="card-header m-0 me-2 pb-3">Blogs</h5>
+    <table class="table table-striped table-hover mx-auto col-lg-12" style="width: 80%;">
+        <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Titre</th>
+            <th>Texte</th>
+            <th>Support</th>
+            <th>Likes</th>
+            <th>Actions</th>
+        </tr>
 
-                
+        @if($blogs->isNotEmpty())
+            @foreach ($blogs as $blog)
+            <tr valign="middle">
+                <td>{{ $blog->id }}</td>
+                <td>
+                    @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.$blog->image))
+                    <img src="{{ url('uploads/blogs/'.$blog->image) }}" alt="" height="40" width="40" class="rounded-circle">
+                    @else
+                    <img src="{{ url('back/assets/img/no-image.jpg') }}" alt="" height="40" width="40" class="rounded-circle">
+                    @endif
+                </td>
+                <td>
+                    <?php $titreWords = explode(' ', $blog->titre); ?>
+                    {{ implode(' ', array_slice($titreWords, 0, 2)) }}{{ count($titreWords) > 2 ? '...' : '' }}
+                </td>
+                <td>
+                    <?php $texteWords = explode(' ', $blog->texte); ?>
+                    {{ implode(' ', array_slice($texteWords, 0, 2)) }}{{ count($texteWords) > 2 ? '...' : '' }}
+                </td>
+                <td>
+                    <?php $supportWords = explode(' ', $blog->support); ?>
+                    {{ implode(' ', array_slice($supportWords, 0, 2)) }}{{ count($supportWords) > 2 ? '...' : '' }}
+                </td>
+                <td>{{ $blog->likes_count }}</td>
+                <td>
+                   <a href="{{ route('admin.blog.show', $blog->id) }}" class="btn btn-info btn-sm" title="Détails">
+                        <i class="fa fa-eye"></i> <!-- Icône de loupe pour les détails -->
+                    </a>
+                    <a href="{{ route('admin.blog.edit', $blog->id) }}" class="btn btn-primary btn-sm" title="Modifier">
+                        <i class="fa fa-pencil-alt"></i> <!-- Icône de crayon pour modifier -->
+                    </a>
+                    <a href="#" onclick="deleteBlog({{ $blog->id }})" class="btn btn-danger btn-sm" title="Supprimer">
+                        <i class="fa fa-trash-alt"></i> <!-- Icône de poubelle pour supprimer -->
+                    </a>
+                    <form id="blog-edit-action-{{ $blog->id }}" action="{{ route('admin.blog.destroy', $blog->id) }}" method="post" style="display: none;">
+                        @csrf
+                        @method('delete')
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        @else
+        <tr>
+            <td colspan="7" class="text-center">Aucun blog trouvé</td>
+        </tr>
+        @endif
+    </table>
+
+    <div class="mt-3">
+        {{ $blogs->links() }}
+    </div>
+</div>
+
 
 
                 </div>

@@ -113,4 +113,12 @@ class BlogController extends Controller
         // $request->session()->flash('success','Blog supprimé avec succée');
         return redirect()->route('admin.listBlog')->with('success','Blog supprimé avec succée');
     }
+
+    
+
+    public function show($id) {
+        $blog = Blog::findOrFail($id);
+        return view('Back.Blog.showblog', compact('blog'));
+    }
+    
 }

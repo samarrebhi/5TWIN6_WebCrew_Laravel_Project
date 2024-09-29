@@ -38,72 +38,57 @@
             </div>
         </div>
 
-<div class="container-fluid fruite py-5">
-            <div class="container py-5">
-                <div class="tab-class text-center">
-                    <div class="row g-4">
-                        <div class="col-lg-4 text-start">
-                            <h1>Our Blogs</h1>
+
+        <div class="container-fluid testimonial py-5">
+    <div class="container py-5">
+        <div class="testimonial-header text-center">
+            <h4 class="text-primary">Our Blogs</h4>
+            <h1 class="display-5 mb-5 text-dark">Latest Blog Posts</h1>
+        </div>
+        
+        <!-- Carousel pour les blogs -->
+        <div class="owl-carousel testimonial-carousel">
+            @if($blogs->isNotEmpty())
+                @foreach ($blogs as $blog)
+                <div class="testimonial-item img-border-radius bg-light rounded p-4" style="height: 350px;"> <!-- Hauteur fixe définie ici -->
+                    <div class="position-relative" style="height: 100%;">
+                        <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                        <div class="mb-4 pb-4 border-bottom border-secondary">
+                            <!-- Titre du blog -->
+                            <h4 class="text-dark" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->titre }}</h4> <!-- Titre limité en hauteur -->
+                            <!-- Texte du blog -->
+                            <p class="mb-0" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ Str::limit($blog->support, 100) }}</p> <!-- Texte limité en hauteur -->
                         </div>
-                       
-                    </div>
+                        
+                        <div class="d-flex align-items-center flex-nowrap">
+                            <div class="bg-secondary rounded" style="flex-shrink: 0;">
+                                <!-- Vérification et affichage de l'image du blog -->
+                                @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.$blog->image))
+                                <img src="{{ url('uploads/blogs/'.$blog->image) }}" class="img-fluid rounded" style="width: 200px; height: 200px; object-fit: cover;" alt="">
+                                @else
+                                <img src="{{ url('back/assets/img/no-image.jpg') }}" class="img-fluid rounded" style="width: 200px; height: 200px; object-fit: cover;" alt="">
+                                @endif
+                            </div>
+                            
+                            <div class="ms-4 d-block" style="flex-grow: 1;">
+                                <p class="m-0 pb-3" style="height: 150px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->texte }}</p> <!-- Texte limité en hauteur -->
 
-
-
-
-
-                 @if(Session::has('success'))
-<div class="alert alert-success">
-    {{ Session::get('success') }}
-</div>
-@endif
-
-<div class="tab-content">
-    <div id="tab-5" class="tab-pane fade show p-0 active">
-        <div class="row g-4">
-            <div class="col-lg-12">
-                <div class="row g-4">
-                    @if($blogs->isNotEmpty())
-                        @foreach ($blogs as $blog)
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="rounded position-relative fruite-item h-100">
-                                <div class="fruite-img" style="height: 200px; overflow: hidden;">
-                                    <!-- Vérification et affichage de l'image du blog -->
-                                    @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.$blog->image))
-                                    <img src="{{ url('uploads/blogs/'.$blog->image) }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="">
-                                    @else
-                                    <img src="{{ url('back/assets/img/no-image.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="">
-                                    @endif
-                                </div>
-                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                    {{ $blog->titre }}
-                                </div>
-                                <div class="p-4 border border-secondary border-top-0 rounded-bottom d-flex flex-column justify-content-between">
-                                    <h4 style="height: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $blog->titre }}</h4>
-                                    <p style="height: 70px; overflow: hidden;">{{ Str::limit($blog->texte, 100) }}</p>
-
-                                    <!-- Bouton Like -->
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary like-button" data-liked="false">
-                                        <i class="fa fa-thumbs-up me-2"></i> J'aime
-                                    </a>
-                                </div>
+                                <!-- Bouton Like avec Compteur -->
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary like-button" data-liked="false" data-id="{{ $blog->id }}">
+                                    <i class="fa fa-thumbs-up me-2"></i> (<span class="like-count">{{ $blog->likes_count }}</span>)
+                                </a>
                             </div>
                         </div>
-                        @endforeach
-                    @else
-                        <div class="col-3">
-                            <p class="text-center">Aucun blog trouvé</p>
-                        </div>
-                    @endif
+                    </div>
                 </div>
-            </div>
+                @endforeach
+            @else
+                <div class="col-3">
+                    <p class="text-center">Aucun blog trouvé</p>
+                </div>
+            @endif
         </div>
     </div>
-</div>
-
-<!-- Pagination -->
-<div class="mt-3">
-    {{ $blogs->links() }}
 </div>
 
 <script>
@@ -113,18 +98,63 @@
             e.preventDefault(); // Empêche le lien de naviguer
 
             const isLiked = this.getAttribute('data-liked') === 'true';
-            // Change la couleur du bouton en fonction de l'état
-            if (isLiked) {
-                this.classList.remove('bg-primary', 'text-white'); // Retire les classes pour le like
-                this.classList.add('text-primary'); // Rétablit l'état normal
-                this.setAttribute('data-liked', 'false'); // Met à jour l'état
-            } else {
-                this.classList.add('bg-primary', 'text-white'); // Ajoute les classes pour le like
-                this.setAttribute('data-liked', 'true'); // Met à jour l'état
+            const blogId = this.getAttribute('data-id');
+            const likeCountElement = this.querySelector('.like-count');
+
+            // Effectuer une requête AJAX pour ajouter ou retirer le like
+            fetch(`/blog/${blogId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Assurez-vous d'inclure le token CSRF
+                },
+                body: JSON.stringify({ liked: !isLiked }), // Indiquez si le like est ajouté ou retiré
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mettre à jour le compteur de likes
+                    likeCountElement.textContent = data.likes_count;
+
+                    // Changer la couleur du bouton en fonction de l'état
+                    if (isLiked) {
+                        this.classList.remove('bg-primary', 'text-white'); // Retire les classes pour le like
+                        this.classList.add('text-primary'); // Rétablit l'état normal
+                        this.setAttribute('data-liked', 'false'); // Met à jour l'état
+                    } else {
+                        this.classList.add('bg-primary', 'text-white'); // Ajoute les classes pour le like
+                        this.setAttribute('data-liked', 'true'); // Met à jour l'état
+                    }
+                } else {
+                    console.error('Échec de l\'ajout du "J\'aime"');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
+
+    // Initialiser le carousel Owl
+    $(document).ready(function(){
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 30,
+            nav: true,
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
             }
         });
     });
 </script>
+
 
 
 

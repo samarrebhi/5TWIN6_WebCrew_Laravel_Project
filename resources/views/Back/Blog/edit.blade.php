@@ -53,21 +53,29 @@
                             class="form-control">{{ old('support',$blog->support)}}</textarea>
                           </div>
                           <div class="mb-3">
-                            <label for="image" class="form-label"></label>
-                            <input type="file" name="image" class="@error('image') is-invalid @enderror ">
-                            @error('image')
-                            <p class="invalid-feedback">{{ $message }}</p>
-                            @enderror
+    <label for="upload" class="btn btn-secondary me-2 mb-4" tabindex="0"> <!-- Bouton en gris -->
+        <span class="d-none d-sm-block">Upload new photo</span>
+        <i class="bx bx-upload d-block d-sm-none"></i>
+        <input
+            type="file"
+            id="upload"
+            name="image"  
+            class="account-file-input @error('image') is-invalid @enderror"
+            hidden
+            accept="image/png, image/jpeg"
+        />
+    </label>
+    @error('image')
+    <p class="invalid-feedback">{{ $message }}</p>
+    @enderror
 
-                            <div class="pt-3">
-                            @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.
-                                  $blog->image))
-                                  <img src="{{ url('uploads/blogs/'.$blog->image) }}" alt="" height="100" 
-                                  width="100" >
-                            @endif
-                            </div>
+    <div class="pt-3">
+        @if($blog->image != '' && file_exists(public_path().'/uploads/blogs/'.$blog->image))
+            <img src="{{ url('uploads/blogs/'.$blog->image) }}" alt="" height="100" width="100">
+        @endif
+    </div>
+</div>
 
-                          </div>
 
 
                          </div>

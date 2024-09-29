@@ -33,7 +33,8 @@ Route::put('admin/listBlog/{blog}', [BlogController::class, 'update'])->name('ad
 Route::delete('admin/listBlog/{blog}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
 
 Route::get('home/blogs', [BlogControllerFront::class, 'indexFront'])->name('Front.Blog.list');
-
+Route::post('/blog/{id}/like', [BlogControllerFront::class, 'likeBlog']);
+Route::get('admin/listBlog/{blog}/show', [BlogController::class, 'show'])->name('admin.blog.show');
 
 
 

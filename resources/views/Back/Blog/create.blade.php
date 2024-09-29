@@ -11,9 +11,10 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-12">
                         <div class="card-body">
+                     
                          
 
-                          <a href="{{ route('admin.listBlog')}}" class="btn btn-sm btn-outline-primary">Aller Vers La Liste</a>
+                          <a href="{{ route('admin.listBlog')}}" class="btn btn-sm btn-outline-primary"><i class="bx bx-list-ul me-1"></i>Aller Vers La Liste</a>
                         </div>
                       </div>
                     </div>
@@ -52,12 +53,22 @@
                             class="form-control">{{ old('support')}}</textarea>
                           </div>
                           <div class="mb-3">
-                            <label for="image" class="form-label"></label>
-                            <input type="file" name="image" class="@error('image') is-invalid @enderror ">
-                            @error('image')
-                            <p class="invalid-feedback">{{ $message }}</p>
-                            @enderror
-                          </div>
+    <label for="upload" class="btn btn-secondary me-2 mb-4" tabindex="0">
+        <span class="d-none d-sm-block">Upload new photo</span>
+        <i class="bx bx-upload d-block d-sm-none"></i>
+        <input
+            type="file"
+            id="upload"
+            name="image"
+            class="account-file-input @error('image') is-invalid @enderror"
+            hidden
+            accept="image/png, image/jpeg"
+        />
+    </label>
+    @error('image')
+    <p class="invalid-feedback">{{ $message }}</p>
+    @enderror
+</div>
 
 
                          </div>
