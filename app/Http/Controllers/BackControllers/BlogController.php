@@ -46,7 +46,7 @@ class BlogController extends Controller
                 $blog->save();
             }
 
-            $request->session()->flash('success','Blog ajouté avec succée');
+            $request->session()->flash('success','Blog ajouté avec succés');
             return redirect()->route('admin.listBlog');
 
         }else{
@@ -96,7 +96,7 @@ class BlogController extends Controller
                 File::delete(public_path().'/uploads/blogs/'.$oldImage);
             }
 
-            $request->session()->flash('success','Blog changé avec succée');
+            $request->session()->flash('success','Blog changé avec succés');
             return redirect()->route('admin.listBlog');
 
         }else{
@@ -110,8 +110,8 @@ class BlogController extends Controller
         File::delete(public_path().'/uploads/blogs/'.$blog->image);
         $blog->delete();
 
-        // $request->session()->flash('success','Blog supprimé avec succée');
-        return redirect()->route('admin.listBlog')->with('success','Blog supprimé avec succée');
+        $request->session()->flash('success','Blog supprimé avec succés');
+        return redirect()->route('admin.listBlog');
     }
 
     

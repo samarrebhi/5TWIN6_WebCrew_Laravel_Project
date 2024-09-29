@@ -57,6 +57,9 @@
 
     <!-- Page CSS -->
 
+<!-- Bootstrap CSS -->
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -509,7 +512,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../back/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{asset('back/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -518,7 +521,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../back/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{asset('back/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -578,24 +581,29 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../back/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../back/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../back/assets/vendor/js/bootstrap.js"></script>
-    <script src="../back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{asset('back/assets/vendor/libs/jquery/jquery.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/libs/popper/popper.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/js/bootstrap.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
 
-    <script src="../back/assets/vendor/js/menu.js"></script>
+    <script src="{{asset('back/assets/vendor/js/menu.js')}}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../back/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="{{asset('back/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 
     <!-- Main JS -->
-    <script src="../back/assets/js/main.js"></script>
+    <script src="{{asset('back/assets/js/main.js')}}"></script>
 
     <!-- Page JS -->
-    <script src="../back/assets/js/dashboards-analytics.js"></script>
+    <script src="{{asset('back/assets/js/dashboards-analytics.js')}}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+    <!-- Bootstrap JS (avec Popper) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
