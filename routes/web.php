@@ -31,21 +31,21 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
     Route::get('/{id}/edit', [EvenementCollecteController::class, 'edit'])->name('edit');
     Route::get('/{id}', [EvenementCollecteController::class, 'show'])->name('evenement_collecte.showDet');
 
-   
-   
+
+
 
 
 
 Route::put('/{id}', [EvenementCollecteController::class, 'update'])->name('update');
 
     Route::delete('/{id}', [EvenementCollecteController::class, 'destroy'])->name('destroy');
-    
 
 
 
-    
+
+
 });
-  
+
 
 Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
@@ -62,12 +62,25 @@ Route::resource('/center',CenterController::class);
 
 
 
+
+Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+Route::get('/center', [CenterController::class, 'index'])->name('center.index');
+Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
+Route::resource('/center',CenterController::class);
+/////routees for sondages entity
+
 Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
     'index' => 'sondage.index',
     'create' => 'sondage.create.form',
     'store' => 'sondage.store',
+
+]);
+Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
+    'index' => 'sondage.listing',
+'show'=>'sondage.details',
 ]);
 
 
 Route::resource('Categories', CategoryController::class);
+
 

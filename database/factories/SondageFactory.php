@@ -19,7 +19,7 @@ class SondageFactory extends Factory
         return [
 
             'title' => $this->faker->text(10), // Generates a title with 3 words
-            'description' => $this->faker->text(100), // Description up to 100 characters
+            'description' => $this->faker->text(1000), // Description up to 100 characters
             'questions' => $this->generateRandomQuestions(), // Random questions generated
             'start_date' => $this->faker->date('Y-m-d', strtotime('+1 week')),  // Random start date within the next week
             'end_date' => $this->faker->date('Y-m-d', strtotime('+1 month')), // Random end date within a month after start
