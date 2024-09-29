@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -13,8 +14,28 @@ class Handler extends ExceptionHandler
      * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
      */
     protected $levels = [
-        //
+        // You can define log levels for specific exceptions here
     ];
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Throwable $exception)
+    {
+        // Check if the exception is a NotFoundHttpException
+        if ($exception instanceof NotFoundHttpException) {
+            \Log::error('Not Found Exception: ' . $exception->getMessage());
+            return response()->view('404', [], 404);
+        }
+        
+
+        // Call the parent render method for other exceptions
+        return parent::render($request, $exception);
+    }
 
     /**
      * A list of the exception types that are not reported.
@@ -22,7 +43,7 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        //
+        // Define exceptions that should not be reported here
     ];
 
     /**
@@ -44,7 +65,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            // You can log specific exceptions here if needed
         });
     }
 }

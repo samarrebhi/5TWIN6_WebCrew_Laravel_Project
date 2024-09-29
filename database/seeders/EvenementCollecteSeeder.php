@@ -9,7 +9,7 @@ class EvenementCollecteSeeder extends Seeder
 {
     public function run()
     {
-        EvenementCollecte::factory()->count(50)->create(); // Remplacez 50 par le nombre souhaité
+       // EvenementCollecte::factory()->count(50)->create(); 
     }
 }
 

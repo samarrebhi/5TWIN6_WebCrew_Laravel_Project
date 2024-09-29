@@ -6,6 +6,14 @@
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
  }
+ .is-invalid {
+    border-color: red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 0.875rem;
+}
 
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
@@ -220,7 +228,7 @@
 
 .page-header {
     position: relative;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../img/cart-page-header-img.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../img/raghav.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -386,11 +394,19 @@
 /*** vesitable End ***/
 
 
-/*** Banner Section Start ***/
+/*** center Section Start ***/
 .banner .banner-btn:hover {
     background: var(--bs-primary);
 }
-/*** Banner Section End ***/
+.centersection {
+    background-color: rgb(207, 228, 207);
+   
+}
+.button{
+    background-color:rgb(137, 171, 137);
+}
+/*** center Section End ***/
+
 
 
 /*** Facts Start ***/

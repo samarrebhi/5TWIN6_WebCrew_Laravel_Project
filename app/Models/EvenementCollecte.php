@@ -12,4 +12,5 @@ class EvenementCollecte extends Model
     protected $fillable = [
         'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image'
     ];
+
 }
