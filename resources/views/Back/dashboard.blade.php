@@ -17,7 +17,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="../back/assets/"
+  data-assets-path="{{asset('back/assets/')}}"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../back/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{{asset('back/assets/img/favicon/favicon.ico')}}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -397,17 +397,12 @@
 
             <!-- Extended components -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-copy"></i>
-                <div data-i18n="Extended UI">Blog</div>
+              <a href="{{ route('admin.listBlog') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Blog</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                    <div data-i18n="Perfect Scrollbar">Liste</div>
-                  </a>
-                </li>
-              </ul>
             </li>
+            
 
             <li class="menu-item">
               <a href="icons-boxicons.html" class="menu-link">
@@ -527,7 +522,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../back/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{asset('back/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -536,7 +531,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../back/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{asset('back/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -596,22 +591,22 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../back/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../back/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../back/assets/vendor/js/bootstrap.js"></script>
-    <script src="../back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{asset('back/assets/vendor/libs/jquery/jquery.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/libs/popper/popper.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/js/bootstrap.js')}}"></script>
+    <script src="{{asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
 
-    <script src="../back/assets/vendor/js/menu.js"></script>
+    <script src="{{asset('back/assets/vendor/js/menu.js')}}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../back/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="{{asset('back/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 
     <!-- Main JS -->
-    <script src="../back/assets/js/main.js"></script>
+    <script src="{{asset('back/assets/js/main.js')}}"></script>
 
     <!-- Page JS -->
-    <script src="../back/assets/js/dashboards-analytics.js"></script>
+    <script src="{{asset('back/assets/js/dashboards-analytics.js')}}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

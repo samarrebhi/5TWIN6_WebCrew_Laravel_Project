@@ -26,7 +26,7 @@ class BlogController extends Controller
             'titre' => 'required',
             'texte' => 'required',
             'image' => 'sometimes|image:gif,png,jpeg,jpg',
-            'support' => 'sometimes',
+            'support' => 'required',
         ]);
 
         if( $validator->passes() ){
@@ -72,7 +72,7 @@ class BlogController extends Controller
             'titre' => 'required',
             'texte' => 'required',
             'image' => 'sometimes|image:gif,png,jpeg,jpg',
-            'support' => 'sometimes',
+            'support' => 'required',
         ]);
 
         if( $validator->passes() ){
