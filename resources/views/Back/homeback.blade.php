@@ -12,18 +12,16 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">Congratulations  🎉</h5>
+                          <h5 class="card-title text-primary">WELCOME 🎉</h5>
                           <p class="mb-4">
-                           <span class="fw-bold"></span>Kudos to you for contributing to recycling and protecting our planet!
+                           <span class="fw-bold"></span>Welcome to your dashboard ! Manage your recycling centers and events efficiently.
                           </p>
-
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
                         <div class="card-body pb-0 px-0 px-md-4">
                           <img
-                            src="../back/assets/img/illustrations/man-with-laptop-light.png"
+                            src="../back/assets/img/illustrations/recyclage.jpg"
                             height="140"
                             alt="View Badge User"
                             data-app-dark-img="illustrations/man-with-laptop-dark.png"
