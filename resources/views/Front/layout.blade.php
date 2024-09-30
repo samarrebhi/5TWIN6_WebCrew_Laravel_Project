@@ -107,8 +107,8 @@
             <div class="row g-4">
                 <div class="col-lg-3">
                     <a href="#">
-                        <h1 class="text-primary mb-0">Fruitables</h1>
-                        <p class="text-secondary mb-0">Fresh products</p>
+                        <h1 class="text-primary mb-0">WebCrew</h1>
+                        <p class="text-secondary mb-0">Eco_Friendly</p>
                     </a>
                 </div>
                 <div class="col-lg-6">
