@@ -207,6 +207,33 @@
 
                   </ul>
               </li>
+
+
+
+              
+              <li class="menu-item active">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-category"></i>
+        <div data-i18n="Layouts">Waste Categories Management</div>
+    </a>
+    
+    <ul class="menu-sub">
+        <!-- List Waste Categories -->
+        <li class="menu-item">
+            <a href="{{ route('Categories.index') }}" class="menu-link">
+                <div data-i18n="Without menu">List of Waste Categories</div>
+            </a>
+        </li>
+
+        <!-- Create New Waste Category -->
+        <li class="menu-item">
+            <a href="{{ route('Categories.create') }}" class="menu-link">
+                <div data-i18n="Without navbar">Create Waste Category</div>
+            </a>
+        </li>
+    </ul>
+</li>
+
               <li class="menu-item">
                   <a href="{{ route('centers.index') }}" class="menu-link">
                       <i class="menu-icon tf-icons bx bx-collection"></i>

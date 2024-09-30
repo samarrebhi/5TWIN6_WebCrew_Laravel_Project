@@ -106,6 +106,9 @@ Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontCon
 
 
 Route::resource('Categories', CategoryController::class);
+Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
+Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
+Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
 
 
 
