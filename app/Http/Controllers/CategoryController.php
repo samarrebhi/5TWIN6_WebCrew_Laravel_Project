@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 
 use Illuminate\Http\Request;
-
 class CategoryController extends Controller
 {
     /**
@@ -16,7 +15,7 @@ class CategoryController extends Controller
     {
         $Categories=Category::all();
         return view('Front.Category.indexC',compact('Categories'));    }
-
+     
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('Front.Category.createC');
+        return view('Back.Category.createC');
     }
 
     /**
@@ -121,4 +120,15 @@ class CategoryController extends Controller
         return redirect()->route('Categories.index')->with('error', 'Category not found');
     }
     
+
+    public function showCategories()
+    {
+        $Categories=Category::all();
+        return view('Back.Category.indexC',compact('Categories'));    }  
+        
+        
+        public function showdetails()
+        {
+            $Categories=Category::all();
+            return view('Back.Category.indexC',compact('Categories'));    }    
 }

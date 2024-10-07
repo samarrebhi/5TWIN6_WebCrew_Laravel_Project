@@ -153,7 +153,7 @@
             </div>
         </div>
 
-        <div class="row g-4" id="event-container">
+        <div class=" row g-4" id="event-container">
             @foreach($evenements as $evenement)
             <div class="col-md-6 col-lg-4 fruite-item" data-title="{{ $evenement->titre }}" data-location="{{ $evenement->lieu }}">
                 <div class="rounded position-relative">
@@ -269,8 +269,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Why People Like us!</h4>
-                            <p class="mb-4">typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
+                       
                             <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
                         </div>
                     </div>
@@ -290,10 +289,7 @@
                             <h4 class="text-light mb-3">Account</h4>
                             <a class="btn-link" href="">My Account</a>
                             <a class="btn-link" href="">Shop details</a>
-                            <a class="btn-link" href="">Shopping Cart</a>
-                            <a class="btn-link" href="">Wishlist</a>
-                            <a class="btn-link" href="">Order History</a>
-                            <a class="btn-link" href="">International Orders</a>
+                         
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">

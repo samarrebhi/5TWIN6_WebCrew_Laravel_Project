@@ -112,41 +112,42 @@ class EvenementCollecteController extends Controller
     }
     public function update(Request $request, $id)
     {
-        // Validate the incoming request
+        // Validation
         $request->validate([
-            'titre' => '',
-            'description' => '',
-            'lieu' => '',
-            'date' => '',
-            'heure' => '',
-            'image' => '',
+            'titre' => 'required',
+            'description' => 'required',
+            'lieu' => 'required',
+            'date' => 'required',
+            'heure' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
     
-        // Find the event by ID
-        $evenementCollecte = EvenementCollecte::findOrFail($id);
+        // Récupérer l'événement
+        $evenement = EvenementCollecte::findOrFail($id);
     
-        // Update only fields that were modified
-        $evenementCollecte->titre = $request->input('titre');
-        $evenementCollecte->description = $request->input('description');
-        $evenementCollecte->lieu = $request->input('lieu');
-        $evenementCollecte->date = $request->input('date');
-        $evenementCollecte->heure = $request->input('heure');
+        // Mise à jour des champs
+        $evenement->titre = $request->input('titre');
+        $evenement->description = $request->input('description');
+        $evenement->lieu = $request->input('lieu');
+        $evenement->date = $request->input('date');
+        $evenement->heure = $request->input('heure');
     
-        // Handle image upload if a new image is provided
+        // Si une nouvelle image est téléchargée, remplacer l'ancienne
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
-            $this->deleteOldImage($evenementCollecte->image);
-            // Upload the new image
-            $evenementCollecte->image = $this->uploadImage($request->file('image'));
+            // Supprimer l'ancienne image
+            $this->deleteOldImage($evenement->image);
+    
+            // Enregistrer la nouvelle image
+            $evenement->image = $this->uploadImage($request->file('image'));
         }
     
-        // Save the updated event
-        $evenementCollecte->save();
+        // Sauvegarder l'événement
+        $evenement->save();
     
-        // Redirect back to the list view with a success message
+        // Rediriger avec succès
         return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
     }
-
+    
 
 
     public function show($id)

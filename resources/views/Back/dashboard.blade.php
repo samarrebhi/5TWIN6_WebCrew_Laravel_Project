@@ -107,13 +107,13 @@
                           <mask id="mask-2" fill="white">
                             <use xlink:href="#path-1"></use>
                           </mask>
-                          <use fill="#696cff" xlink:href="#path-1"></use>
+                          <use fill="#05500e" xlink:href="#path-1"></use>
                           <g id="Path-3" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-3"></use>
+                            <use fill="#05500e" xlink:href="#path-3"></use>
                             <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
                           </g>
                           <g id="Path-4" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-4"></use>
+                            <use fill="#05500e" xlink:href="#path-4"></use>
                             <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
                           </g>
                         </g>
@@ -121,7 +121,7 @@
                           id="Triangle"
                           transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
                         >
-                          <use fill="#696cff" xlink:href="#path-5"></use>
+                          <use fill="#05500e" xlink:href="#path-5"></use>
                           <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
                         </g>
                       </g>
@@ -207,6 +207,33 @@
 
                   </ul>
               </li>
+
+
+
+              
+              <li class="menu-item active">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-category"></i>
+        <div data-i18n="Layouts">Waste Categories Management</div>
+    </a>
+    
+    <ul class="menu-sub">
+        <!-- List Waste Categories -->
+        <li class="menu-item">
+            <a href="{{ route('Categories.index') }}" class="menu-link">
+                <div data-i18n="Without menu">List of Waste Categories</div>
+            </a>
+        </li>
+
+        <!-- Create New Waste Category -->
+        <li class="menu-item">
+            <a href="{{ route('Categories.create') }}" class="menu-link">
+                <div data-i18n="Without navbar">Create Waste Category</div>
+            </a>
+        </li>
+    </ul>
+</li>
+
               <li class="menu-item">
                   <a href="{{ route('centers.index') }}" class="menu-link">
                       <i class="menu-icon tf-icons bx bx-collection"></i>

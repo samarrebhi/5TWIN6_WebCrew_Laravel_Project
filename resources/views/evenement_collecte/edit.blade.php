@@ -65,16 +65,34 @@
                             <div class="invalid-feedback">Please enter a valid time.</div>
                             <div class="text-danger" id="heureRequired" style="display:none;">Please enter a valid time.</div>
                         </div>
+<!-- Affichage de l'image actuelle -->
+<!-- Image actuelle -->
+<!-- Image actuelle -->
+@if($evenement->image)
+        <div class="mb-3">
+            <label for="current_image" class="form-label">Image actuelle</label>
+            <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" alt="Image actuelle" style="max-width: 100%; height: auto;">
+        </div>
+    @endif
 
-                        <!-- Image Field (optional) -->
-                        <div class="mb-1">
-                            <label class="form-label" for="image">Image (optional)</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="image" name="image" accept="image/*">
-                            
-                                <div class="invalid-feedback">Please select a valid image file (jpg, jpeg, png, gif).</div>
-                            </div>
-                        </div>
+    <!-- Champ pour télécharger une nouvelle image (optionnel) -->
+    <div class="mb-3">
+        <label for="image" class="form-label">Changer l'image (facultatif)</label>
+        <input type="file" name="image" class="form-control" id="image">
+    </div>
+<!-- Script pour prévisualisation de l'image -->
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            const preview = document.getElementById('preview');
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
 
                         <!-- Submit Button -->
                         <div>

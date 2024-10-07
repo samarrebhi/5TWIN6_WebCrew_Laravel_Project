@@ -1,6 +1,3 @@
-
-@extends('Back/dashboard')
-@section('content')
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -23,7 +20,8 @@
                 </li>
             </ul>
         </div>
-     
+        <div class="card-footer text-center bg-white">
+            <a href="{{ route('Categories.index') }}" class="btn btn-success">Back to Categories</a>
+        </div>
     </div>
 </div>
-@endsection
