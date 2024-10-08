@@ -168,6 +168,10 @@
                         <div class="d-flex justify-content-between flex-lg-wrap mt-3">
                             <a href="{{ route('event.details', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
                         </div>
+
+
+                        <a href="{{ route('reviews.create', $evenement->id) }}">Create Review</a>
+  
                     </div>
                 </div>
             </div>

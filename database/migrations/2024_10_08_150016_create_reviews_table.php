@@ -13,23 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evenement_collectes', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-
-            $table->string('titre');
-            $table->text('description');
-            $table->string('lieu');
-            $table->date('date');
+            $table->foreignId('evenement_collecte_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
-            $table->time('heure');
-            $table->integer('participants')->default(0); // Nombre de participants par défaut
-            $table->string('image')->nullable();
-
+            $table->text('comment');
+            $table->integer('rating'); 
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -38,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evenements');
+        Schema::dropIfExists('reviews');
     }
 };

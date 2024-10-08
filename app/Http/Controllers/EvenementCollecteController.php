@@ -51,17 +51,20 @@ class EvenementCollecteController extends Controller
         // Validate the request
         $this->validateEvent($request);
     
-        // Create new event
-        $evenement = EvenementCollecte::create($request->except('image'));
+        // Create new event and assign user_id
+        $evenement = new EvenementCollecte($request->except('image'));
+        $evenement->user_id = auth()->id(); // Assign user ID
+        $evenement->save();
     
         // Handle image upload
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
-            $evenement->save(); // Ensure save after image assignment
+            $evenement->save(); // Save again after image assignment
         }
     
         return redirect()->route('evenement_collecte.list')->with('success', 'Événement ajouté avec succès.');
     }
+    
 
     public function edit($id)
     {
