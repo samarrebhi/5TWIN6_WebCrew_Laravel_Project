@@ -18,4 +18,31 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ///*ikram
 }
