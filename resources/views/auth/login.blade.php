@@ -40,11 +40,15 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
+       
             <x-primary-button class="btn btn-primary mt-3 d-block mx-auto" style="background-color: #287233; border-color: #287233; color: white;">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
+    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
+                {{ __('didnt registered?') }}
+            </a>
 </x-guest-layout>
+
 @endsection
