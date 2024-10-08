@@ -14,10 +14,10 @@
                 </ul>
             </div>
         @endif
-
+        
         <form action="{{ route('reviews.update', $review->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+    @csrf
+    @method('PUT')
             <div class="form-group">
                 <label for="comment">Comment</label>
                 <textarea id="comment" name="comment" class="form-control" rows="5" required>{{ old('comment', $review->comment) }}</textarea>

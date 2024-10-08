@@ -32,8 +32,8 @@
             <td>{{ $review->rating }}</td>
             <td>{{ $review->created_at->format('Y-m-d H:i') }}</td>
             <td>
-                <a href="{{ route('reviews.edit', ['evenementId' => $evenement->id, 'review' => $review->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
+            <a href="{{ route('reviews.edit', ['evenementId' => $evenement->id, 'id' => $review->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this review?');">Delete</button>

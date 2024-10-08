@@ -53,13 +53,14 @@ class ReviewController extends Controller
     }
     
     
-    public function edit($id)
-    {
-        $review = Review::findOrFail($id);
-        $evenement = EvenementCollecte::findOrFail($review->evenement_collecte_id); // Get the associated evenement
-        return view('Front.reviews.edit', compact('review', 'evenement'));
-    }
+  public function edit($evenementId, $id)
+{
+    $review = Review::findOrFail($id);
+    $evenement = EvenementCollecte::findOrFail($evenementId); // Fetch the associated event by ID
+    return view('Front.reviews.edit', compact('review', 'evenement'));
+}
 
+    
     public function update(Request $request, $id)
     {
         $request->validate([
