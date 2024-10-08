@@ -55,7 +55,7 @@ class EvenementCollecteController extends Controller
         $evenement = new EvenementCollecte($request->except('image'));
         $evenement->user_id = auth()->id(); // Assign user ID
         $evenement->save();
-    
+    ////
         // Handle image upload
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
