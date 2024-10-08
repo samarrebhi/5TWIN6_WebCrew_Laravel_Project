@@ -41,4 +41,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // A user can create many events.
+    public function evenements()
+    {
+        return $this->hasMany(EvenementCollecte::class);
+    }
+
+    // A user can write many reviews.
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

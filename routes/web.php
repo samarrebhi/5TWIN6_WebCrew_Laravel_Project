@@ -1,15 +1,18 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
 use App\Http\Controllers\FrontControllers\EventController; // Adjust the controller path as needed
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
+
 
 use App\Http\Controllers\FrontControllers\ReservationController;
 use App\Http\Controllers\BackControllers\ReservationBackController;
@@ -18,9 +21,39 @@ use App\Http\Controllers\FrontControllers\PaymentController;
 
 // Home page routes
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
+
+
+
+
+Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+// Login
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+
+
+
+
+Route::group(['middleware' => ['auth']], function () {
+
+
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 
 
@@ -91,6 +124,7 @@ Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.
 Route::resource('/center',CenterController::class);
 /////routees for sondages entity
 
+
 Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
     'index' => 'sondage.index',
     'create' => 'sondage.create.form',
@@ -107,7 +141,19 @@ Route::resource('Categories', CategoryController::class);
 Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
 Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 
 Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
@@ -125,4 +171,20 @@ Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'c
 
 
 
+
+
+// Register
+
+// Logout
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::get('reviews/create/{evenementId}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews/{evenementId}', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{evenementId}/edit/{review}', [ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::get('evenements/{evenementId}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+
+});
+require __DIR__.'/auth.php';
 

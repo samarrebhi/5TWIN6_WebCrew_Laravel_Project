@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('lieu');
             $table->date('date');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->time('heure');
             $table->integer('participants')->default(0); // Nombre de participants par défaut
             $table->string('image')->nullable();
