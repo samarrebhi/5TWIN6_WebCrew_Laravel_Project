@@ -22,22 +22,29 @@ class ReviewController extends Controller
         return view('Front.reviews.create', compact('evenement'));
     }
     public function store(Request $request, $evenementId)
-    {
-        $request->validate([
-            'comment' => 'required|string|max:1000',
-            'rating' => 'required|integer|between:1,5', // Validate rating between 1 and 5
-        ]);
-    
-        Review::create([
-            'evenement_collecte_id' => $evenementId,
-            'comment' => $request->comment,
-            'rating' => $request->rating,
-            'user_id' => auth()->id(), // Add user_id from the authenticated user
-        ]);
-    
-        return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
-    }
-    
+{
+    $request->validate([
+        'comment' => 'required|string|max:1000',
+        'rating' => 'required|integer|between:1,5',
+    ], [
+        'comment.required' => 'Le commentaire est obligatoire.',
+        'comment.string' => 'Le commentaire doit être une chaîne de caractères.',
+        'comment.max' => 'Le commentaire ne doit pas dépasser 1000 caractères.',
+        'rating.required' => 'La note est obligatoire.',
+        'rating.integer' => 'La note doit être un nombre entier.',
+        'rating.between' => 'La note doit être comprise entre 1 et 5.',
+    ]);
+
+    Review::create([
+        'evenement_collecte_id' => $evenementId,
+        'comment' => $request->comment,
+        'rating' => $request->rating,
+        'user_id' => auth()->id(),
+    ]);
+
+    return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
+}
+
     
 
     public function edit($id)
