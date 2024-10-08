@@ -240,6 +240,18 @@
                       <div data-i18n="Basic">Centers</div>
                   </a>
               </li>
+              <li class="menu-item">
+                  <a href="{{ route('commandeList') }}" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-collection"></i>
+                      <div data-i18n="Basic">Orders</div>
+                  </a>
+              </li>
+              <li class="menu-item">
+              <a href="{{ route('admin.listBlog') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Blog</div>
+              </a>
+            </li>
 
               <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
@@ -423,12 +435,7 @@
             </li>
 
             <!-- Extended components -->
-            <li class="menu-item">
-              <a href="{{ route('admin.listBlog') }}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-copy"></i>
-              <div data-i18n="Basic">Blog</div>
-              </a>
-            </li>
+            
             
 
             <li class="menu-item">

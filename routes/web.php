@@ -11,6 +11,10 @@ use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
 
+use App\Http\Controllers\FrontControllers\ReservationController;
+use App\Http\Controllers\BackControllers\ReservationBackController;
+use App\Http\Controllers\FrontControllers\PaymentController;
+
 
 // Home page routes
 
@@ -81,12 +85,6 @@ Route::resource('/center',CenterController::class);
 
 
 
-
-
-
-
-
-
 Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
@@ -109,6 +107,22 @@ Route::resource('Categories', CategoryController::class);
 Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
 Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
+
+
+
+Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
+Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::get('home/cart', [ReservationController::class, 'showCart'])->name('cart');
+Route::delete('/home/reservations/{id}/remove', [ReservationController::class, 'remove'])->name('reservations.remove');
+
+Route::get('admin/commande', [ReservationBackController::class, 'listCommande'])->name('commandeList');
+Route::patch('/admin/reservations/{id}/confirm', [ReservationBackController::class, 'confirm'])->name('admin.reservations.confirm');
+Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
+Route::get('home/reservations/{id}/pay', [ReservationController::class, 'pay'])->name('reservations.pay');
+Route::post('/home/reservations/{id}/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); // Route pour confirmer le paiement
+
+
 
 
 
