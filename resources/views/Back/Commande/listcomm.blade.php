@@ -35,8 +35,8 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th>Status</th> <!-- Nouvelle colonne pour l'état de la commande -->
                             <th>Actions</th>
+                            <th>Status</th> <!-- Nouvelle colonne pour l'état de la commande -->
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -55,22 +55,8 @@
                                     <td>{{ $reservation->prix }} Dt</td>
                                     <!-- Quantité de la réservation -->
                                     <td>{{ $category->pivot->quantity }}</td>
-
-                                    <!-- Nouvelle colonne pour l'état de la commande -->
-                                    <td>
-                                        @if(!is_null($reservation->refused_at))
-                                            <span class="text-danger">-</span>
-                                        @elseif(!is_null($reservation->confirmed_at) && is_null($reservation->paid_at))
-                                            <span class="text-warning">Unpaid</span>
-                                        @elseif(!is_null($reservation->confirmed_at) && !is_null($reservation->paid_at))
-                                            <span class="text-success">Paid</span>
-                                        @else
-                                            <span class="text-secondary">Waiting</span>
-                                        @endif
-                                    </td>
-
-                                    <!-- Actions pour confirmer ou refuser -->
-                                    <td>
+                                       <!-- Actions pour confirmer ou refuser -->
+                                       <td>
                                         @if(is_null($reservation->confirmed_at) && is_null($reservation->refused_at))
                                             <form action="{{ route('admin.reservations.confirm', $reservation->id) }}" method="POST" style="display:inline;">
                                                 @csrf
@@ -88,6 +74,21 @@
                                             <span class="text-danger">Refused</span>
                                         @endif
                                     </td>
+
+                                    <!-- Nouvelle colonne pour l'état de la commande -->
+                                    <td>
+                                        @if(!is_null($reservation->refused_at))
+                                            <span class="text-danger">-</span>
+                                        @elseif(!is_null($reservation->confirmed_at) && is_null($reservation->paid_at))
+                                            <span class="text-warning">Unpaid</span>
+                                        @elseif(!is_null($reservation->confirmed_at) && !is_null($reservation->paid_at))
+                                            <span class="text-success">Paid</span>
+                                        @else
+                                            <span class="text-secondary">Waiting</span>
+                                        @endif
+                                    </td>
+
+                                 
                                 </tr>
                             @endforeach
                         @endforeach
