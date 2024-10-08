@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
@@ -10,13 +11,38 @@ use App\Http\Controllers\FrontControllers\EventController; // Adjust the control
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
-
-
-// Home page routes
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
+
+
+
+
+Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+// Login
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+
+
+
+
+Route::group(['middleware' => ['auth']], function () {
+
+
 Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
 
 
@@ -93,6 +119,7 @@ Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.
 Route::resource('/center',CenterController::class);
 /////routees for sondages entity
 
+
 Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
     'index' => 'sondage.index',
     'create' => 'sondage.create.form',
@@ -109,6 +136,34 @@ Route::resource('Categories', CategoryController::class);
 Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
 Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Register
+
+// Logout
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 
+
+
+
+
+
+
+
+
+});
+require __DIR__.'/auth.php';
