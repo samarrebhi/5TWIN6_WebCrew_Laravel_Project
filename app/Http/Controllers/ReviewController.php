@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use App\Models\EvenementCollecte;
 use Illuminate\Http\Request;
+use App\Rules\NoBadWords;
 
 class ReviewController extends Controller
 {
@@ -25,32 +26,31 @@ class ReviewController extends Controller
         return view('Front.reviews.create', compact('evenement'));
     }
 
-    public function store(Request $request, $evenementId)
-    {
-        // Validate input
-        $request->validate([
-            'comment' => 'required|string|max:1000',
-            'rating' => 'required|integer|between:1,5',
-        ], [
-            'comment.required' => 'Le commentaire est obligatoire.',
-            'comment.string' => 'Le commentaire doit être une chaîne de caractères.',
-            'comment.max' => 'Le commentaire ne doit pas dépasser 1000 caractères.',
-            'rating.required' => 'La note est obligatoire.',
-            'rating.integer' => 'La note doit être un nombre entier.',
-            'rating.between' => 'La note doit être comprise entre 1 et 5.',
-        ]);
+ 
+public function store(Request $request, $evenementId)
+{
+    $request->validate([
+        'comment' => ['required', 'string', 'max:1000', new NoBadWords],
+        'rating' => 'required|integer|between:1,5',
+    ], [
+        'comment.required' => 'Le commentaire est obligatoire.',
+        'comment.string' => 'Le commentaire doit être une chaîne de caractères.',
+        'comment.max' => 'Le commentaire ne doit pas dépasser 1000 caractères.',
+        'rating.required' => 'La note est obligatoire.',
+        'rating.integer' => 'La note doit être un nombre entier.',
+        'rating.between' => 'La note doit être comprise entre 1 et 5.',
+    ]);
 
-        // Create the review
-        Review::create([
-            'evenement_collecte_id' => $evenementId,
-            'comment' => $request->comment,
-            'rating' => $request->rating,
-            'user_id' => auth()->id(),  // Attach the logged-in user's ID
-        ]);
-     
+    // Store the review
+    Review::create([
+        'evenement_collecte_id' => $evenementId,
+        'comment' => $request->comment,
+        'rating' => $request->rating,
+        'user_id' => auth()->id(),  // Attach the logged-in user's ID
+    ]);
 
-        return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
-    }
+    return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
+}
     
     
   public function edit($evenementId, $id)
