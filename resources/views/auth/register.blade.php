@@ -1,5 +1,6 @@
 @extends('Front/layout')
 @section('content') 
+
 <x-guest-layout>
     <form class="mb-10" method="POST" action="{{ route('register') }}">
         @csrf
@@ -52,4 +53,5 @@
         </div>
     </form>
 </x-guest-layout>
+
 @endsection

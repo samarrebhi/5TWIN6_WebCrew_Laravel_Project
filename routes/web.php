@@ -12,15 +12,9 @@ use App\Http\Controllers\FrontControllers\EventController; // Adjust the control
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
-
-
 use App\Http\Controllers\FrontControllers\ReservationController;
 use App\Http\Controllers\BackControllers\ReservationBackController;
 use App\Http\Controllers\FrontControllers\PaymentController;
-
-
-// Home page routes
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +25,19 @@ use App\Http\Controllers\FrontControllers\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
+Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::get('home/cart', [ReservationController::class, 'showCart'])->name('cart');
+Route::delete('/home/reservations/{id}/remove', [ReservationController::class, 'remove'])->name('reservations.remove');
+
+Route::get('admin/commande', [ReservationBackController::class, 'listCommande'])->name('commandeList');
+Route::patch('/admin/reservations/{id}/confirm', [ReservationBackController::class, 'confirm'])->name('admin.reservations.confirm');
+Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
+Route::get('home/reservations/{id}/pay', [ReservationController::class, 'pay'])->name('reservations.pay');
+Route::post('/home/reservations/{id}/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); // Route pour confirmer le paiement
+
 
 
 
@@ -118,6 +125,12 @@ Route::resource('/center',CenterController::class);
 
 
 
+
+
+
+
+
+
 Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
@@ -155,24 +168,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
-Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-Route::get('home/cart', [ReservationController::class, 'showCart'])->name('cart');
-Route::delete('/home/reservations/{id}/remove', [ReservationController::class, 'remove'])->name('reservations.remove');
-
-Route::get('admin/commande', [ReservationBackController::class, 'listCommande'])->name('commandeList');
-Route::patch('/admin/reservations/{id}/confirm', [ReservationBackController::class, 'confirm'])->name('admin.reservations.confirm');
-Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
-Route::get('home/reservations/{id}/pay', [ReservationController::class, 'pay'])->name('reservations.pay');
-Route::post('/home/reservations/{id}/process', [PaymentController::class, 'processPayment'])->name('payment.process');
-Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); // Route pour confirmer le paiement
-
-
-
-
-
-
 // Register
 
 // Logout
@@ -187,4 +182,59 @@ Route::get('reviews/create/{evenementId}', [ReviewController::class, 'create'])-
 
 });
 require __DIR__.'/auth.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
