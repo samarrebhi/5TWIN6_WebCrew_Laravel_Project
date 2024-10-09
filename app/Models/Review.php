@@ -10,7 +10,10 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'evenement_collecte_id', 'user_id', 'comment', 'rating'
+        'evenement_collecte_id',
+        'comment',
+        'rating',
+        'user_id',
     ];
 
     public function evenement()

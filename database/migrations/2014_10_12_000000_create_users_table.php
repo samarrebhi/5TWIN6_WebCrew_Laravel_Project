@@ -20,6 +20,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+
+            $table->string('cover_photo')->nullable(); // Add this line
+
+
             $table->timestamps();
         });
     }

@@ -172,13 +172,15 @@ Route::middleware('auth')->group(function () {
 
 // Logout
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+  // Review routes
+  Route::get('evenements/{evenementId}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+  Route::get('reviews/create/{evenementId}', [ReviewController::class, 'create'])->name('reviews.create');
+  Route::post('/reviews/store/{evenementId}', [ReviewController::class, 'store'])->name('reviews.store');
+  Route::get('reviews/{evenementId}/edit/{review}', [ReviewController::class, 'edit'])->name('reviews.edit');
+  Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+  Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+  Route::get('reviews/{evenementId}/edit/{id}', [ReviewController::class, 'edit'])->name('reviews.edit');
 
-Route::get('reviews/create/{evenementId}', [ReviewController::class, 'create'])->name('reviews.create');
-    Route::post('reviews/{evenementId}', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::get('reviews/{evenementId}/edit/{review}', [ReviewController::class, 'edit'])->name('reviews.edit');
-    Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
-    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-    Route::get('evenements/{evenementId}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
 });
 require __DIR__.'/auth.php';
