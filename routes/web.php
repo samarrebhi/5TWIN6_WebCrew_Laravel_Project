@@ -161,8 +161,9 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
   Route::post('/reviews/store/{evenementId}', [ReviewController::class, 'store'])->name('reviews.store');
   Route::get('reviews/{evenementId}/edit/{review}', [ReviewController::class, 'edit'])->name('reviews.edit');
   Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
-  Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
   Route::get('reviews/{evenementId}/edit/{id}', [ReviewController::class, 'edit'])->name('reviews.edit');
+  Route::delete('reviews/{evenementId}/{reviewId}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
 
 
 });

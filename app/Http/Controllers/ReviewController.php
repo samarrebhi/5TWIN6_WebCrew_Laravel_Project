@@ -10,6 +10,7 @@ use App\Rules\NoBadWords;
 class ReviewController extends Controller
 {
 
+
     public function index($evenementId)
 {
     $evenement = EvenementCollecte::findOrFail($evenementId);
@@ -19,13 +20,27 @@ class ReviewController extends Controller
     return view('Front.reviews.index', compact('evenement', 'reviews'));
 }
 
-
     public function create($evenementId)
     {
         $evenement = EvenementCollecte::findOrFail($evenementId);
         return view('Front.reviews.create', compact('evenement'));
     }
-
+    public function approve($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->update(['status' => 'approved']);
+    
+        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review approved successfully.');
+    }
+    
+    public function reject($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->update(['status' => 'rejected']);
+    
+        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review rejected successfully.');
+    }
+    
  
 public function store(Request $request, $evenementId)
 {
@@ -74,11 +89,20 @@ public function store(Request $request, $evenementId)
         return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review updated successfully.');
     }
 
-    public function destroy($id)
+   
+    public function destroy($evenementId, $reviewId)
     {
-        $review = Review::findOrFail($id);
+        $review = Review::find($reviewId);
+        if (!$review) {
+            return response()->json(['message' => 'Review not found'], 404);
+        }
+    
         $review->delete();
-
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review deleted successfully.');
+        return response()->json(['message' => 'Review deleted successfully']);
     }
+    
+    
+
+
+        
 }

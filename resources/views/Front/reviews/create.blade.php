@@ -1,6 +1,7 @@
 @extends('Front/layout')
 
 @section('content')
+
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 120vh; ">
     <div class="col-md-6 bg-light p-5 shadow rounded" style="border-radius: 15px; backdrop-filter: blur(10px); animation: slideIn 1.5s ease-out;">
         <h1 class="text-center text-dark mb-4" style="font-family: 'Poppins', sans-serif; font-weight: bold;"> Review for <span class="text-center mt-1 mb-3" style="color: green;">{{ $evenement->titre }}</span></h1>
@@ -22,6 +23,8 @@
                 <div class="input-group">
                     <textarea id="comment" name="comment" class="form-control border border-secondary rounded" rows="5" placeholder="Share your thoughts about this event..." required style="transition: transform 0.3s;"></textarea>
                 </div>
+                <small id="charCount" class="text-muted mt-1">0 / 250 characters</small>
+
             </div>
 
             <div class="form-group mb-4">
@@ -38,7 +41,7 @@
                 </div>
             </div>
 
-            <button type="submit"  class="btn btn-primary mt-3 d-block mx-auto" style="background-color: #287233; border-color: #287233; color: white;">
+            <button type="submit"  class="btn btn-primary mt-3 d-block mx-auto" style="background-color: #287233; border-color: #287233; color: white; disabled">
                 Submit Review
             </button>
         </form>
@@ -83,6 +86,63 @@
         border-left: none;
     }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const commentField = document.getElementById('comment');
+    const charCount = document.getElementById('charCount');
+    const submitButton = document.getElementById('submitReviewButton');
+    const errorFeedback = document.getElementById('errorFeedback');
+
+    // Update character count
+    commentField.addEventListener('input', function() {
+        const text = commentField.value;
+        charCount.textContent = `${text.length} / 250 characters`;
+        
+        // Check for bad words
+        
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 {{-- Link FontAwesome for icons --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
