@@ -27,6 +27,21 @@
         <div class="container py-5">
             <div class="row g-5 align-items-center">
                 <div class="col-md-12 col-lg-7">
+
+
+                <li>
+                  
+                  <!-- Authentication -->
+                  <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+
+                      <x-dropdown-link :href="route('logout')"
+                              onclick="event.preventDefault();
+                                          this.closest('form').submit();">
+                          {{ __('Log Out') }}
+                      </x-dropdown-link>
+                  </form>
+              </li>
                     <h4 class="mb-3 text-secondary">100% Eco-Friendly Products</h4>
                     <h3 class="mb-5 display-3 text-primary">Eco-Friendly Living & Recycling </h3>
                     <div class="position-relative mx-auto">

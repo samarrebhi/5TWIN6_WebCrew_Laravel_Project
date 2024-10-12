@@ -30,7 +30,6 @@ Route::get('/', function () {
 });
 //Route::get('/', [HomeController::class, 'index'])->name('homepage'); // Set this as the default homepage
 ////
-Route::get('home', [HomeController::class, 'index'])->name('homepage');
 
 
 
@@ -48,6 +47,7 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('home', [HomeController::class, 'index'])->name('homepage');
 
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
