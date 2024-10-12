@@ -29,7 +29,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 //Route::get('/', [HomeController::class, 'index'])->name('homepage'); // Set this as the default homepage
-
+////
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
 
 
