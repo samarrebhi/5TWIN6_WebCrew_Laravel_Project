@@ -48,10 +48,16 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('home', [HomeController::class, 'index'])->name('homepage');
+// routes/web.php
+
+Route::post('/event/{id}/participate', [EventController::class, 'participate'])->name('event.participate');
 
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
+// routes/web.php
+
+Route::get('/admin/participants', [EventController::class, 'allParticipants'])->name('admin.participants');
 
 
     Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');

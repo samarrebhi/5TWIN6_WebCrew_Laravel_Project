@@ -61,11 +61,12 @@ class EvenementCollecteController extends Controller
         // Validate the request
         $this->validateEvent($request);
     
-        // Create new event and assign user_id
+        // Create new event and assign user_id and created_by
         $evenement = new EvenementCollecte($request->except('image'));
         $evenement->user_id = auth()->id(); // Assign user ID
+        $evenement->created_by = auth()->id(); // Assign created_by to the authenticated user
         $evenement->save();
-    ////
+        
         // Handle image upload
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
@@ -167,6 +168,16 @@ class EvenementCollecteController extends Controller
 {
     $evenement = EvenementCollecte::findOrFail($id);
     return view('evenement_collecte.showDet', compact('evenement'));
+}
+public function participantsList($id)
+{
+    $event = EvenementCollecte::findOrFail($id);
+
+    // Fetch participants user details
+    $participantIds = json_decode($event->participants, true);
+    $participants = User::whereIn('id', $participantIds)->get();
+
+    return view('Front.event.participants', compact('event', 'participants'));
 }
 
 }    

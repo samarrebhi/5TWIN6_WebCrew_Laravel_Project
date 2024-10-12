@@ -172,12 +172,9 @@
         <div data-i18n="Without navbar">Add New Event</div>
     </a>
 </li>
-
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Check participants</div>
-                  </a>
-                </li>
+<a href="{{ route('admin.participants') }}" class="btn btn-primary mb-3">
+        Voir tous les participants
+    </a>
                 <li class="menu-item">
                   <a href="layouts-container.html" class="menu-link">
                     <div data-i18n="Container">New Notifications</div>
