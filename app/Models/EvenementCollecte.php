@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,16 +10,16 @@ class EvenementCollecte extends Model
     use HasFactory;
 
     protected $fillable = [
-        'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image', 'user_id'
+        'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image',
     ];
 
-    // A user can create many events, but each event belongs to a single user.
+    // Relationship with User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // An event can have many reviews.
+    // Relationship with Review
     public function reviews()
     {
         return $this->hasMany(Review::class);

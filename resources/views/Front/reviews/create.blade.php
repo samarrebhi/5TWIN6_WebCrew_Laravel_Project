@@ -18,6 +18,28 @@
 
         <form action="{{ route('reviews.store', $evenement->id) }}" method="POST">
             @csrf
+
+ <!-- Review Title -->
+
+
+    <!-- Would Recommend -->
+    <div class="form-group mb-4">
+        <label for="would_recommend" class="form-label">Would you recommend this event?</label>
+        <select id="would_recommend" name="would_recommend" class="form-control">
+            <option value="1" {{ old('would_recommend') == '1' ? 'selected' : '' }}>Yes</option>
+            <option value="0" {{ old('would_recommend') == '0' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+
+    <!-- Anonymous Review -->
+    <div class="form-group mb-4">
+        <label for="anonymous" class="form-label">Submit as anonymous</label>
+        <input type="checkbox" id="anonymous" name="anonymous" value="1" {{ old('anonymous') ? 'checked' : '' }}>
+    </div>
+
+
+
+
             <div class="form-group mb-4">
                 <label for="comment" class="form-label ">Your Comment</label>
                 <div class="input-group">

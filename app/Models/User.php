@@ -43,15 +43,15 @@ class User extends Authenticatable
     ];
 
 
-    // A user can create many events.
-    public function evenements()
-    {
-        return $this->hasMany(EvenementCollecte::class);
-    }
-
-    // A user can write many reviews.
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+      // Relationship with EvenementCollecte
+      public function evenementCollectes()
+      {
+          return $this->hasMany(EvenementCollecte::class);
+      }
+  
+      // Relationship with Review
+      public function reviews()
+      {
+          return $this->hasMany(Review::class);
+      }
 }

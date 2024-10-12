@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
 
+            $table->string('profile_photo_path')->nullable();  // Add the column with 'nullable' in case it's optional
 
-            $table->string('cover_photo')->nullable(); // Add this line
 
 
             $table->timestamps();

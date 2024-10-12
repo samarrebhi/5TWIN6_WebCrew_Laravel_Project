@@ -5,104 +5,100 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use App\Models\EvenementCollecte;
 use Illuminate\Http\Request;
-use App\Rules\NoBadWords;
 
 class ReviewController extends Controller
 {
-
-
+    // Afficher les reviews de l'utilisateur connecté pour un événement spécifique
     public function index($evenementId)
-{
-    $evenement = EvenementCollecte::findOrFail($evenementId);
-    // Retrieve only reviews created by the logged-in user
-    $reviews = $evenement->reviews()->where('user_id', auth()->id())->get();
+    {
+        $evenement = EvenementCollecte::findOrFail($evenementId);
+        $reviews = $evenement->reviews()->where('user_id', auth()->id())->get();
 
-    return view('Front.reviews.index', compact('evenement', 'reviews'));
-}
+        return view('Front.reviews.index', compact('evenement', 'reviews'));
+    }
 
+    // Formulaire pour créer une nouvelle review
     public function create($evenementId)
     {
         $evenement = EvenementCollecte::findOrFail($evenementId);
         return view('Front.reviews.create', compact('evenement'));
     }
+
+    // Approuver une review
     public function approve($id)
     {
         $review = Review::findOrFail($id);
         $review->update(['status' => 'approved']);
-    
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review approved successfully.');
+
+        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review approved successfully.');
     }
-    
+
+    // Rejeter une review
     public function reject($id)
     {
         $review = Review::findOrFail($id);
         $review->update(['status' => 'rejected']);
+
+        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review rejected successfully.');
+    }
+
+    // Sauvegarder une nouvelle review
+    public function store(Request $request, $evenementId)
+    {
+        // Validate the request input
+        $request->validate([
+            'comment' => 'required|string|max:250',
+            'rating' => 'required|integer|between:1,5',
+            'would_recommend' => 'required|boolean',
+            'anonymous' => 'nullable|boolean',
+        ]);
     
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review rejected successfully.');
+        // Create the review and ensure 'evenement_collecte_id' is provided
+        Review::create([
+            'evenement_collecte_id' => $evenementId, // Ensure this line is present and correct
+            'comment' => $request->comment,
+            'rating' => $request->rating,
+            'would_recommend' => $request->would_recommend,
+            'anonymous' => $request->anonymous,
+            'user_id' => auth()->id(),
+        ]);
+    
+        // Redirect after successful creation
+        return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
     }
     
- 
-public function store(Request $request, $evenementId)
-{
-    $request->validate([
-        'comment' => ['required', 'string', 'max:1000', new NoBadWords],
-        'rating' => 'required|integer|between:1,5',
-    ], [
-        'comment.required' => 'Le commentaire est obligatoire.',
-        'comment.string' => 'Le commentaire doit être une chaîne de caractères.',
-        'comment.max' => 'Le commentaire ne doit pas dépasser 1000 caractères.',
-        'rating.required' => 'La note est obligatoire.',
-        'rating.integer' => 'La note doit être un nombre entier.',
-        'rating.between' => 'La note doit être comprise entre 1 et 5.',
-    ]);
 
-    // Store the review
-    Review::create([
-        'evenement_collecte_id' => $evenementId,
-        'comment' => $request->comment,
-        'rating' => $request->rating,
-        'user_id' => auth()->id(),  // Attach the logged-in user's ID
-    ]);
+    // Formulaire pour éditer une review existante
+    public function edit($evenementId, $id)
+    {
+        $review = Review::findOrFail($id);
+        $evenement = EvenementCollecte::findOrFail($evenementId);
 
-    return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
-}
-    
-    
-  public function edit($evenementId, $id)
-{
-    $review = Review::findOrFail($id);
-    $evenement = EvenementCollecte::findOrFail($evenementId); // Fetch the associated event by ID
-    return view('Front.reviews.edit', compact('review', 'evenement'));
-}
+        return view('Front.reviews.edit', compact('review', 'evenement'));
+    }
 
-    
+    // Mettre à jour une review
     public function update(Request $request, $id)
     {
         $request->validate([
-            'comment' => 'required|string|max:1000',
+            'comment' => 'required|string|max:250',
             'rating' => 'required|integer|between:1,5',
+            'would_recommend' => 'required|boolean',
+            'anonymous' => 'nullable|boolean',
         ]);
 
         $review = Review::findOrFail($id);
-        $review->update($request->only('comment', 'rating'));
+        $review->update($request->only('comment', 'rating', 'would_recommend', 'anonymous'));
 
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review updated successfully.');
+        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review updated successfully.');
     }
 
-   
+    // Supprimer une review
     public function destroy($evenementId, $reviewId)
     {
-        $review = Review::find($reviewId);
-        if (!$review) {
-            return response()->json(['message' => 'Review not found'], 404);
-        }
-    
+        $review = Review::findOrFail($reviewId);
         $review->delete();
+
         return response()->json(['message' => 'Review deleted successfully']);
     }
-    
-    
-
-
-        
 }

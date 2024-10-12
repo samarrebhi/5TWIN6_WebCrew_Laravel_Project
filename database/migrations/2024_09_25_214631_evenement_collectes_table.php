@@ -15,21 +15,17 @@ return new class extends Migration
     {
         Schema::create('evenement_collectes', function (Blueprint $table) {
             $table->id();
-
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key to users
             $table->string('titre');
             $table->text('description');
             $table->string('lieu');
             $table->date('date');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
             $table->time('heure');
-            $table->integer('participants')->default(0); // Nombre de participants par défaut
+            $table->integer('participants')->default(0);
             $table->string('image')->nullable();
-
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
