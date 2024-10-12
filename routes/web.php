@@ -25,9 +25,11 @@ use App\Http\Controllers\FrontControllers\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
+//Route::get('/', [HomeController::class, 'index'])->name('homepage'); // Set this as the default homepage
 
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('home', [HomeController::class, 'index'])->name('homepage');
 
 
@@ -139,9 +141,7 @@ Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontCon
 Route::resource('Categories', CategoryController::class);
 Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -15,38 +15,41 @@ class EvenementCollecteController extends Controller
     {
      $this->middleware( 'role:admin');
     }
-
     public function index(Request $request)
     {
-        $query = EvenementCollecte::query();
-
+        // Get the authenticated user's ID
+        $userId = auth()->id();
+    
+        // Query only the events that belong to the authenticated user
+        $query = EvenementCollecte::where('user_id', $userId);
+    
         // Apply filters if search fields are provided
         if ($request->filled('titre')) {
             $query->where('titre', 'like', '%' . $request->input('titre') . '%');
         }
-
+    
         if ($request->filled('description')) {
             $query->where('description', 'like', '%' . $request->input('description') . '%');
         }
-
+    
         if ($request->filled('lieu')) {
             $query->where('lieu', 'like', '%' . $request->input('lieu') . '%');
         }
-
+    
         if ($request->filled('date')) {
             $query->whereDate('date', $request->input('date'));
         }
-
+    
         // Paginate the filtered results
         $evenements = $query->paginate();
-
+    
         if ($request->ajax()) {
             return view('evenement_collecte.partials.event_table', compact('evenements'));
         }
-
+    
         return view('evenement_collecte.list', compact('evenements'));
     }
-
+    
 
     public function create()
     {

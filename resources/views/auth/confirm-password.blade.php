@@ -1,5 +1,7 @@
+@extends('Front/layout')
+@section('content') 
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
@@ -19,9 +21,10 @@
         </div>
 
         <div class="flex justify-end mt-4">
-            <x-primary-button>
+            <x-primary-button class="btn btn-primary mt-3 d-block mx-auto" style="background-color: #287233; border-color: #287233; color: white;">
                 {{ __('Confirm') }}
             </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
+@endsection
