@@ -13,8 +13,8 @@ return new class extends Migration
 
 
         
-        $table->unsignedBigInteger('evenement_collecte_id');
-        $table->foreign('evenement_collecte_id')->references('id')->on('evenement_collectes')->onDelete('cascade');        $table->string('comment');
+        $table->foreignId('evenement_collecte_id')->constrained()->onDelete('cascade'); // Ensure this is correct
+        $table->string('comment');
         $table->integer('rating');
         $table->boolean('would_recommend');
         $table->boolean('anonymous')->nullable();
