@@ -76,8 +76,6 @@ class ReviewController extends Controller
 
         return view('Front.reviews.edit', compact('review', 'evenement'));
     }
-
-    // Mettre à jour une review
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -86,13 +84,17 @@ class ReviewController extends Controller
             'would_recommend' => 'required|boolean',
             'anonymous' => 'nullable|boolean',
         ]);
-
+    
         $review = Review::findOrFail($id);
+    
+        // Update the review with the new data
         $review->update($request->only('comment', 'rating', 'would_recommend', 'anonymous'));
-
-        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review updated successfully.');
+    
+        // Redirect back to the reviews.index route, passing the correct evenement_collecte_id
+        return redirect()->route('reviews.index', ['evenementId' => $review->evenement_collecte_id])
+                         ->with('success', 'Review updated successfully.');
     }
-
+    
     // Supprimer une review
     public function destroy($evenementId, $reviewId)
     {

@@ -18,6 +18,23 @@
         <form action="{{ route('reviews.update', $review->id) }}" method="POST">
             @csrf
             @method('PUT')
+
+            <!-- Would Recommend -->
+            <div class="form-group mb-4">
+                <label for="would_recommend" class="form-label">Would you recommend this event?</label>
+                <select id="would_recommend" name="would_recommend" class="form-control">
+                    <option value="1" {{ old('would_recommend', $review->would_recommend) == '1' ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('would_recommend', $review->would_recommend) == '0' ? 'selected' : '' }}>No</option>
+                </select>
+            </div>
+
+            <!-- Anonymous Review -->
+            <div class="form-group mb-4">
+                <label for="anonymous" class="form-label">Submit as anonymous</label>
+                <input type="checkbox" id="anonymous" name="anonymous" value="1" {{ old('anonymous', $review->anonymous) ? 'checked' : '' }}>
+            </div>
+
+            <!-- Comment Field -->
             <div class="form-group mb-4">
                 <label for="comment" class="form-label">Your Comment</label>
                 <div class="input-group">
@@ -26,6 +43,7 @@
                 <small id="charCount" class="text-muted mt-1">{{ strlen(old('comment', $review->comment)) }} / 250 characters</small>
             </div>
 
+            <!-- Rating Field -->
             <div class="form-group mb-4">
                 <label for="rating" class="form-label">Your Rating</label>
                 <div class="input-group">
@@ -49,7 +67,6 @@
 
 {{-- CSS for the animations --}}
 <style>
-    /* Slide-in animation for the form */
     @keyframes slideIn {
         from {
             transform: translateY(50px);
@@ -61,26 +78,18 @@
         }
     }
 
-    /* Focused form fields animation */
     textarea:focus, select:focus {
         transform: scale(1.03);
         box-shadow: 0 0 10px rgba(255, 204, 102, 0.7);
         outline: none;
     }
 
-    /* Button hover animation */
     button:hover {
         background-color: #f57c00;
         transform: translateY(-2px);
         box-shadow: 0px 5px 15px rgba(255, 204, 102, 0.6);
     }
 
-    /* Input group style (icon and field together) */
-    .input-group-text {
-        border: none;
-        border-right: 1px solid #ccc;
-    }
-    
     .input-group textarea, .input-group select {
         border-left: none;
     }
@@ -90,7 +99,6 @@
     const commentField = document.getElementById('comment');
     const charCount = document.getElementById('charCount');
 
-    // Update character count
     commentField.addEventListener('input', function() {
         const text = commentField.value;
         charCount.textContent = `${text.length} / 250 characters`;
