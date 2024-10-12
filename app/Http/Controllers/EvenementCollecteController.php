@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\File;
 class EvenementCollecteController extends Controller
 {
 
+
+
+    public function __construct()
+    {
+     $this->middleware( 'role:admin');
+    }
+
     public function index(Request $request)
     {
         $query = EvenementCollecte::query();
