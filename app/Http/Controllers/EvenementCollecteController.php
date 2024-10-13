@@ -58,23 +58,30 @@ class EvenementCollecteController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
-        $this->validateEvent($request);
+        // Validation côté serveur
+        $validatedData = $request->validate([
+            'titre' => 'required|string|min:3|max:25',
+            'description' => 'required|string|min:10|max:30',
+            'lieu' => 'required|string|min:3|max:25',
+            'date' => 'required|date',
+            'heure' => 'required|date_format:H:i',
+            'image' => 'required|nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
     
-        // Create new event and assign user_id and created_by
-        $evenement = new EvenementCollecte($request->except('image'));
-        $evenement->user_id = auth()->id(); // Assign user ID
-        $evenement->created_by = auth()->id(); // Assign created_by to the authenticated user
+        // Créer un nouvel événement
+        $evenement = new EvenementCollecte($validatedData);
+        $evenement->user_id = auth()->id();
         $evenement->save();
-        
-        // Handle image upload
+    
+        // Gestion de l'image si elle est présente
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
-            $evenement->save(); // Save again after image assignment
+            $evenement->save();
         }
     
         return redirect()->route('evenement_collecte.list')->with('success', 'Événement ajouté avec succès.');
     }
+    
     
 
     public function edit($id)
@@ -125,43 +132,39 @@ class EvenementCollecteController extends Controller
         }
     }
     public function update(Request $request, $id)
-    {
-        // Validation
-        $request->validate([
-            'titre' => 'required',
-            'description' => 'required',
-            'lieu' => 'required',
-            'date' => 'required',
-            'heure' => 'required',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-        ]);
-    
-        // Récupérer l'événement
-        $evenement = EvenementCollecte::findOrFail($id);
-    
-        // Mise à jour des champs
-        $evenement->titre = $request->input('titre');
-        $evenement->description = $request->input('description');
-        $evenement->lieu = $request->input('lieu');
-        $evenement->date = $request->input('date');
-        $evenement->heure = $request->input('heure');
-    
-        // Si une nouvelle image est téléchargée, remplacer l'ancienne
-        if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image
-            $this->deleteOldImage($evenement->image);
-    
-            // Enregistrer la nouvelle image
-            $evenement->image = $this->uploadImage($request->file('image'));
-        }
-    
-        // Sauvegarder l'événement
-        $evenement->save();
-    
-        // Rediriger avec succès
-        return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
+{
+    // Validation rules for updating
+    $validatedData = $request->validate([
+        'titre' => 'required|string|min:3|max:25',
+        'description' => 'required|string|min:10|max:30',
+        'lieu' => 'required|string|min:3|max:25',
+        'date' => 'required|date',
+        'heure' => 'required|date_format:H:i',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
+
+    // Find the event to update
+    $evenement = EvenementCollecte::findOrFail($id);
+
+    // Update event data
+    $evenement->update($validatedData);
+
+    // If a new image is uploaded, delete the old one and upload the new one
+    if ($request->hasFile('image')) {
+        // Delete old image
+        $this->deleteOldImage($evenement->image);
+
+        // Upload new image and save path
+        $evenement->image = $this->uploadImage($request->file('image'));
     }
-    
+
+    // Save updated event
+    $evenement->save();
+
+    // Redirect with success message
+    return redirect()->route('evenement_collecte.list')->with('success', 'Événement mis à jour avec succès.');
+}
+
 
 
     public function show($id)
