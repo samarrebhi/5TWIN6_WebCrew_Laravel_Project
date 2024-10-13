@@ -74,7 +74,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('home/blogs', [BlogControllerFront::class, 'indexFront'])->name('Front.Blog.list');
-    Route::post('/blog/{id}/like', [BlogControllerFront::class, 'likeBlog']);
+    Route::post('/like-blog/{id}', [BlogControllerFront::class, 'likeBlog'])->middleware('auth');   
+    Route::get('home/blog/search', [BlogController::class, 'search'])->name('blog.search');
     Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
     Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('home/cart', [ReservationController::class, 'showCart'])->name('cart');

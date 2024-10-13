@@ -48,6 +48,7 @@
                         <th>Texte</th>
                         <th>Support</th>
                         <th>Likes</th>
+                        <th>Users</th>
                         <th>Actions</th>
                     </tr>
 
@@ -65,7 +66,17 @@
                             <td>{{ Str::words($blog->titre, 2, '...') }}</td>
                             <td>{{ Str::words($blog->texte, 2, '...') }}</td>
                             <td>{{ Str::words($blog->support, 2, '...') }}</td>
-                            <td>{{ $blog->likes_count }}</td>
+                            <td>{{ $blog->like_count }}</td>
+                            <td>
+    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+        @foreach ($blog->likes as $user)
+        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{ $user->email }}">
+            <img src="{{asset('img/useravater.jpeg')}}" alt="Avatar" class="rounded-circle" />
+        </li>
+        @endforeach
+    </ul>
+</td>
+
                             <td>
                                 <a href="{{ route('admin.blog.show', $blog->id) }}" class="btn btn-info btn-sm" title="Détails">
                                     <i class="fa fa-eye"></i>

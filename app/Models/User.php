@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Blog;
 
 
 class User extends Authenticatable
@@ -25,6 +26,16 @@ class User extends Authenticatable
         'password',
         
     ];
+
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+    public function likedBlogs()
+{
+    return $this->belongsToMany(Blog::class, 'blog_likes', 'user_id', 'blog_id');
+}
 
     /**
      * The attributes that should be hidden for serialization.

@@ -23,12 +23,22 @@ class BlogController extends Controller
 
    
   
-    public function index()  {
-        // $blogs = Blog::orderBy('id','DESC')->get();
+    // public function index()  {
+    //     // $blogs = Blog::orderBy('id','DESC')->get();
 
-        $blogs = Blog::orderBy('id','DESC')->paginate(5);
-        return view('Back.Blog.list',['blogs'=> $blogs]) ;
+    //     $blogs = Blog::orderBy('id','DESC')->paginate(5);
+    //     return view('Back.Blog.list',['blogs'=> $blogs]) ;
+    // }
+
+    public function index() {
+        // Charger les blogs avec les utilisateurs qui ont aimé
+        $blogs = Blog::with('likes')->orderBy('id', 'DESC')->paginate(5);
+        return view('Back.Blog.list', ['blogs' => $blogs]);
     }
+    
+
+
+
     public function create()  {
         return view('Back.Blog.create') ;
     }
