@@ -31,14 +31,7 @@
                 @enderror
             </div>
 
-            <!-- Anonymous Review -->
-            <div class="form-group mb-4">
-                <label for="anonymous" class="form-label">Submit as anonymous</label>
-                <input type="checkbox" id="anonymous" name="anonymous" value="1" class="@error('anonymous') is-invalid @enderror" {{ old('anonymous', $review->anonymous) ? 'checked' : '' }}>
-                @error('anonymous')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+         
 
             <!-- Comment Field -->
             <div class="form-group mb-4">

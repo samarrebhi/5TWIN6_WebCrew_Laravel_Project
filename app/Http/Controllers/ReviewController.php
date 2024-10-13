@@ -61,7 +61,6 @@ class ReviewController extends Controller
 
             'rating' => 'required|integer|between:1,5',
             'would_recommend' => 'required|boolean',
-            'anonymous' => 'nullable|boolean',
         ]);
         
         // If validation passes, create the review
@@ -95,13 +94,12 @@ class ReviewController extends Controller
 
             'rating' => 'required|integer|between:1,5',
             'would_recommend' => 'required|boolean',
-            'anonymous' => 'nullable|boolean',
         ]);
     
         $review = Review::findOrFail($id);
     
         // Update the review with the new data
-        $review->update($request->only('comment', 'rating', 'would_recommend', 'anonymous'));
+        $review->update($request->only('comment', 'rating', 'would_recommend'));
     
         // Redirect back to the reviews.index route, passing the correct evenement_collecte_id
         return redirect()->route('reviews.index', ['evenementId' => $review->evenement_collecte_id])

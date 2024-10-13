@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    //ikram
     public function index()
     {
         // Fetch all blocked users
         $blockedUsers = User::where('blocked', true)->get();
 
-        return view('users.blocked', compact('blockedUsers'));
+        return view('Front.reviews.users.blocked', compact('blockedUsers'));
     }
-
+//ikram
     public function unblock($id)
     {
         $user = User::findOrFail($id);
@@ -23,6 +24,7 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User has been unblocked successfully.');
     }
+    //ikrammm
     public function block($id)
     {
         $user = User::find($id);

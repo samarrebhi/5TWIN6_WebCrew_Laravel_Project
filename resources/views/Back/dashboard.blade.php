@@ -261,7 +261,7 @@
               <li class="menu-item">
               <a href="{{ route('admin.reviews.index') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-copy"></i>
-              <div data-i18n="Basic">Reviews List</div>
+              <div data-i18n="Basic">Reviews</div>
               </a>
             </li>
             <li class="menu-item">
