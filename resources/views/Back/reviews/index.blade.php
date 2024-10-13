@@ -25,7 +25,6 @@
                     <th>Comment</th>
                     <th>Rating</th>
                     <th>Would Recommend</th>
-                    <th>Anonymous</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,7 +37,6 @@
                             <td>{{ $review->comment }}</td>
                             <td>{{ $review->rating }}</td>
                             <td>{{ $review->would_recommend ? 'Yes' : 'No' }}</td>
-                            <td>{{ $review->anonymous ? 'Yes' : 'No' }}</td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#blockModal-{{ $review->user->id }}">
                                     Block User
