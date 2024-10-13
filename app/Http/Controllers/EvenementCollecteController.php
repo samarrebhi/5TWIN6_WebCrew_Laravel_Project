@@ -139,7 +139,7 @@ class EvenementCollecteController extends Controller
         'description' => 'required|string|min:10|max:30',
         'lieu' => 'required|string|min:3|max:25',
         'date' => 'required|date',
-        'heure' => 'required|date_format:H:i',
+        'heure' => 'required',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
     ]);
 

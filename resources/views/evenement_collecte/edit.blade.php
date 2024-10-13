@@ -30,7 +30,7 @@
                         <!-- Description Field -->
                         <div class="mb-1">
                             <label class="form-label" for="description">Description</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" required  placeholder="Enter a description (min 10 chars)">{{ old('description', $evenement->description) }}</textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"   placeholder="Enter a description (min 10 chars)">{{ old('description', $evenement->description) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -39,7 +39,7 @@
                         <!-- Location Field -->
                         <div class="mb-1">
                             <label class="form-label" for="lieu">Location</label>
-                            <input type="text" class="form-control @error('lieu') is-invalid @enderror" id="lieu" name="lieu" value="{{ old('lieu', $evenement->lieu) }}" required  placeholder="Enter location">
+                            <input type="text" class="form-control @error('lieu') is-invalid @enderror" id="lieu" name="lieu" value="{{ old('lieu', $evenement->lieu) }}"   placeholder="Enter location">
                             @error('lieu')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -48,7 +48,7 @@
                         <!-- Date Field -->
                         <div class="mb-1">
                             <label class="form-label" for="date">Date</label>
-                            <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date', \Carbon\Carbon::parse($evenement->date)->format('Y-m-d')) }}" required>
+                            <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date', \Carbon\Carbon::parse($evenement->date)->format('Y-m-d')) }}" >
                             @error('date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -57,7 +57,7 @@
                         <!-- Time Field -->
                         <div class="mb-1">
                             <label class="form-label" for="heure">Time</label>
-                            <input type="time" class="form-control @error('heure') is-invalid @enderror" id="heure" name="heure" value="{{ old('heure', $evenement->heure) }}" required>
+                            <input type="time" class="form-control @error('heure') is-invalid @enderror" id="heure" name="heure" value="{{ old('heure', $evenement->heure) }}" >
                             @error('heure')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

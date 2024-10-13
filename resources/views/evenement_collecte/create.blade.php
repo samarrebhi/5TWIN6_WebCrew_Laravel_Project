@@ -27,7 +27,7 @@
         
         <input type="text" name="titre" id="titre" class="form-control @error('titre') is-invalid @enderror" value="{{ old('titre') }}" >
         @error('titre')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
@@ -36,7 +36,7 @@
         <label for="description" class="form-label">Description</label>
         <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" >{{ old('description') }}</textarea>
         @error('description')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
@@ -45,7 +45,7 @@
         <label for="lieu" class="form-label">Lieu</label>
         <input type="text" name="lieu" id="lieu" class="form-control @error('lieu') is-invalid @enderror" value="{{ old('lieu') }}" >
         @error('lieu')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
@@ -54,7 +54,7 @@
         <label for="date" class="form-label">Date</label>
         <input type="date" name="date" id="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date') }}" >
         @error('date')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
@@ -63,7 +63,7 @@
         <label for="heure" class="form-label">Heure</label>
         <input type="time" name="heure" id="heure" class="form-control @error('heure') is-invalid @enderror" value="{{ old('heure') }}" >
         @error('heure')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
@@ -72,12 +72,12 @@
         <label for="image" class="form-label">Image</label>
         <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
         @error('image')
-            <div class="invalid-feedback" required>{{ $message }}</div>
+            <div class="invalid-feedback" >{{ $message }}</div>
         @enderror
     </div>
 
     <!-- Bouton de soumission -->
-    <button type="submit" class="btn btn-primary">Créer</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
                 </div>
@@ -89,25 +89,14 @@
 <!-- Validation Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('eventForm');
-        const inputRequiredMessages = document.querySelectorAll('.input-required');
-
-        // Add the 'input' event listener to all form inputs to hide 'input required' when typing
-        form.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('input', function() {
-                if (input.value.trim() !== '') {
-                    input.nextElementSibling.style.display = 'none'; // Hide 'Input required' message
-                }
-            });
-        });
+     
 
         form.addEventListener('submit', function(event) {
             let isValid = true;
 
-            // Show 'Input required' messages for empty fields
             form.querySelectorAll('input, textarea').forEach(input => {
                 if (!input.value.trim()) {
-                    input.nextElementSibling.style.display = 'block'; // Show 'Input required' message
+                    input.nextElementSibling.style.display = 'block'; 
                     isValid = false;
                 }
             });
