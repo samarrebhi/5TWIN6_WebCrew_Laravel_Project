@@ -22,32 +22,41 @@
             <!-- Would Recommend -->
             <div class="form-group mb-4">
                 <label for="would_recommend" class="form-label">Would you recommend this event?</label>
-                <select id="would_recommend" name="would_recommend" class="form-control">
+                <select id="would_recommend" name="would_recommend" class="form-control @error('would_recommend') is-invalid @enderror">
                     <option value="1" {{ old('would_recommend', $review->would_recommend) == '1' ? 'selected' : '' }}>Yes</option>
                     <option value="0" {{ old('would_recommend', $review->would_recommend) == '0' ? 'selected' : '' }}>No</option>
                 </select>
+                @error('would_recommend')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Anonymous Review -->
             <div class="form-group mb-4">
                 <label for="anonymous" class="form-label">Submit as anonymous</label>
-                <input type="checkbox" id="anonymous" name="anonymous" value="1" {{ old('anonymous', $review->anonymous) ? 'checked' : '' }}>
+                <input type="checkbox" id="anonymous" name="anonymous" value="1" class="@error('anonymous') is-invalid @enderror" {{ old('anonymous', $review->anonymous) ? 'checked' : '' }}>
+                @error('anonymous')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Comment Field -->
             <div class="form-group mb-4">
                 <label for="comment" class="form-label">Your Comment</label>
                 <div class="input-group">
-                    <textarea id="comment" name="comment" class="form-control border border-secondary rounded" rows="5" placeholder="Update your thoughts about this event..." required style="transition: transform 0.3s;">{{ old('comment', $review->comment) }}</textarea>
+                    <textarea id="comment" name="comment" class="form-control border border-secondary rounded @error('comment') is-invalid @enderror" rows="5" placeholder="Update your thoughts about this event..." >{{ old('comment', $review->comment) }}</textarea>
                 </div>
                 <small id="charCount" class="text-muted mt-1">{{ strlen(old('comment', $review->comment)) }} / 250 characters</small>
+                @error('comment')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Rating Field -->
             <div class="form-group mb-4">
                 <label for="rating" class="form-label">Your Rating</label>
                 <div class="input-group">
-                    <select id="rating" name="rating" class="form-control border border-secondary rounded" required style="transition: transform 0.3s;">
+                    <select id="rating" name="rating" class="form-control border border-secondary rounded @error('rating') is-invalid @enderror" >
                         <option value="" disabled selected>Choose a rating</option>
                         @for ($i = 1; $i <= 5; $i++)
                             <option value="{{ $i }}" {{ $i == old('rating', $review->rating) ? 'selected' : '' }}>
@@ -55,6 +64,9 @@
                             </option>
                         @endfor
                     </select>
+                    @error('rating')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 

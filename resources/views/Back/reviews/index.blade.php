@@ -22,6 +22,8 @@
                 <tr>
                     <th>User</th>
                     <th>Event</th>
+                    <th>Event Created by</th>
+
                     <th>Comment</th>
                     <th>Rating</th>
                     <th>Would Recommend</th>
@@ -33,7 +35,11 @@
                     @if(!$review->user->blocked) <!-- Check if user is not blocked -->
                         <tr class="review-row">
                             <td class="user-name">{{ $review->user ? $review->user->name : 'N/A' }}</td>
+                            
                             <td class="event-title">{{ $review->evenementCollecte ? $review->evenementCollecte->titre : 'N/A' }}</td>
+
+                            <td class="event-created-by">{{ $review->evenementCollecte ? $review->evenementCollecte->user->email : 'N/A' }}</td> <!-- New column -->
+
                             <td>{{ $review->comment }}</td>
                             <td>{{ $review->rating }}</td>
                             <td>{{ $review->would_recommend ? 'Yes' : 'No' }}</td>

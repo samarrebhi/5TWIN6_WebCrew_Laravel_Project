@@ -2,170 +2,63 @@
 
 @section('content')
 
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 120vh; ">
-    <div class="col-md-6 bg-light p-5 shadow rounded" style="border-radius: 15px; backdrop-filter: blur(10px); animation: slideIn 1.5s ease-out;">
-        <h1 class="text-center text-dark mb-4" style="font-family: 'Poppins', sans-serif; font-weight: bold;"> Review for <span class="text-center mt-1 mb-3" style="color: green;">{{ $evenement->titre }}</span></h1>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 120vh;">
+    <div class="col-md-6 bg-light p-5 shadow rounded" style="border-radius: 15px;">
+        <h1 class="text-center text-dark mb-4">Review for <span style="color: green;">{{ $evenement->titre }}</span></h1>
 
         <form action="{{ route('reviews.store', $evenement->id) }}" method="POST">
             @csrf
 
- <!-- Review Title -->
-
-
-    <!-- Would Recommend -->
-    <div class="form-group mb-4">
-        <label for="would_recommend" class="form-label">Would you recommend this event?</label>
-        <select id="would_recommend" name="would_recommend" class="form-control">
-            <option value="1" {{ old('would_recommend') == '1' ? 'selected' : '' }}>Yes</option>
-            <option value="0" {{ old('would_recommend') == '0' ? 'selected' : '' }}>No</option>
-        </select>
-    </div>
-
-    <!-- Anonymous Review -->
-    <div class="form-group mb-4">
-        <label for="anonymous" class="form-label">Submit as anonymous</label>
-        <input type="checkbox" id="anonymous" name="anonymous" value="1" {{ old('anonymous') ? 'checked' : '' }}>
-    </div>
-
-
-
-
+            <!-- Would Recommend -->
             <div class="form-group mb-4">
-                <label for="comment" class="form-label ">Your Comment</label>
-                <div class="input-group">
-                    <textarea id="comment" name="comment" class="form-control border border-secondary rounded" rows="5" placeholder="Share your thoughts about this event..." required style="transition: transform 0.3s;"></textarea>
-                </div>
-                <small id="charCount" class="text-muted mt-1">0 / 250 characters</small>
-
+                <label for="would_recommend">Would you recommend this event?</label>
+                <select id="would_recommend" name="would_recommend" class="form-control @error('would_recommend') is-invalid @enderror">
+                    <option value="1" {{ old('would_recommend') == '1' ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('would_recommend') == '0' ? 'selected' : '' }}>No</option>
+                </select>
+                @error('would_recommend')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
+            <!-- Anonymous Review -->
             <div class="form-group mb-4">
-                <label for="rating" class="form-label ">Your Rating</label>
-                <div class="input-group">
-                    <select id="rating" name="rating" class="form-control border border-secondary rounded" required style="transition: transform 0.3s;">
-                        <option value="" disabled selected>Choose a rating</option>
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Fair</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Very Good</option>
-                        <option value="5">5 - Excellent</option>
-                    </select>
-                </div>
+                <label for="anonymous">Submit as anonymous</label>
+                <input type="checkbox" id="anonymous" name="anonymous" value="1" class="@error('anonymous') is-invalid @enderror" {{ old('anonymous') ? 'checked' : '' }}>
+                @error('anonymous')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
-            <button type="submit"  class="btn btn-primary mt-3 d-block mx-auto" style="background-color: #287233; border-color: #287233; color: white; disabled">
-                Submit Review
-            </button>
+            <!-- Comment -->
+            <div class="form-group mb-4">
+                <label for="comment">Your Comment</label>
+                <textarea id="comment" name="comment" class="form-control @error('comment') is-invalid @enderror" rows="5"  >{{ old('comment') }}</textarea>
+                @error('comment')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <small class="text-muted">{{ strlen(old('comment')) }} / 250 characters</small>
+            </div>
+
+            <!-- Rating -->
+            <div class="form-group mb-4">
+                <label for="rating">Your Rating</label>
+                <select id="rating" name="rating" class="form-control @error('rating') is-invalid @enderror" >
+                    <option value="" disabled selected>Choose a rating</option>
+                    <option value="1" {{ old('rating') == '1' ? 'selected' : '' }}>1 - Poor</option>
+                    <option value="2" {{ old('rating') == '2' ? 'selected' : '' }}>2 - Fair</option>
+                    <option value="3" {{ old('rating') == '3' ? 'selected' : '' }}>3 - Good</option>
+                    <option value="4" {{ old('rating') == '4' ? 'selected' : '' }}>4 - Very Good</option>
+                    <option value="5" {{ old('rating') == '5' ? 'selected' : '' }}>5 - Excellent</option>
+                </select>
+                @error('rating')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
         </form>
     </div>
 </div>
 
-{{-- CSS for the animations --}}
-<style>
-    /* Slide-in animation for the form */
-    @keyframes slideIn {
-        from {
-            transform: translateY(50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    /* Focused form fields animation */
-    textarea:focus, select:focus {
-        transform: scale(1.03);
-        box-shadow: 0 0 10px rgba(255, 204, 102, 0.7);
-        outline: none;
-    }
-
-    /* Button hover animation */
-    button:hover {
-        background-color: #f57c00;
-        transform: translateY(-2px);
-        box-shadow: 0px 5px 15px rgba(255, 204, 102, 0.6);
-    }
-
-    /* Input group style (icon and field together) */
-    .input-group-text {
-        border: none;
-        border-right: 1px solid #ccc;
-    }
-    
-    .input-group textarea, .input-group select {
-        border-left: none;
-    }
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-    const commentField = document.getElementById('comment');
-    const charCount = document.getElementById('charCount');
-    const submitButton = document.getElementById('submitReviewButton');
-    const errorFeedback = document.getElementById('errorFeedback');
-
-    // Update character count
-    commentField.addEventListener('input', function() {
-        const text = commentField.value;
-        charCount.textContent = `${text.length} / 250 characters`;
-        
-        // Check for bad words
-        
-    });
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- Link FontAwesome for icons --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 @endsection

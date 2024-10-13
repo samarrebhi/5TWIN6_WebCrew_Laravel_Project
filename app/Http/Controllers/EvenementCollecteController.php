@@ -71,6 +71,8 @@ class EvenementCollecteController extends Controller
         // Créer un nouvel événement
         $evenement = new EvenementCollecte($validatedData);
         $evenement->user_id = auth()->id();
+        $evenement->created_by = auth()->id(); // Assign created_by to the authenticated user
+ 
         $evenement->save();
     
         // Gestion de l'image si elle est présente

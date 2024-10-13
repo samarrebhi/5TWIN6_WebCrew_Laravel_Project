@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Rules\NoBadWords;
 
 use App\Models\Review;
 use App\Models\EvenementCollecte;
@@ -56,15 +57,16 @@ class ReviewController extends Controller
     {
         // Validate the request input
         $request->validate([
-            'comment' => 'required|string|max:250',
+            'comment' => ['required', 'string','min:3','max:40' ,new NoBadWords],  // Apply the custom rule here
+
             'rating' => 'required|integer|between:1,5',
             'would_recommend' => 'required|boolean',
             'anonymous' => 'nullable|boolean',
         ]);
-    
-        // Create the review and ensure 'evenement_collecte_id' is provided
+        
+        // If validation passes, create the review
         Review::create([
-            'evenement_collecte_id' => $evenementId, // Ensure this line is present and correct
+            'evenement_collecte_id' => $evenementId,
             'comment' => $request->comment,
             'rating' => $request->rating,
             'would_recommend' => $request->would_recommend,
@@ -75,6 +77,7 @@ class ReviewController extends Controller
         // Redirect after successful creation
         return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
     }
+    
     
 
     // Formulaire pour éditer une review existante
@@ -88,7 +91,8 @@ class ReviewController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'comment' => 'required|string|max:250',
+            'comment' => ['required', 'string','min:3','max:40' ,new NoBadWords],  // Apply the custom rule here
+
             'rating' => 'required|integer|between:1,5',
             'would_recommend' => 'required|boolean',
             'anonymous' => 'nullable|boolean',

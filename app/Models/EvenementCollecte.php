@@ -10,7 +10,7 @@ class EvenementCollecte extends Model
     use HasFactory;
 
     protected $fillable = [
-        'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image',
+        'titre', 'description', 'lieu', 'date', 'heure', 'participants', 'image','created_by',
     ];
 
     // Relationship with User
