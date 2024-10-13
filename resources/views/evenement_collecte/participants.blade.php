@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">List of Participants</h1>
+    <h1 class="text-center mt-4 mb-3 " style="color: green;">List of Participants</h1>
 
     <!-- Search Bar -->
     <div class="input-group mb-3">

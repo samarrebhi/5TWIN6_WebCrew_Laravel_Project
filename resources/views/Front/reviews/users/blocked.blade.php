@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Blocked Users</h1>
-
+    <h1 class="text-center mt-4 mb-3 " style="color: green;">Blocked Users</h1>
     <!-- Success Message -->
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

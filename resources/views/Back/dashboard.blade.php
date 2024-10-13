@@ -173,11 +173,7 @@
 <div data-i18n="Without menu">Participants </div>
     </a>                </li>
 
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">New Notifications</div>
-                  </a>
-                </li>
+              
 
 
               </ul>
@@ -260,21 +256,15 @@
               <ul class="menu-sub">
               <li class="menu-item">
               <a href="{{ route('admin.reviews.index') }}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-copy"></i>
-              <div data-i18n="Basic">Reviews</div>
+              <div data-i18n="Basic">List of Reviews</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="{{ route('users.blocked') }}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-copy"></i>
               <div data-i18n="Basic">Bad Reviews Users</div>
               </a>
             </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
-                  </a>
-                </li>
+                
               </ul>
             </li>
             <li class="menu-item">

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mt-4">Reviews</h1>
+    <h1 class="text-center mt-4 mb-3 " style="color: green;">List of Reviews</h1>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
