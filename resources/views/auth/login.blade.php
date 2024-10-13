@@ -1,8 +1,16 @@
 @extends('Front/layout')
+
 @section('content') 
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <!-- Display Blocked Account Message -->
+    @if ($errors->has('blocked'))
+        <div class="alert alert-danger mb-4">
+            {{ $errors->first('blocked') }}
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -47,8 +55,7 @@
         </div>
     </form>
     <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
-                {{ __('didnt registered?') }}
-            </a>
+        {{ __('Didn’t register yet?') }}
+    </a>
 </x-guest-layout>
-
 @endsection

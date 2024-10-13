@@ -13,9 +13,22 @@
                       <div class="col-sm-7">
                         <div class="card-body">
                           <h5 class="card-title text-primary">WELCOME 🎉</h5>
+                          @if (session('notification'))
+    <div class="alert alert-success">
+        {{ session('notification') }}
+    </div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
                           <p class="mb-4">
                            <span class="fw-bold"></span>Welcome to your dashboard ! Manage your recycling centers and events efficiently.
                           </p>
+    
+
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">

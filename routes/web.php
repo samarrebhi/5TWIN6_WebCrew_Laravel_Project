@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BackControllers\BlogController;
@@ -54,8 +55,9 @@ Route::post('/event/{id}/participate', [EventController::class, 'participate'])-
 
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
+        Route::get('/admin/reviews', [ReviewController::class, 'adminIndex'])->name('admin.reviews.index');
+        Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
 
-// routes/web.php
 
 Route::get('/admin/participants', [EventController::class, 'allParticipants'])->name('admin.participants');
 

@@ -28,31 +28,32 @@ class EventController extends Controller
         $pdf = PDF::loadView('Front.event_pdf', compact('event'));
         return $pdf->download('event_details.pdf');
     }
-
     public function participate($id)
     {
         $event = EvenementCollecte::findOrFail($id);
         $user = Auth::user();
     
         $participants = json_decode($event->participants, true);
-    
         if (!is_array($participants)) {
             $participants = [];
         }
     
         if (in_array($user->id, $participants)) {
-            return back()->with('error', 'You have already participated in this event.');
+            // Flash an error message if the user has already participated
+            return back()->with('error', 'Vous avez déjà participé à cet événement.');
         }
     
+        // Add user to participants and save the event
         $participants[] = $user->id;
         $event->participants = json_encode($participants);
         $event->save();
     
-        return back()->with('success', 'You have successfully participated in the event.');
+        // Add success notification to the session
+        session()->flash('notification', "Vous avez réussi à participer à l'événement '{$event->titre}'.");
+    
+        return back()->with('success', 'Vous avez réussi à participer à l\'événement.');
     }
-
-
-
+    
 
 
 

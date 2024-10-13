@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+     // Method to display all reviews with associated events and users
+     public function adminIndex()
+     {
+         // Retrieve all reviews with associated events and users
+         $reviews = Review::with(['evenementCollecte', 'user'])->get();
+ 
+         return view('back.reviews.index', compact('reviews'));
+     }
     // Afficher les reviews de l'utilisateur connecté pour un événement spécifique
     public function index($evenementId)
     {

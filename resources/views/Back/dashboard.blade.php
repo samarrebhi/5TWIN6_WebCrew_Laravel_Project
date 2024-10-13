@@ -230,8 +230,7 @@
         </li>
     </ul>
 </li>
-
-              <li class="menu-item">
+   <li class="menu-item">
                   <a href="{{ route('centers.index') }}" class="menu-link">
                       <i class="menu-icon tf-icons bx bx-collection"></i>
                       <div data-i18n="Basic">Centers</div>
