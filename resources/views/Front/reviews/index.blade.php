@@ -12,6 +12,21 @@
         </div>
     @endif
 
+    <!-- Barre de recherche avec filtres -->
+    <div class="mb-4 w-100">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" id="name-search" class="form-control" placeholder="Search by Name" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="event-search" class="form-control" placeholder="Search by Event" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="comment-search" class="form-control" placeholder="Search by Comment" />
+            </div>
+        </div>
+    </div>
+
     @if ($reviews->isEmpty())
         <div class="alert alert-warning">
             No reviews yet.
@@ -21,34 +36,28 @@
             <table class="table table-striped table-hover shadow-sm rounded">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Name</th> <!-- Added name column -->
-                        <th>would_recommend</th> <!-- Added email column -->
-                        <th>anonymous</th> <!-- Added email column -->
-
+                        <th>Name</th>
+                        <th>Event name</th>
                         <th>Comment</th>
                         <th>Rating</th>
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="reviews-table-body">
                 @foreach ($reviews as $review)
                     <tr>
-                        <td>{{ $review->user->name }}</td> <!-- Assuming the review is associated with a user -->
-                        <td>{{ $review->would_recommend }}</td>
-                        <td>{{ $review->anonymous }}</td>
-                 
+                        <td>{{ $review->user->name }}</td>
+                        <td>{{ $review->evenementCollecte ? $review->evenementCollecte->titre : 'N/A' }}</td>
                         <td>{{ $review->comment }}</td>
                         <td>
                             <span class="badge badge-warning">{{ $review->rating }}</span>
                         </td>
                         <td>{{ $review->created_at->format('Y-m-d H:i') }}</td>
                         <td>
-                            <!-- Edit Icon -->
                             <a href="{{ route('reviews.edit', ['evenementId' => $evenement->id, 'id' => $review->id]) }}" class="text-warning me-2" title="Edit">
                                 <i class="bx bx-edit" style="font-size: 1.5em;"></i>
                             </a>
-                            <!-- Delete Icon -->
                             <form action="{{ route('reviews.destroy', ['evenementId' => $evenement->id, 'reviewId' => $review->id]) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -109,6 +118,23 @@
             }
         });
     });
+
+    // Fonction de recherche multicritères
+    $(document).ready(function() {
+        $('input').on('keyup', function() {
+            var nameValue = $('#name-search').val().toLowerCase();
+            var eventValue = $('#event-search').val().toLowerCase();
+            var commentValue = $('#comment-search').val().toLowerCase();
+
+            $('#reviews-table-body tr').filter(function() {
+                $(this).toggle(
+                    ($(this).find('td:nth-child(1)').text().toLowerCase().indexOf(nameValue) > -1 || nameValue === '') &&
+                    ($(this).find('td:nth-child(2)').text().toLowerCase().indexOf(eventValue) > -1 || eventValue === '') &&
+                    ($(this).find('td:nth-child(3)').text().toLowerCase().indexOf(commentValue) > -1 || commentValue === '')
+                );
+            });
+        });
+    });
 </script>
 
 <style>
@@ -142,6 +168,16 @@
     .custom-btn i {
         font-size: 1.2em;
         vertical-align: middle;
+    }
+    /* Styles supplémentaires pour les champs de recherche */
+    #name-search, #event-search, #comment-search {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+    #name-search:focus, #event-search:focus, #comment-search:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0.2rem rgba(0, 123, 255, .25);
     }
 </style>
 @endsection

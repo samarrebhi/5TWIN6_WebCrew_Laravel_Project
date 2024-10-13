@@ -37,6 +37,34 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
     </head>
+    <style>
+    .create-review a {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem; /* Taille du texte et icône */
+        color: #28a745; /* Vert principal */
+        font-weight: bold;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .create-review i {
+        font-size: 1.5rem; /* Taille de l'icône */
+        margin-right: 8px; /* Espace entre l'icône et le texte */
+    }
+
+    /* Effet au survol */
+    .create-review a:hover {
+        color: #218838; /* Vert plus foncé au survol */
+        transform: scale(1.1); /* Augmentation de taille au survol */
+    }
+
+    /* Animation de survol pour l'icône */
+    .create-review i:hover {
+        transform: rotate(10deg); /* Petite rotation au survol de l'icône */
+    }
+</style>
+
+
 
     <body>
 
@@ -164,13 +192,23 @@
                         <h4 class="text-primary">{{ $evenement->titre }}</h4>
                         <p class="mb-0">{{ $evenement->description }}</p>
                         <p class="text-muted mb-0">Location: {{ $evenement->lieu }}</p>
-                        <p class="text-muted mb-0">Date: {{ $evenement->date }} | Time: {{ $evenement->heure }}</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap mt-3">
-                            <a href="{{ route('event.details', $evenement->id) }}" class="btn btn-outline-primary rounded-pill"><i class="fas fa-eye me-2"></i> View Details</a>
-                        </div>
+                   
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- Premier bouton (View Details) -->
+    <a href="{{ route('event.details', $evenement->id) }}" class="btn btn-outline-primary rounded-pill">
+        <i class="fas fa-eye me-2"></i> View Details
+    </a>
+    
+    <!-- Deuxième lien (Review) -->
+    <div class="create-review ms-3">
+        <a href="{{ route('reviews.create', $evenement->id) }}" class="text-decoration-none">
+            <i class="fas fa-pen-fancy me-2"></i> Review
+        </a>
+    </div>
+</div>
 
 
-                        <a href="{{ route('reviews.create', $evenement->id) }}">Create Review</a>
   
                     </div>
                 </div>

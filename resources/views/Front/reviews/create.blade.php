@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 120vh;">
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 130vh;">
     <div class="col-md-6 bg-light p-5 shadow rounded" style="border-radius: 15px;">
         <h1 class="text-center text-dark mb-4">Review for <span style="color: green;">{{ $evenement->titre }}</span></h1>
 
