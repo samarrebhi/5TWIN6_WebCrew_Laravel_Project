@@ -11,6 +11,7 @@ class ReviewController extends Controller
      // Method to display all reviews with associated events and users
      public function adminIndex()
      {
+
          // Retrieve all reviews with associated events and users
          $reviews = Review::with(['evenementCollecte', 'user'])->get();
  
@@ -111,4 +112,21 @@ class ReviewController extends Controller
 
         return response()->json(['message' => 'Review deleted successfully']);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        // Search reviews by user name or event title
+        $reviews = Review::whereHas('user', function($q) use ($query) {
+            $q->where('name', 'like', '%' . $query . '%');
+        })->orWhereHas('evenementCollecte', function($q) use ($query) {
+            $q->where('titre', 'like', '%' . $query . '%');
+        })->get();
+    
+        // Return the partial view with the filtered reviews
+        return view('reviews.partials.review_table', compact('reviews'));
+    }
+    
+    
+
 }

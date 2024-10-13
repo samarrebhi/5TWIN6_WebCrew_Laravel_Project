@@ -59,6 +59,12 @@ Route::post('/event/{id}/participate', [EventController::class, 'participate'])-
         Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
 
 
+        // Route to view blocked users
+        Route::get('/admin/blocked-users', [UserController::class, 'index'])->name('users.blocked');
+        
+        // Route to unblock a user
+        Route::post('/admin/unblock-user/{id}', [UserController::class, 'unblock'])->name('users.unblock');
+        
 Route::get('/admin/participants', [EventController::class, 'allParticipants'])->name('admin.participants');
 
 

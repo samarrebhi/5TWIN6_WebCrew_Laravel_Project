@@ -7,6 +7,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        // Fetch all blocked users
+        $blockedUsers = User::where('blocked', true)->get();
+
+        return view('users.blocked', compact('blockedUsers'));
+    }
+
+    public function unblock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->blocked = false; // Set the blocked status to false
+        $user->save();
+
+        return redirect()->back()->with('success', 'User has been unblocked successfully.');
+    }
     public function block($id)
     {
         $user = User::find($id);

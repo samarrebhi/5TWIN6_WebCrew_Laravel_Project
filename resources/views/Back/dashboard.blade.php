@@ -253,9 +253,21 @@
               <span class="menu-header-text">Pages</span>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{ route('admin.reviews.index') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Reviews</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ route('users.blocked') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Blocked Users</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ route('admin.reviews.index') }}"  class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <div data-i18n="Account Settings"> Reviews</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
