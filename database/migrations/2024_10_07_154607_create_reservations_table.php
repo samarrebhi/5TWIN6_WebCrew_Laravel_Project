@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('user_id'); 
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->string('prix'); 
             $table->timestamp('confirmed_at')->nullable(); 

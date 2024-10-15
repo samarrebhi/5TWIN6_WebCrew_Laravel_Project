@@ -17,10 +17,6 @@ class Blog extends Model
     }
 
    
-        // Ajoute cette méthode pour définir la relation
-
-   
-
         // Ajoute une méthode pour obtenir les utilisateurs qui aiment le blog
 
         public function likedByUsers()

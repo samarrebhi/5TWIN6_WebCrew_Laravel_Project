@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
+
    
 public function shop($id)
 {
@@ -32,6 +34,7 @@ public function store(Request $request)
     $reservation = new Reservation();
     $reservation->quantity = $validatedData['quantity'];
     $reservation->prix = $validatedData['prix'];
+    $reservation->user_id = Auth::id(); 
     $reservation->save();
 
     // Associer la catégorie à la réservation via la table pivot en insérant la quantité
@@ -48,7 +51,7 @@ public function store(Request $request)
 public function showCart()
 {
     // Récupérer les réservations avec les catégories associées
-    $reservations = Reservation::with('categories')->get();
+    $reservations = Reservation::with('categories')->where('user_id', Auth::id())->get();
 
     // Passer les données à la vue
     return view('Front.Panier.cart', compact('reservations'));
