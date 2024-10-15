@@ -1,5 +1,7 @@
 
 Description du projet
+
+
 Ce projet, développé dans le cadre du cours d'applications web avancées pour l'année universitaire 2024-2025, consiste en la création d'une application web permettant aux utilisateurs de :
 
 Localiser les centres de recyclage
