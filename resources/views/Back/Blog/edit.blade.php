@@ -9,7 +9,7 @@
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-12">
                             <div class="card-body">
-                                <a href="{{ route('admin.listBlog')}}" class="btn btn-sm btn-outline-primary">Aller Vers La Liste</a>
+                                <a href="{{ route('admin.listBlog')}}" class="btn btn-sm btn-outline-primary">Jump to list</a>
                             </div>
                         </div>
                     </div>
@@ -27,8 +27,8 @@
                         <div class="card-body">
                             <!-- Champ Titre -->
                             <div class="mb-3">
-                                <label for="titre" class="form-label">Titre</label>
-                                <input type="text" name="titre" id="titre" placeholder="Taper le Titre"
+                                <label for="titre" class="form-label">Title</label>
+                                <input type="text" name="titre" id="titre" placeholder="Type the Title"
                                     class="form-control @error('titre') is-invalid @enderror" 
                                     value="{{ old('titre', $blog->titre) }}" required>
                                 <div class="invalid-feedback" id="titreError"></div>
@@ -39,8 +39,8 @@
 
                             <!-- Champ Texte -->
                             <div class="mb-3">
-                                <label for="texte" class="form-label">Texte</label>
-                                <textarea name="texte" id="texte" placeholder="Tapez le Texte"
+                                <label for="texte" class="form-label">Text</label>
+                                <textarea name="texte" id="texte" placeholder="Type the Text"
                                           class="form-control @error('texte') is-invalid @enderror" 
                                           required>{{ old('texte', $blog->texte) }}</textarea>
                                 <div class="invalid-feedback" id="texteError"></div>
@@ -52,7 +52,7 @@
                             <!-- Champ Support -->
                             <div class="mb-3">
                                 <label for="support" class="form-label">Support</label>
-                                <textarea name="support" id="support" placeholder="Tapez les Supports" 
+                                <textarea name="support" id="support" placeholder="Type the Supports" 
                                           class="form-control @error('support') is-invalid @enderror" 
                                           required>{{ old('support', $blog->support) }}</textarea>
                                 <div class="invalid-feedback" id="supportError"></div>
@@ -84,7 +84,7 @@
                     </div>
 
                     <!-- Bouton Mettre à Jour qui déclenche le modal -->
-                    <button type="button" class="btn btn-primary my-4" id="openModalBtn">Mettre à Jour</button>
+                    <button type="button" class="btn btn-primary my-4" id="openModalBtn">Update</button>
                 </form>
 
                 <!-- Modal de Confirmation -->
@@ -92,15 +92,15 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="confirmModalLabel">Confirmation de Modification</h5>
+                                <h5 class="modal-title" id="confirmModalLabel">Confirmation </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Êtes-vous sûr de vouloir changer ce blog ?
+                               Are you sure you want to change this blog ?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-primary" id="confirmSubmit">Confirmer</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                         const titreError = document.getElementById('titreError');
                         if (titre.value.trim() === "") {
                             titre.classList.add('is-invalid');
-                            titreError.textContent = "Le titre est requis.";
+                            titreError.textContent = "The Title is required.";
                             isValid = false;
                         } else {
                             titre.classList.remove('is-invalid');
@@ -126,21 +126,25 @@
                         // Champ Texte
                         const texte = document.getElementById('texte');
                         const texteError = document.getElementById('texteError');
+                        const wordCount = texte.value.trim().split(/\s+/).length;
                         if (texte.value.trim() === "") {
                             texte.classList.add('is-invalid');
-                            texteError.textContent = "Le texte est requis.";
+                            texteError.textContent = "Text is required.";
+                            isValid = false;
+                        } else if (wordCount < 3) {
+                            texte.classList.add('is-invalid');
+                            texteError.textContent = "The text field must contain at least three words.";
                             isValid = false;
                         } else {
                             texte.classList.remove('is-invalid');
                             texteError.textContent = "";
                         }
-
                         // Champ Support
                         const support = document.getElementById('support');
                         const supportError = document.getElementById('supportError');
                         if (support.value.trim() === "") {
                             support.classList.add('is-invalid');
-                            supportError.textContent = "Le support est requis.";
+                            supportError.textContent = "The support is required.";
                             isValid = false;
                         } else {
                             support.classList.remove('is-invalid');

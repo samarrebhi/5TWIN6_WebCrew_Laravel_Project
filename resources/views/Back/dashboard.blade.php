@@ -168,21 +168,12 @@
 
                 </li>
                 <li class="menu-item">
-    <a href="{{ route('evenement_collecte.create') }}" class="menu-link">
-        <div data-i18n="Without navbar">Add New Event</div>
-    </a>
-</li>
 
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Check participants</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">New Notifications</div>
-                  </a>
-                </li>
+<a href="{{ route('admin.participants') }}" class="menu-link">
+<div data-i18n="Without menu">Participants </div>
+    </a>                </li>
+
+              
 
 
               </ul>
@@ -233,38 +224,47 @@
         </li>
     </ul>
 </li>
-
-              <li class="menu-item">
+   <li class="menu-item">
                   <a href="{{ route('centers.index') }}" class="menu-link">
                       <i class="menu-icon tf-icons bx bx-collection"></i>
                       <div data-i18n="Basic">Centers</div>
                   </a>
               </li>
+              <li class="menu-item">
+                  <a href="{{ route('commandeList') }}" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-collection"></i>
+                      <div data-i18n="Basic">Orders</div>
+                  </a>
+              </li>
+              <li class="menu-item">
+              <a href="{{ route('admin.listBlog') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Blog</div>
+              </a>
+            </li>
 
               <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
+          
+          
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{ route('admin.reviews.index') }}"  class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <div data-i18n="Account Settings"> Reviews</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">Account</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
-                    <div data-i18n="Notifications">Notifications</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
-                  </a>
-                </li>
+              <li class="menu-item">
+              <a href="{{ route('admin.reviews.index') }}" class="menu-link">
+              <div data-i18n="Basic">List of Reviews</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ route('users.blocked') }}" class="menu-link">
+              <div data-i18n="Basic">Bad Reviews Users</div>
+              </a>
+            </li>
+                
               </ul>
             </li>
             <li class="menu-item">
@@ -423,12 +423,7 @@
             </li>
 
             <!-- Extended components -->
-            <li class="menu-item">
-              <a href="{{ route('admin.listBlog') }}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-copy"></i>
-              <div data-i18n="Basic">Blog</div>
-              </a>
-            </li>
+            
             
 
             <li class="menu-item">
@@ -596,10 +591,17 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+                  
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
                     </li>
                   </ul>
                 </li>

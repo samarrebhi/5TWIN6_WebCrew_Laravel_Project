@@ -24,6 +24,10 @@
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
                             </form>
                         </div>
+                         <!-- Bouton Buy -->
+                         <div class="d-flex justify-content-center mt-3">
+                            <a href="{{ route('buy', $category->id) }}" class="btn btn-success btn-sm">Buy</a>
+                        </div>
                     </div>
                 </div>
             </div>
