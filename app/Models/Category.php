@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Reservation;
+
 
 class Category extends Model
 {
@@ -16,4 +18,12 @@ class Category extends Model
     
 
     ];
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'category_reservation')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
+
 }

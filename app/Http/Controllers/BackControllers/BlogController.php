@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
+
+
+
+    public function __construct()
+   {
+    // Appliquer la permission "manage blogBack" à toutes les actions de ce contrôleur
+    $this->middleware( 'role:admin');
+   }
+
+   
+  
     public function index()  {
         // $blogs = Blog::orderBy('id','DESC')->get();
 
