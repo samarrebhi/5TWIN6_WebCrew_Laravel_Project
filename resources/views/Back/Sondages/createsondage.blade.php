@@ -97,7 +97,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Add Poll</button>
+                        <button type="submit" class="btn btn-success">Add Poll</button>
                     </form>
                 </div>
             </div>
