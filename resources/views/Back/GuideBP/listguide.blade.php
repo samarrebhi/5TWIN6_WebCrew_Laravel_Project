@@ -13,7 +13,7 @@
             <div class="table-responsive text-nowrap">
 
                 <div class="card-header f-flex justify-body-between align-items-center">
-                    <h5>Created Polls</h5>
+                    <h5>Created  Best Practices Guides</h5>
                     <a href="{{ route('guide.create.form') }}" class="btn btn-success ">+ Add Guide</a>
                 </div>
 

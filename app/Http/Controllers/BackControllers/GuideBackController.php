@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Log;
 //
 class GuideBackController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware( 'role:admin');
+    }
     public function index()
     {
         $guides=GuideBP::all();

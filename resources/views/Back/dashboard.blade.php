@@ -173,12 +173,12 @@
 <div data-i18n="Without menu">Participants </div>
     </a>                </li>
 
-              
+
 
 
               </ul>
             </li>
-              <li class="menu-item active">
+              <li class="menu-item ">
                   <a href="javascript:void(0);"  class="menu-link menu-toggle">
                       <i class="menu-icon tf-icons bx bx-poll"></i>
                       <div data-i18n="Layouts">Polls Management</div>
@@ -198,16 +198,36 @@
 
                   </ul>
               </li>
+              <li class="menu-item ">
+                  <a href="javascript:void(0);"  class="menu-link menu-toggle">
+                      <i class="menu-icon tf-icons bx bx-book"></i>
+                      <div data-i18n="Layouts">Best Practices Guides Management</div>
+                  </a>
+
+                  <ul class="menu-sub">
+                      <li class="menu-item">
+                          <a href="{{ route('guide.index') }}" class="menu-link">
+                              <div data-i18n="Without menu">List of Best Practices Guides</div>
+                          </a>
+                      </li>
+                      <li class="menu-item">
+                          <a href="{{ route('guide.create.form') }}" class="menu-link">
+                              <div data-i18n="Without navbar">Create Best Practices Guides</div>
+                          </a>
+                      </li>
+
+                  </ul>
+              </li>
 
 
 
-              
-              <li class="menu-item active">
+
+              <li class="menu-item ">
     <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-category"></i>
         <div data-i18n="Layouts">Waste Categories Management</div>
     </a>
-    
+
     <ul class="menu-sub">
         <!-- List Waste Categories -->
         <li class="menu-item">
@@ -246,8 +266,8 @@
               <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
-          
-          
+
+
             <li class="menu-item">
               <a href="{{ route('admin.reviews.index') }}"  class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -264,7 +284,7 @@
               <div data-i18n="Basic">Bad Reviews Users</div>
               </a>
             </li>
-                
+
               </ul>
             </li>
             <li class="menu-item">
@@ -423,8 +443,8 @@
             </li>
 
             <!-- Extended components -->
-            
-            
+
+
 
             <li class="menu-item">
               <a href="icons-boxicons.html" class="menu-link">
@@ -591,7 +611,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                  
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

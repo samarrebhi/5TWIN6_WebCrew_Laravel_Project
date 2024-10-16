@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 class SondageController extends Controller
 {
 
-
+    public function __construct()
+    {
+        $this->middleware( 'role:admin');
+    }
     ////pour get all
     public function index()
     {
