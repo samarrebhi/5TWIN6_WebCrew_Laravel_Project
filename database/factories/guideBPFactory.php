@@ -18,11 +18,11 @@ class guideBPFactory extends Factory
     {
 
         return [
-            'title' => $this->faker->sentence,           // Random title
-            'content' => $this->faker->paragraphs(3, true), // Random content
-            'category' => $this->faker->randomElement(['Recycling', 'Waste Management', 'Environmental Awareness']), // Random category
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->text(1000),
+            'category' => $this->faker->randomElement(['Recycling', 'Waste Management', 'Environmental Awareness']),
 
-            'external_links' => $this->faker->url(),     // Random external link
+            'external_links' => $this->faker->url(),
             'tags' => implode(',', $this->faker->words(5)),  // Random tags (5 words separated by commas)
         ];
     }

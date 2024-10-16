@@ -13,21 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('guide_b_p_s', function (Blueprint $table) {
+        Schema::create('evenement_collectes', function (Blueprint $table) {
             $table->id();
 
-
-                $table->string('title');
-                $table->text('content');
-                $table->string('category');
-
-                $table->string('external_links')->nullable();
-                $table->string('tags')->nullable();
-                $table->timestamps();
+            $table->string('titre');
+            $table->text('description');
+            $table->string('lieu');
+            $table->date('date');
+            $table->time('heure');
+            $table->integer('participants')->default(0); // Nombre de participants par défaut
             $table->string('image')->nullable();
-            });
 
+            $table->timestamps();
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guide_b_p_s');
+        Schema::dropIfExists('evenements');
     }
 };

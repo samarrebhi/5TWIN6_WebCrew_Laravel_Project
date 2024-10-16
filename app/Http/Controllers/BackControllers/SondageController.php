@@ -71,9 +71,9 @@ class SondageController extends Controller
 
             "start_date"=>$request->start_date,
             "end_date"=>$request->end_date,
-            //"response_count"=>$request->response_count,
+
             "category"=>$request->category,
-           // "location"=>$request->location
+
         ];
         Sondage::whereId($id)->update($sondage);
 

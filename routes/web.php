@@ -10,7 +10,7 @@ use App\Http\Controllers\FrontControllers\EventController; // Adjust the control
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\BackControllers\GuideBackController;
 
 // Home page routes
 
@@ -92,18 +92,31 @@ Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
 Route::resource('/center',CenterController::class);
 /////routees for sondages entity
-
+//backoffice
 Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
     'index' => 'sondage.index',
     'create' => 'sondage.create.form',
     'store' => 'sondage.store',
 
 ]);
+//frontoffice
 Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
     'index' => 'sondage.listing',
 'show'=>'sondage.details',
 ]);
 
+//////routes for guideBP entity
+/// backoffice
+ Route::resource('/guides',GuideBackController::class)->names([
+   'index' => 'guide.index',
+    'create' => 'guide.create.form',
+    'store' => 'guide.store',
+'show' =>  'guide.show',
+     'edit'=>  'guide.edit',
+     'destroy'=>'guide.destroy',
+     'update' => 'guide.update',
+]);
+ //
 
 Route::resource('Categories', CategoryController::class);
 Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');

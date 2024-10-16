@@ -11,11 +11,11 @@ class GuideBP extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'title',             // Title of the guide
-        'content',           // Content or description of the guide
-        'category',          // Category (e.g., Recycling, Waste Management, Environmental Awareness)
-       'image',             // image related to the guide
-        'external_links',    // Related external resources or links
-        'tags',// Tags to help categorize the guide (e.g., plastic recycling, composting)
+        'title',
+        'content',
+        'category',
+       'image',
+        'external_links',
+        'tags',
     ];
 }

@@ -17,7 +17,7 @@
                 <p><strong>Response Count:</strong> {{ $sondage->response_count }}</p>
                 <p><strong>Questions:</strong></p>
                 <ul>
-                    @foreach(explode('|', $sondage->questions) as $question)
+                    @foreach(explode(',', $sondage->questions) as $question)
                         <li>{{ $question }}</li>
                     @endforeach
                 </ul>
