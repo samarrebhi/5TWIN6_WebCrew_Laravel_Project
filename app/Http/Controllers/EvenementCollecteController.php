@@ -17,13 +17,10 @@ class EvenementCollecteController extends Controller
     }
     public function index(Request $request)
     {
-        // Get the authenticated user's ID
         $userId = auth()->id();
     
-        // Query only the events that belong to the authenticated user
         $query = EvenementCollecte::where('user_id', $userId);
     
-        // Apply filters if search fields are provided
         if ($request->filled('titre')) {
             $query->where('titre', 'like', '%' . $request->input('titre') . '%');
         }
@@ -40,7 +37,6 @@ class EvenementCollecteController extends Controller
             $query->whereDate('date', $request->input('date'));
         }
     
-        // Paginate the filtered results
         $evenements = $query->paginate();
     
         if ($request->ajax()) {
@@ -58,7 +54,6 @@ class EvenementCollecteController extends Controller
 
     public function store(Request $request)
     {
-        // Validation côté serveur
         $validatedData = $request->validate([
             'titre' => 'required|string|min:3|max:25',
             'description' => 'required|string|min:10|max:30',
@@ -68,14 +63,12 @@ class EvenementCollecteController extends Controller
             'image' => 'required|nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
     
-        // Créer un nouvel événement
         $evenement = new EvenementCollecte($validatedData);
         $evenement->user_id = auth()->id();
-        $evenement->created_by = auth()->id(); // Assign created_by to the authenticated user
+        $evenement->created_by = auth()->id(); 
  
         $evenement->save();
     
-        // Gestion de l'image si elle est présente
         if ($request->hasFile('image')) {
             $evenement->image = $this->uploadImage($request->file('image'));
             $evenement->save();
@@ -96,7 +89,7 @@ class EvenementCollecteController extends Controller
     {
         $evenement = EvenementCollecte::findOrFail($id);
         $this->deleteOldImage($evenement->image); // Delete the old image
-        $evenement->delete(); // Then delete the event
+        $evenement->delete(); 
         return response()->json(['message' => 'Événement supprimé avec succès.']);
     }
         

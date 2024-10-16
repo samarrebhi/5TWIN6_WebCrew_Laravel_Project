@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     //ikram
+    //review
     public function index()
     {
         // Fetch all blocked users
