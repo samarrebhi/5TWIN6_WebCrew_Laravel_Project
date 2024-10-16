@@ -12,7 +12,7 @@
                     <div class="card-subtitle text-muted mb-3">{{ $guide->category }}</div>
                     <hr>
 
-                    <p><strong>Content:</strong> {{ $guide->content }}</p>
+                    <p><strong>body:</strong> {{ $guide->body }}</p>
                     <p><strong>Creation Date:</strong> {{ \Carbon\Carbon::parse($guide->created_at)->format('d/m/Y H:i') }}</p>
                     <p><strong>Update Date:</strong> {{ \Carbon\Carbon::parse($guide->updated_at)->format('d/m/Y H:i') }}</p>
                     <p><strong>Category:</strong> {{ $guide->category }}</p>

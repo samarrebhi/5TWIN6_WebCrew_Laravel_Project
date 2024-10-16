@@ -68,7 +68,7 @@ class GuideBackController extends Controller
     {
         $guide = [
             'title' => $request->title,
-            'content' => $request->content,
+            'body' => $request->body,
             'category' => $request->category,
             'tags' => $request->tags,
             'image' => $request->image,

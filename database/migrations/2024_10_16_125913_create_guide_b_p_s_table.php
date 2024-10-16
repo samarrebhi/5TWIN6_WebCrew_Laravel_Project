@@ -18,7 +18,7 @@ return new class extends Migration
 
 
                 $table->string('title');
-                $table->text('content');
+                $table->text('body');
                 $table->string('category');
 
                 $table->string('external_links')->nullable();

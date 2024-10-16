@@ -12,7 +12,7 @@ class GuideBP extends Model
 
     protected $fillable = [
         'title',
-        'content',
+        'body',
         'category',
        'image',
         'external_links',

@@ -12,7 +12,7 @@
 
             <div class="table-responsive text-nowrap">
 
-                <div class="card-header f-flex justify-content-between align-items-center">
+                <div class="card-header f-flex justify-body-between align-items-center">
                     <h5>Created Polls</h5>
                     <a href="{{ route('guide.create.form') }}" class="btn btn-success ">+ Add Guide</a>
                 </div>
@@ -22,7 +22,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Category</th>
-                        <th>Content</th>
+                        <th>body</th>
 
                         <th>Image</th>
 
@@ -37,7 +37,7 @@
                             <td><strong>{{Str::limit($guide->title , 30)}}</strong></td>
 
                             <td>{{ $guide->category}}</td>
-                            <td>{{ Str::limit($guide->content, 30) }}</td>
+                            <td>{{ Str::limit($guide->body, 30) }}</td>
                             <td>
 
                                 <img src="{{ asset('storage/' . $guide->image)  }}" alt="{{ $guide->title }}" class="img-thumbnail" style="width: 100px; height: auto;">

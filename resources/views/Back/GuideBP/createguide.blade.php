@@ -26,14 +26,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="guide-content">Content</label>
+                            <label class="form-label" for="guide-body">body</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-comment"></i></span>
                                 <textarea
-                                    id="guide-content"
-                                    name="content"
+                                    id="guide-body"
+                                    name="body"
                                     class="form-control"
-                                    placeholder="Enter the content"
+                                    placeholder="Enter the body of your guide"
                                     required
                                 ></textarea>
                             </div>

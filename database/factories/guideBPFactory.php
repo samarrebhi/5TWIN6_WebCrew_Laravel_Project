@@ -19,7 +19,7 @@ class guideBPFactory extends Factory
 
         return [
             'title' => $this->faker->sentence,
-            'content' => $this->faker->text(1000),
+            'body' => $this->faker->text(100),
             'category' => $this->faker->randomElement(['Recycling', 'Waste Management', 'Environmental Awareness']),
 
             'external_links' => $this->faker->url(),

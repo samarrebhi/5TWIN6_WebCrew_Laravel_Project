@@ -28,15 +28,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="guide-content">Content</label>
+                            <label class="form-label" for="guide-body">body</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-comment"></i></span>
                                 <input type="text"
-                                    id="guide-content"
-                                    name="content"
-                                    placeholder="Enter your guide content"
+                                    id="guide-body"
+                                    name="body"
+                                    placeholder="Enter your guide body"
                                     class="form-control"
-value="{{ $guide->content}}"
+value="{{ $guide->body}}"
                                 />
                             </div>
                         </div>
