@@ -83,4 +83,5 @@ class PaymentController extends Controller
             return false; // Indique que l'e-mail n'a pas été envoyé
         }
     }
+    
 }
