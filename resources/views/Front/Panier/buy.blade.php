@@ -41,7 +41,7 @@
                 <i class="fa fa-minus"></i>
             </button>
         </div>
-        <input type="number" name="quantity" class="form-control form-control-sm text-center border-0" value="1" min="1" max="{{ $category->quantity }}">
+        <input type="text" name="quantity" class="form-control form-control-sm text-center border-0" value="1" min="1" max="{{ $category->quantity }}">
         <div class="input-group-btn">
             <button class="btn btn-sm btn-plus rounded-circle bg-light border" type="button">
                 <i class="fa fa-plus"></i>

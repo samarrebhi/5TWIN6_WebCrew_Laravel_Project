@@ -9,6 +9,7 @@ use App\Models\Reservation;
 
 class ReservationBackController extends Controller
 {
+    
     public function listCommande(Request $request) {
         // Récupérer les réservations avec les catégories associées
         $query = Reservation::with('categories');

@@ -57,74 +57,84 @@
                             </ul>
                         </div>
                     @endif
+                    
 
                     <form action="{{ route('payment.process', ['id' => $reservation->id]) }}" method="POST">
-    @csrf  <!-- Ajoutez cette ligne pour le token CSRF -->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="email" class="text-muted">Email</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
-            </div>
-            @error('email')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="col-md-6">
-            <label for="cardNumber" class="text-muted">Card Number</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
-                <input type="text" name="cardNumber" class="form-control" id="cardNumber" placeholder="Enter card number" required>
-            </div>
-            @error('cardNumber')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-    
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="expiration" class="text-muted">Expiration Date</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                <input type="text" name="expiration" class="form-control" id="expiration" placeholder="MM/YY" required>
-            </div>
-            @error('expiration')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="col-md-6">
-            <label for="cvc" class="text-muted">CVC</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                <input type="text" name="cvc" class="form-control" id="cvc" placeholder="Card Verification Code" required>
-            </div>
-            @error('cvc')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+                        @csrf  <!-- Ajoutez cette ligne pour le token CSRF -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="text-muted">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                </div>
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cardNumber" class="text-muted">Card Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                    <input type="text" name="cardNumber" class="form-control" id="cardNumber" placeholder="Enter card number" required>
+                                </div>
+                                @error('cardNumber')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="expiration" class="text-muted">Expiration Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    <input type="text" name="expiration" class="form-control" id="expiration" placeholder="MM/YY" required>
+                                </div>
+                                @error('expiration')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvc" class="text-muted">CVC</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="text" name="cvc" class="form-control" id="cvc" placeholder="Card Verification Code" required>
+                                </div>
+                                @error('cvc')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
-    <div class="mb-3">
-        <label for="amount" class="text-muted">Amount to Pay</label>
-        <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-            <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount" required>
-        </div>
-        @error('amount')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
+                        <div class="mb-3">
+                            <label for="fidelity_points" class="text-muted">Points de fidélité</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-gift"></i></span>
+                                <input type="number" name="fidelity_points" class="form-control" id="fidelity_points" placeholder="Points de fidélité à utiliser" min="0" max="{{ auth()->user()->fidelity_points }}" value="0" required>
+                            </div>
+                            @error('fidelity_points')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                       <div class="mb-3">
+    <label for="amount" class="text-muted">Montant</label>
+    <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+        <input type="number" name="amount" class="form-control" id="amount" placeholder="Montant total" value="{{ $reservation->prix }}" readonly>
     </div>
+    @error('amount')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-    <div class="text-center">
-        <button type="submit" class="btn btn-success w-100 py-2" style="border-radius: 5px;">
-            <i class="fas fa-check-circle"></i> Confirm Payment
-        </button>
-    </div>
-</form>
-
-
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success w-100 py-2" style="border-radius: 5px;">
+                                <i class="fas fa-check-circle"></i> Confirm Payment
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- Carousel -->
@@ -153,6 +163,15 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('fidelity_points').addEventListener('input', function() {
+        var pointsUsed = parseInt(this.value) || 0;
+        var price = {{ $reservation->prix }};
+        var discount = pointsUsed * 0.02 * price; // Chaque point vaut 2% du prix
+        var adjustedAmount = price - discount;
+        document.getElementById('adjustedAmount').value = adjustedAmount > 0 ? adjustedAmount.toFixed(2) : 0; // Afficher avec deux décimales
+    });
+</script>
 
 <!-- JavaScript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

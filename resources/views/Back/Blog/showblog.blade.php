@@ -27,7 +27,7 @@
                         <strong>Titre:</strong> {{ $blog->titre }}<br>
                         <strong>Texte:</strong> {{ $blog->texte }}<br>
                         <strong>Support:</strong> {{ $blog->support }}<br>
-                        <strong>Likes:</strong> {{ $blog->likes_count }}<br>
+                        <strong>Likes:</strong> {{ $blog->like_count }}<br>
                         <strong>Crée à:</strong> {{ $blog->created_at }}<br>
                         <strong>Modifié à:</strong> {{ $blog->updated_at }}
                     </div>

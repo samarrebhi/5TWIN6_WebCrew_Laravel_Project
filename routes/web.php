@@ -72,6 +72,7 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::get('admin/listBlog', [BlogController::class, 'index'])->name('admin.listBlog');
     Route::get('admin/createBlog', [BlogController::class, 'create'])->name('admin.createBlog');
     Route::post('admin/store', [BlogController::class, 'store'])->name('admin.store');
+    Route::post('/translate-blog', [BlogControllerFront::class, 'translateBlog'])->name('translate.blog');
     Route::get('admin/listBlog/{blog}/edit', [BlogController::class, 'edit'])->name('admin.blog.edit');
     Route::put('admin/listBlog/{blog}', [BlogController::class, 'update'])->name('admin.blog.update');
     Route::delete('admin/listBlog/{blog}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
@@ -90,7 +91,8 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     });
 
     Route::get('home/blogs', [BlogControllerFront::class, 'indexFront'])->name('Front.Blog.list');
-    Route::post('/blog/{id}/like', [BlogControllerFront::class, 'likeBlog']);
+    Route::post('/like-blog/{id}', [BlogControllerFront::class, 'likeBlog'])->middleware('auth');   
+    Route::get('home/blog/search', [BlogController::class, 'search'])->name('blog.search');
     Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
     Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('home/cart', [ReservationController::class, 'showCart'])->name('cart');

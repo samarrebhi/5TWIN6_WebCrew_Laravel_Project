@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Category;
 use App\Models\User;
+use App\Models\Blog;
 
-
-class Reservation extends Model
+class BlogLike extends Model
 {
     use HasFactory;
-    public function categories()
+
+    protected $fillable = ['blog_id', 'user_id'];
+    
+    public function blog()
     {
-        return $this->belongsToMany(Category::class, 'category_reservation')
-                    ->withPivot('quantity')
-                    ->withTimestamps();
+        return $this->belongsTo(Blog::class);
     }
 
     public function user()
