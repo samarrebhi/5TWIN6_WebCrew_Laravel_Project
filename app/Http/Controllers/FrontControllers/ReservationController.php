@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
@@ -42,7 +43,18 @@ public function store(Request $request)
         'quantity' => $validatedData['quantity'],
     ]);
 
-    // Rediriger vers une page de confirmation ou le panier
+      // Attribuer des points de fidélité si le prix dépasse 50 euros
+      if ($validatedData['prix'] > 50) {
+        // Calculer le nombre de points de fidélité
+        $extraAmount = $validatedData['prix'] - 50;
+        $points = floor($extraAmount / 10);
+
+        // Mettre à jour les points de fidélité de l'utilisateur
+        $user = User::find(Auth::id());
+        $user->fidelity_points += $points;
+        $user->save();
+    }
+
     return redirect()->route('cart')->with('success', 'Product added to cart!');
 }
 
@@ -66,7 +78,6 @@ public function remove($id)
     // Supprimer la réservation ou une catégorie spécifique de la réservation
     $reservation->delete();
 
-    // Rediriger vers la page du panier avec un message de succès
     return redirect()->route('cart')->with('success', 'Item removed from cart');
 }
 

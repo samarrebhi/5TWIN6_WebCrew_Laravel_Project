@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->string('prix'); 
+            $table->integer('fidelity_points_used')->default(0); 
             $table->timestamp('confirmed_at')->nullable(); 
             $table->timestamp('refused_at')->nullable(); 
             $table->timestamp('paid_at')->nullable();

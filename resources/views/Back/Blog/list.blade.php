@@ -46,8 +46,7 @@
                         <th>Title</th>
                         <th>Text</th>
                         <th>Support</th>
-                        <th>Likes</th>
-                        <th>Users</th>
+                        <th>Users Like</th>
                         <th>Actions</th>
                     </tr>
 
@@ -64,7 +63,6 @@
                             <td>{{ Str::words($blog->titre, 2, '...') }}</td>
                             <td>{{ Str::words($blog->texte, 2, '...') }}</td>
                             <td>{{ Str::words($blog->support, 2, '...') }}</td>
-                            <td>{{ $blog->like_count }}</td>
                             <td>
                                 @if ($blog->likes->isEmpty())
                                     <span>No Likes</span>

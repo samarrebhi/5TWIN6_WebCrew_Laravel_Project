@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogLike; 
 use Illuminate\Support\Facades\Auth;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class BlogControllerFront extends Controller
 {
     public function indexFront()  
     {
         $blogs = Blog::orderBy('id', 'DESC')->get();
+
+        $tr = new GoogleTranslate('en'); // Par exemple, pour traduire en anglais
+        foreach ($blogs as $blog) {
+            $blog->translated_title = $tr->translate($blog->titre);
+            $blog->translated_text = $tr->translate($blog->texte);
+        }
+        
         return view('Front.Blog.list', ['blogs' => $blogs]);
     }
 
@@ -51,6 +59,29 @@ class BlogControllerFront extends Controller
              'like_count' => $blog->like_count,
          ]);
      }
+
+     public function translateBlog($id, $lang)
+     {
+         $blog = Blog::findOrFail($id);
+ 
+         // Initialiser le traducteur Google
+         $tr = new GoogleTranslate();
+         
+         // Définir la langue cible
+         $tr->setTarget($lang);
+ 
+         // Traduire le texte du blog
+         $translatedTitle = $tr->translate($blog->titre);
+         $translatedText = $tr->translate($blog->texte);
+         
+         return response()->json([
+             'translated_title' => $translatedTitle,
+             'translated_text' => $translatedText,
+         ]);
+     }
+
+
+
      
 
 }

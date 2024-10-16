@@ -2,6 +2,7 @@
 @section('content')
 
 <div class="container-fluid py-5 mb-5 hero-header">
+    
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-md-12 col-lg-7">
@@ -49,14 +50,14 @@
         <div class="owl-carousel testimonial-carousel">
             @if($blogs->isNotEmpty())
                 @foreach ($blogs as $blog)
-                <div class="testimonial-item img-border-radius bg-light rounded p-4" style="height: 350px;"> <!-- Hauteur fixe définie ici -->
+                <div class="testimonial-item img-border-radius bg-light rounded p-4" style="height: 350px;">
                     <div class="position-relative" style="height: 100%;">
                         <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                         <div class="mb-4 pb-4 border-bottom border-secondary">
                             <!-- Titre du blog -->
-                            <h4 class="text-dark" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->titre }}</h4> <!-- Titre limité en hauteur -->
+                            <h4 class="text-dark" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->titre }}</h4>
                             <!-- Texte du blog -->
-                            <p class="mb-0" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ Str::limit($blog->support, 100) }}</p> <!-- Texte limité en hauteur -->
+                            <p class="mb-0" style="height: 30px; overflow: hidden; text-overflow: ellipsis;">{{ Str::limit($blog->support, 100) }}</p>
                         </div>
                         
                         <div class="d-flex align-items-center flex-nowrap">
@@ -71,7 +72,7 @@
 
                             <!-- Bouton J'aime -->
                             <div class="ms-4 d-block" style="flex-grow: 1;">
-                                <p class="m-0 pb-3" style="height: 150px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->texte }}</p> <!-- Texte limité en hauteur -->
+                                <p class="m-0 pb-3" style="height: 150px; overflow: hidden; text-overflow: ellipsis;">{{ $blog->texte }}</p>
 
                                 <button class="btn like-btn" data-id="{{ $blog->id }}" style="background: transparent; border: none;">
                                     <i class="fa fa-thumbs-up" style="font-size: 24px; color: green;"></i>
@@ -80,6 +81,15 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Contenu traduit -->
+                    <!-- <div class="blog-content mt-3">
+    <h1>{{ $blog->titre }}</h1>
+    <p>{{ $blog->texte }}</p>
+    <hr>
+    <h4>Translation</h4>
+    <p>{{ $blog->translated_text }}</p> 
+     </div> -->
                 </div>
                 @endforeach
             @else
@@ -100,10 +110,10 @@
         var liked = localStorage.getItem('likedBlogs') ? JSON.parse(localStorage.getItem('likedBlogs')) : {};
 
         if (liked[blogId]) {
-            $(this).find('.fa-thumbs-up').css('font-size', '30px'); // Taille augmentée pour l'état "aimé"
+            $(this).find('.fa-thumbs-up').css('font-size', '50px');
             $(this).data('liked', true);
         } else {
-            $(this).find('.fa-thumbs-up').css('font-size', '24px'); // Taille normale pour l'état "non aimé"
+            $(this).find('.fa-thumbs-up').css('font-size', '24px');
             $(this).data('liked', false);
         }
     });
@@ -121,25 +131,19 @@
                 _token: '{{ csrf_token() }}'
             },
             success: function(response) {
-                // Met à jour le compteur de likes
                 $('#like-count-' + blogId).text(response.like_count);
 
-                // Basculer l'état du bouton "J'aime"
                 if (!liked) {
-                    // L'utilisateur aime le blog
-                    likeButton.find('.fa-thumbs-up').css('font-size', '30px'); // Augmente la taille de l'icône pour indiquer qu'il aime
+                    likeButton.find('.fa-thumbs-up').css('font-size', '38px');
                     likeButton.data('liked', true);
 
-                    // Enregistrer l'état dans le localStorage
                     var likedBlogs = localStorage.getItem('likedBlogs') ? JSON.parse(localStorage.getItem('likedBlogs')) : {};
                     likedBlogs[blogId] = true;
                     localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
                 } else {
-                    // L'utilisateur n'aime plus le blog (dislike)
-                    likeButton.find('.fa-thumbs-up').css('font-size', '24px'); // Réduit la taille de l'icône
+                    likeButton.find('.fa-thumbs-up').css('font-size', '24px');
                     likeButton.data('liked', false);
 
-                    // Supprimer l'état du localStorage
                     var likedBlogs = JSON.parse(localStorage.getItem('likedBlogs'));
                     delete likedBlogs[blogId];
                     localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
@@ -151,7 +155,6 @@
         });
     });
 });
-
 </script>
 
 @endsection
