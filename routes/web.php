@@ -78,6 +78,7 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
     Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
     Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+    Route::get('/centers/search', [CenterController::class, 'search'])->name('center.search');
     Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
     Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
     

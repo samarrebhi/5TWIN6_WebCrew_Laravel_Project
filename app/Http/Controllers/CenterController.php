@@ -21,13 +21,15 @@ class CenterController extends Controller
 
     public function showCenters()
     {
-        $centers = Center::all(); 
+        
+        $centers = Center::where('user_id', auth()->id())->get();
+ 
         return view('Back.showcenters', compact('centers'));
     }
 
     public function showDetails($id)
     {
-    $center = Center::findOrFail($id); 
+    $center = Center::where('id', $id)->where('user_id', auth()->id())->firstOrFail(); 
     return view('Back.detailscenter', compact('center')); 
     }
 
@@ -50,30 +52,27 @@ class CenterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'description' => 'required',
-            'phone' => 'required',
+            'name' => ['required', 'string','min:2','max:40'],
+            'address' => ['required','min:2'],
+            'description' => ['required','min:10','max:200'],
+            'phone' => 'required|integer',
             'email' => 'required|email',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $center = new Center(); 
+        Center::create([
+            
+            'name' =>$request->name,
+            'address' => $request->address,
+            'description' =>  $request->description,
+            'phone' =>  $request->phone,
+            'email' =>  $request->email,
+            'image' => $request->file('image')->store('img', 'public'),
+            'user_id' => auth()->id(),
+        ]);
 
-        $center->name = $request->name;
-        $center->address = $request->address;
-        $center->description = $request->description;
-        $center->phone = $request->phone;
-        $center->email = $request->email;
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('img', 'public');
-            $center->image = $imagePath; 
-        }    
-
-        $center->save(); 
-
-        return redirect()->route('centers.index');
+        return redirect()->route('centers.index')->with('success', 'Center created successfully!');;
     }
 
     /**
@@ -85,6 +84,7 @@ class CenterController extends Controller
     public function show($id)
     {
         $center=center::find($id);
+        
         return view('Front.Centers.show',compact('center'));
     }
 
@@ -96,7 +96,7 @@ class CenterController extends Controller
      */
     public function edit($id)
     {
-        $center =Center::find($id);
+        $center = Center::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
         return view ('Front.Centers.edit',compact('center'));
     }
 
@@ -109,15 +109,14 @@ class CenterController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
-       $request->validate([
-        'name' => 'sometimes|required',
-        'address' => 'sometimes|required',
-        'description' => 'sometimes|required',
-        'phone' => 'sometimes|required',
-        'email' => 'sometimes|required|email',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+        $request->validate([
+            'name' => [ 'string','min:2','max:40'],
+            'address' => ['min:2'],
+            'description' => ['min:10','max:200'],
+            'phone' => 'integer',
+            'email' => 'email',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
     $center = Center::findOrFail($id); 
 
@@ -149,7 +148,7 @@ class CenterController extends Controller
     {
         \Log::info('Attempting to delete center with ID: ' . $id);
         
-        $center = Center::find($id); 
+        $center = Center::where('id', $id)->where('user_id', auth()->id())->firstOrFail(); 
         if (!$center) {
             \Log::error('Center not found with ID: ' . $id);
             return response()->json(['message' => 'Center not found'], 404);
@@ -158,5 +157,16 @@ class CenterController extends Controller
         $center->delete();
         return response()->json(['message' => 'Center deleted successfully']);
     }
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    // Chercher les centres où le nom correspond à la requête
+    $centers = Center::where('name', 'like', '%' . $query . '%')->get();
+
+    // Retourner la vue avec les résultats de recherche
+    return view('centers.index', compact('centers'));
+}
     
 }

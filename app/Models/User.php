@@ -56,4 +56,9 @@ class User extends Authenticatable
       {
           return $this->hasMany(Review::class);
       }
+       // Relationship with Center
+       public function Centers()
+       {
+           return $this->hasMany(Center::class);
+       }
 }
