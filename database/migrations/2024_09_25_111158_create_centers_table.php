@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('description', 255);
             $table->string('image')->nullable();
             $table->timestamps();
+           
         });
     }
 
@@ -33,5 +34,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('centers');
+
     }
 };

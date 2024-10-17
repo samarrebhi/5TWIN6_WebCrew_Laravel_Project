@@ -7,6 +7,7 @@
         <h2>Recycling Centers</h2>
         <a href="{{ route('center.create') }}" class="btn text-white" style="background-color: #006400;">+ Add Center</a>
     </div>
+    
     <div class="card">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover">
