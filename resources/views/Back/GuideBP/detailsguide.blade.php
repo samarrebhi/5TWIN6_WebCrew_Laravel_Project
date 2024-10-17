@@ -26,11 +26,13 @@
                 </div>
 
                 <div class="col-md-4 text-center"> <!-- Right Column for Image -->
-                    @if ($guide->image)
-                        <img src="{{ asset('storage/' . $guide->image) }}" alt="{{ $guide->title }}" class="img-fluid" style="max-width: 100%; height: auto;">
+                    @if($guide->image)
+                        <img src="{{ asset('storage/' . $guide->image) }}" alt="{{ $guide->title }}" class="img-fluid rounded"
+                             style="width: 300px; height: 300px; float: right; margin-left: 15px; object-fit: cover;">
                     @else
-                        <p>No image available.</p>
+                        <p>No image available</p>
                     @endif
+
                 </div>
             </div>
         </div>

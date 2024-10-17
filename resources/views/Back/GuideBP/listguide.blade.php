@@ -40,7 +40,7 @@
                             <td>{{ Str::limit($guide->body, 30) }}</td>
                             <td>
 
-                                <img src="{{ asset('storage/' . $guide->image)  }}" alt="{{ $guide->title }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                <img src="{{ asset('storage/' . $guide->image)  }}" alt="{{ $guide->title }}" class="img-fluid rounded" style="width: 120px; height: 80px;">
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">

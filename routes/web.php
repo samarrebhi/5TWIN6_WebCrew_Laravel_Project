@@ -182,5 +182,10 @@ Route::resource('/guides',GuideBackController::class)->names([
     'destroy'=>'guide.destroy',
     'update' => 'guide.update',
 ]);
+//frontoffice
+Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
+    'index' => 'guide.listing',
+    'show'=>'guide.details',
+]);
 
 require __DIR__.'/auth.php';

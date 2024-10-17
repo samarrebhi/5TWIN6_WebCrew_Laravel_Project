@@ -98,7 +98,12 @@ class GuideBackController extends Controller
                 Storage::disk('public')->delete($guide->image); // Ensure 'use Illuminate\Support\Facades\Storage;'
             }
         }
-
+// Convert tags array to a comma-separated string if they exist
+        if (isset($data['tags'])) {
+            $data['tags'] = implode(',', $data['tags']);
+        } else {
+            $data['tags'] = null;
+        }
         // Update the guide
         $guide->update($data);
 
