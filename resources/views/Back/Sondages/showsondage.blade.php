@@ -15,6 +15,7 @@
                 <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($sondage->start_date)->format('d/m/Y H:i') }}</p>
                 <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($sondage->end_date)->format('d/m/Y H:i') }}</p>
                 <p><strong>Response Count:</strong> {{ $sondage->response_count }}</p>
+                <p><strong>Created by user:</strong>{{ $sondage->user_id }}</p>
                 <p><strong>Questions:</strong></p>
                 <ul>
                     @foreach(explode(',', $sondage->questions) as $question)

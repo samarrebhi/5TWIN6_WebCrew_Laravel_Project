@@ -9,7 +9,7 @@
             <div class="card-body d-flex">
                 <div class="col-md-8"> <!-- Left Column for Text Details -->
                     <h5 class="card-title">{{ $guide->title }}</h5>
-                    <div class="card-subtitle text-muted mb-3">{{ $guide->category }}</div>
+                     <div class="card-subtitle text-muted mb-3"><p><strong>Created by user:</strong>{{ $guide->user_id }}</div>
                     <hr>
 
                     <p><strong>body:</strong> {{ $guide->body }}</p>
