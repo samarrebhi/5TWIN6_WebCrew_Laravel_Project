@@ -29,9 +29,6 @@ use App\Http\Controllers\FrontControllers\PaymentController;
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/', [HomeController::class, 'index'])->name('homepage'); // Set this as the default homepage
-////
-
 
 
 
