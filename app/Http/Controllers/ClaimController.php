@@ -43,7 +43,7 @@ class ClaimController extends Controller
         'title' => 'required|string|max:255',
         'description' => 'required|string|max:1000',
         'center_id' => 'required|exists:centers,id',
-        'category' => 'required|in:service,quality,time,other', // Validate category
+        'category' => 'required|in:service,quality,time,other', 
         'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
     ]);
 
@@ -80,7 +80,10 @@ class ClaimController extends Controller
      */
     public function edit($id)
     {
-        
+       
+    $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+    $centers = Center::all();
+    return view('Front.Claims.edit', compact('claim', 'centers')); 
     }
 
     /**
@@ -92,7 +95,28 @@ class ClaimController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+      // Retrieve the claim that belongs to the logged-in user
+    $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+    // Validate the input data
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string|max:1000',
+        'center_id' => 'required|exists:centers,id',
+        'category' => 'required|in:service,quality,time,other', // Validate category
+        'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048', // Optional attachment
+    ]);
+
+    // Update the claim
+    $claim->update([
+        'title' => $validatedData['title'],
+        'description' => $validatedData['description'],
+        'center_id' => $validatedData['center_id'],
+        'category' => $validatedData['category'],
+        'attachment' => $request->hasFile('attachment') ? $request->file('attachment')->store('attachments') : $claim->attachment,
+    ]);
+
+    return redirect()->route('claim.index')->with('success', 'Claim updated successfully.');  
     }
 
     /**
