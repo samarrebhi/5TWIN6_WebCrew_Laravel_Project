@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 
 class SondageFrontController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('role:client|admin');
-    }
+
 
     public function index()
     {

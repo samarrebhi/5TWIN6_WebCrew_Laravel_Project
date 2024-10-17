@@ -5,7 +5,7 @@ namespace App\Http\Controllers\BackControllers;
 use App\Http\Controllers\Controller;
 use App\Models\GuideBP;use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Storage;
 //
 class GuideBackController extends Controller
 {
@@ -31,37 +31,30 @@ class GuideBackController extends Controller
     }
     public function store(Request $request)
     {
-        // Validate incoming request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'tags' => 'array|nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
-        ]);
+        $request->merge(['user_id' => auth()->id()]);
 
-        $data = $validatedData; // Use validated data
+        $data = $request->all();
+
 
         // Handle the image upload
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images/guides', 'public');
-            $data['image'] = $imagePath; // Save image path in the data array
+            $data['image'] = $imagePath;
         }
-
         // Convert tags array to a comma-separated string if they exist
         if (isset($data['tags'])) {
             $data['tags'] = implode(',', $data['tags']);
         } else {
             $data['tags'] = null;
         }
-
-        // Add the logged-in user's ID
-        $data['user_id'] = auth()->id(); // Assuming user is authenticated
-
-        // Create the GuideBP instance with the user_id included
         $guide = GuideBP::create($data);
-
-        return redirect()->route('guide.index')->with('success', 'Guide created successfully.'); // Redirect with a success message
+        return redirect()->route('guide.index')->with('success', 'Guide created successfully.');
     }
+
+
+
+
+
 
 
 
@@ -80,19 +73,37 @@ class GuideBackController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $guide = [
+        // Find the guide by ID
+        $guide = GuideBP::findOrFail($id);
+
+        // Prepare the update data
+        $data = [
             'title' => $request->title,
             'body' => $request->body,
             'category' => $request->category,
             'tags' => $request->tags,
-            'image' => $request->image,
             'external_links' => $request->external_links,
         ];
 
+        // Handle the image upload if a new image is provided
+        if ($request->hasFile('image')) {
+            // Store the new image in 'images/guides' directory
+            $imagePath = $request->file('image')->store('images/guides', 'public');
 
-        GuideBP::whereId($id)->update($guide);
+            // Add the new image path to the data array
+            $data['image'] = $imagePath;
+
+            // Optionally, delete the old image if needed
+            if ($guide->image) {
+                Storage::disk('public')->delete($guide->image); // Ensure 'use Illuminate\Support\Facades\Storage;'
+            }
+        }
+
+        // Update the guide
+        $guide->update($data);
 
         return redirect()->route('guide.index')->with('success', 'Guide updated successfully.');
     }
+
 
 }
