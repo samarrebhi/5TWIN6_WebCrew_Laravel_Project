@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
@@ -134,6 +134,7 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
 
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::resource('/center',CenterController::class);
+Route::resource('/claim',ClaimController::class);
 
 
 

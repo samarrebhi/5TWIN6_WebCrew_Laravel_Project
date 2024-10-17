@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('centers', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable()->after('image'); // Make user_id nullable
+            $table->unsignedBigInteger('user_id')->nullable()->after('image'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('centers', function (Blueprint $table) {
-            $table->dropForeign(['user_id']); // Drop the foreign key constraint
-            $table->dropColumn('user_id');    // Drop the user_id column
+            $table->dropForeign(['user_id']); 
+            $table->dropColumn('user_id');   
         });
     }
 };

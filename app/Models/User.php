@@ -61,4 +61,9 @@ class User extends Authenticatable
        {
            return $this->hasMany(Center::class);
        }
+       // Relationship with reclamation
+       public function Claims()
+       {
+           return $this->hasMany(Claim::class);
+       }
 }
