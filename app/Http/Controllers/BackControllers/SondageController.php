@@ -29,17 +29,24 @@ class SondageController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:15',
+            'description' => 'required|string|min:20',
+            'category' => 'required|alpha',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',
+            'questions' => 'required|string',
+        ]);
 
-        $request->merge(['user_id' => auth()->id()]);
+        $validatedData['user_id'] = auth()->id();
 
-
-        $sondage = Sondage::create($request->all());
-
+        $sondage = Sondage::create($validatedData);
 
         session()->flash('success', 'Poll created successfully!');
 
         return redirect()->route('sondage.index');
     }
+
 
 
     /**
@@ -75,20 +82,20 @@ class SondageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sondage=['title'=>$request->title,
-            'description'=>$request->description,
-            'questions'=>$request->questions,
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:15',
+            'description' => 'required|string|min:20',
+            'category' => 'required|alpha',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',
+            'questions' => 'required|string',
+        ]);
 
-            "start_date"=>$request->start_date,
-            "end_date"=>$request->end_date,
-
-            "category"=>$request->category,
-
-        ];
-        Sondage::whereId($id)->update($sondage);
+        Sondage::whereId($id)->update($validatedData);
 
         return redirect()->route('sondage.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

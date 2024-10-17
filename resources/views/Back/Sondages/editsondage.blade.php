@@ -12,6 +12,15 @@
                         @method('PUT')
 
                         <div class="mb-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="poll-title">Title</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-title"></i></span>
@@ -22,7 +31,7 @@
                                     class="form-control"
                                     value="{{ $sondage->title }}"
                                     placeholder="Enter poll title"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -38,7 +47,7 @@
                                     name="description"
                                     class="form-control"
                                     placeholder="Enter a brief description"
-                                    required
+
                                 >{{ $sondage->description }}</textarea>
                             </div>
                         </div>
@@ -68,7 +77,7 @@
                                     name="start_date"
                                     class="form-control"
                                     value="{{ $sondage->start_date }}"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -83,7 +92,7 @@
                                     name="end_date"
                                     class="form-control"
                                     value="{{ $sondage->end_date }}"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -97,7 +106,7 @@
                                     name="questions"
                                     class="form-control"
                                     placeholder="Enter your poll questions, separated by commas or new lines..."
-                                    required
+
                                 >{{ $sondage->questions }}</textarea>
                             </div>
                         </div>

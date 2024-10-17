@@ -11,6 +11,15 @@
                         @csrf
 
                         <div class="mb-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="guide-title">Title</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-title"></i></span>
@@ -20,7 +29,7 @@
                                     name="title"
                                     class="form-control"
                                     placeholder="Enter guide title"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -34,14 +43,14 @@
                                     name="body"
                                     class="form-control"
                                     placeholder="Enter the body of your guide"
-                                    required
+
                                 ></textarea>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="guide-category">Category</label>
-                            <select id="guide-category" name="category" class="form-select" required>
+                            <select id="guide-category" name="category" class="form-select" >
                                 <option value="" disabled selected>Select a category</option>
                                 <option value="Recycling">Recycling</option>
                                 <option value="Waste Management">Waste Management</option>
@@ -54,7 +63,7 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="guide-image">Image</label>
-                            <input type="file" id="guide-image" name="image" class="form-control" required />
+                            <input type="file" id="guide-image" name="image" class="form-control"  />
                         </div>
 
                         <div class="mb-3">

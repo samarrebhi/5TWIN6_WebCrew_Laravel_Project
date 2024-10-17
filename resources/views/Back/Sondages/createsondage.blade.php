@@ -12,6 +12,15 @@
                         @csrf
 
                         <div class="mb-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="poll-title">Title</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-title"></i></span>
@@ -21,7 +30,7 @@
                                     name="title"
                                     class="form-control"
                                     placeholder="Enter poll title"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -36,7 +45,7 @@
                                     name="description"
                                     class="form-control"
                                     placeholder="Enter a brief description"
-                                    required
+
                                 ></textarea>
                             </div>
                         </div>
@@ -64,7 +73,7 @@
                                     id="poll-start-date"
                                     name="start_date"
                                     class="form-control"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -78,7 +87,7 @@
                                     id="poll-end-date"
                                     name="end_date"
                                     class="form-control"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -92,7 +101,7 @@
                                     name="questions"
                                     class="form-control"
                                     placeholder="Enter your poll questions, separated by commas or new lines..."
-                                    required
+
                                 ></textarea>
                             </div>
                         </div>

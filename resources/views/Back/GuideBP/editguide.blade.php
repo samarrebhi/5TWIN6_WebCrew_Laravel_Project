@@ -12,6 +12,15 @@
                         @method('PUT')
 
                         <div class="mb-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="guide-title">Title</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-title"></i></span>
