@@ -24,7 +24,11 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+
+
+        $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
         });
+
     }
 
     /**

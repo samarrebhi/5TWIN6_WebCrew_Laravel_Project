@@ -31,8 +31,15 @@ class GuideBackController extends Controller
     }
     public function store(Request $request)
     {
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'tags' => 'array|nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+        ]);
 
-        $data = $request->all();
+        $data = $validatedData; // Use validated data
 
         // Handle the image upload
         if ($request->hasFile('image')) {
@@ -47,11 +54,15 @@ class GuideBackController extends Controller
             $data['tags'] = null;
         }
 
+        // Add the logged-in user's ID
+        $data['user_id'] = auth()->id(); // Assuming user is authenticated
 
+        // Create the GuideBP instance with the user_id included
         $guide = GuideBP::create($data);
 
         return redirect()->route('guide.index')->with('success', 'Guide created successfully.'); // Redirect with a success message
     }
+
 
 
     public function destroy($id)

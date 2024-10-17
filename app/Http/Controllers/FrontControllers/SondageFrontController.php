@@ -10,9 +10,9 @@ class SondageFrontController extends Controller
 {
     public function __construct()
     {
-        $this->middleware( 'role:client');
-        $this->middleware( 'role:admin');
+        $this->middleware('role:client|admin');
     }
+
     public function index()
     {
         $sondages=sondage::all();

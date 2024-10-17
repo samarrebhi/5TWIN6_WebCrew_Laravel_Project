@@ -29,11 +29,18 @@ class SondageController extends Controller
 
     public function store(Request $request)
     {
-        $sondage=Sondage::create($request->all());
-        $sondage->save();
+
+        $request->merge(['user_id' => auth()->id()]);
+
+
+        $sondage = Sondage::create($request->all());
+
+
         session()->flash('success', 'Poll created successfully!');
+
         return redirect()->route('sondage.index');
     }
+
 
     /**
      * Display the specified resource.

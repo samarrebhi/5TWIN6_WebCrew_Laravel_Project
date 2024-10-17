@@ -25,6 +25,8 @@ return new class extends Migration
                 $table->string('tags')->nullable();
                 $table->timestamps();
             $table->string('image')->nullable();
+
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             });
 
     }

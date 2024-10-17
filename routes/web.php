@@ -67,31 +67,8 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
     Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
 
-/////routees for sondages entity
 
-        Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
-            'index' => 'sondage.index',
-            'create' => 'sondage.create.form',
-            'store' => 'sondage.store',
 
-        ]);
-//frontoffice
-        Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
-            'index' => 'sondage.listing',
-            'show'=>'sondage.details',
-        ]);
-//////routes for guideBP entity
-/// backoffice
-        Route::resource('/guides',GuideBackController::class)->names([
-            'index' => 'guide.index',
-            'create' => 'guide.create.form',
-            'store' => 'guide.store',
-            'show' =>  'guide.show',
-            'edit'=>  'guide.edit',
-            'destroy'=>'guide.destroy',
-            'update' => 'guide.update',
-        ]);
-        //
 
 
     });
@@ -180,4 +157,30 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 
 
 });
+
+////routees for sondages entity
+
+Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
+    'index' => 'sondage.index',
+    'create' => 'sondage.create.form',
+    'store' => 'sondage.store',
+
+]);
+//frontoffice
+Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
+    'index' => 'sondage.listing',
+    'show'=>'sondage.details',
+]);
+//////routes for guideBP entity
+/// backoffice
+Route::resource('/guides',GuideBackController::class)->names([
+    'index' => 'guide.index',
+    'create' => 'guide.create.form',
+    'store' => 'guide.store',
+    'show' =>  'guide.show',
+    'edit'=>  'guide.edit',
+    'destroy'=>'guide.destroy',
+    'update' => 'guide.update',
+]);
+
 require __DIR__.'/auth.php';

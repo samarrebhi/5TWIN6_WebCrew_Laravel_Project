@@ -68,10 +68,19 @@ class User extends Authenticatable
       {
           return $this->hasMany(EvenementCollecte::class);
       }
-  
+
       // Relationship with Review
       public function reviews()
       {
           return $this->hasMany(Review::class);
       }
+
+    public function sondages()
+    {
+        return $this->hasMany(Sondage::class);
+    }
+    public function guide()
+    {
+        return $this->hasMany(GuideBP::class);
+    }
 }
