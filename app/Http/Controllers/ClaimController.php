@@ -126,7 +126,16 @@ class ClaimController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { $claim = Claim::findOrFail($id);
+
+        // Check if the authenticated user is the owner of the claim
+        if ($claim->user_id !== auth()->id()) {
+            return redirect()->route('claim.index')->with('error', 'You are not authorized to delete this claim.');
+        }
+    
+        // Delete the claim
+        $claim->delete();
+    
+        return redirect()->route('claim.index')->with('success', 'Claim deleted successfully.');
     }
 }
