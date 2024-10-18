@@ -1,141 +1,147 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Claim;
 use App\Models\Center;
 use Illuminate\Http\Request;
 
 class ClaimController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Afficher la liste des réclamations pour le client 
     public function index()
     {
         $claims = Claim::where('user_id', auth()->id())->get();
         return view('Front.Claims.claims', compact('claims')); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Montrer le formulaire de création d'une nouvelle réclamation
     public function create()
     {
         $centers = Center::all(); 
         return view('Front.Claims.create', compact('centers')); 
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-      // Validate the input data
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string|max:1000',
-        'center_id' => 'required|exists:centers,id',
-        'category' => 'required|in:service,quality,time,other', 
-        'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
-    ]);
+        $request->validate([
+            'title' => 'required|string|max:50',
+            'description' => 'required|string|max:1000',
+            'center_id' => 'required|exists:centers,id',
+            'category' => 'required|in:service,quality,time,other', 
+            'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
+        ]);
 
-    // Store the claim with the logged-in user's ID
-    Claim::create([
-        'title' => $validatedData['title'],
-        'description' => $validatedData['description'],
-        'status' => 'in_progress',
-        'user_id' => auth()->id(),
-        'center_id' => $validatedData['center_id'],
-        'category' => $validatedData['category'], // Add category
-        'attachment' => $request->hasFile('attachment') ? $request->file('attachment')->store('attachments') : null,
-    ]);
+        $attachmentPath = null; 
 
-    return redirect()->route('claim.index')->with('success', 'Claim created successfully.');
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+            \Log::info('File stored at: ' . $attachmentPath);
+        } else {
+            \Log::warning('No file uploaded.');
+        }
+    
+        Claim::create([
+            'title' => $request->title,
+            'category' => $request->category,
+            'description' => $request->description,
+            'status' => 'in_progress',
+            'center_id' => $request->center_id,
+            'attachment' => $attachmentPath, 
+            'user_id' => auth()->id(),
+        ]);
+
+    
+        return redirect()->route('claim.index')->with('success', 'Claim created successfully.');
     }
+    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Afficher les details d'une reclamation pour le client
     public function show($id)
     {
-       
+        $claim = Claim::findOrFail($id);
+
+        if ($claim->user_id !== auth()->id()) {
+            return redirect()->route('claim.index')->with('error', 'You are not authorized to view this claim.');
+        }
+    
+        return view('Front.Claims.show', compact('claim')); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Montrer le formulaire pour éditer une réclamation
     public function edit($id)
     {
-       
-    $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
-    $centers = Center::all();
-    return view('Front.Claims.edit', compact('claim', 'centers')); 
+        $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $centers = Center::all();
+        return view('Front.Claims.edit', compact('claim', 'centers')); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Mettre à jour une réclamation
     public function update(Request $request, $id)
     {
-      // Retrieve the claim that belongs to the logged-in user
-    $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $claim = Claim::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
-    // Validate the input data
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string|max:1000',
-        'center_id' => 'required|exists:centers,id',
-        'category' => 'required|in:service,quality,time,other', // Validate category
-        'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048', // Optional attachment
-    ]);
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'center_id' => 'required|exists:centers,id',
+            'category' => 'required|in:service,quality,time,other',
+            'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
+        ]);
 
-    // Update the claim
-    $claim->update([
-        'title' => $validatedData['title'],
-        'description' => $validatedData['description'],
-        'center_id' => $validatedData['center_id'],
-        'category' => $validatedData['category'],
-        'attachment' => $request->hasFile('attachment') ? $request->file('attachment')->store('attachments') : $claim->attachment,
-    ]);
+        $claim->update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'center_id' => $validatedData['center_id'],
+            'category' => $validatedData['category'],
+            'attachment' => $request->hasFile('attachment') 
+                ? $request->file('attachment')->store('attachments', 'public') 
+                : $claim->attachment, 
+        ]);
 
-    return redirect()->route('claim.index')->with('success', 'Claim updated successfully.');  
+        return redirect()->route('claim.index')->with('success', 'Claim updated successfully.');  
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Supprimer une réclamation
     public function destroy($id)
-    { $claim = Claim::findOrFail($id);
+    {
+        $claim = Claim::findOrFail($id);
 
-        // Check if the authenticated user is the owner of the claim
         if ($claim->user_id !== auth()->id()) {
             return redirect()->route('claim.index')->with('error', 'You are not authorized to delete this claim.');
         }
     
-        // Delete the claim
         $claim->delete();
     
         return redirect()->route('claim.index')->with('success', 'Claim deleted successfully.');
     }
+
+        public function adminIndex()
+        {
+            $claims = Claim::all(); 
+            return view('Back.Claims.claims', compact('claims'));
+        }
+
+        // Afficher les détails d'une réclamation
+        public function adminShow($id)
+        {
+            $claim = Claim::findOrFail($id);
+            return view('Back.Claims.show', compact('claim'));
+        }
+
+        // Mettre à jour le statut d'une réclamation et ajouter une note
+        public function updateStatus(Request $request, $id)
+        {
+            $request->validate([
+                'status' => 'required|in:seen,in_progress',
+                'admin_note' => 'nullable|string|max:1000',
+            ]);
+
+            $claim = Claim::findOrFail($id);
+            $claim->status = $request->status;
+            $claim->admin_note = $request->admin_note; 
+            $claim->save();
+
+            return redirect()->route('admin.claims.index')->with('success', 'Claim status updated successfully.');
+        }
 }

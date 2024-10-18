@@ -14,12 +14,16 @@ class Claim extends Model
         'description',
         'category',
         'center_id',
-        'attachement',
+        'attachment',
         'status',
         'user_id',
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function Center()
+    {
+        return $this->belongsTo(Center::class);
     }
 }

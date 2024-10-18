@@ -26,9 +26,9 @@
                     <td>{{ $claim->title }}</td>
                     <td>{{ Str::limit($claim->description, 50) }}</td> <!--  a shortened version of the description -->
                     <td>
-                        @if($claim->status == 'pending')
+                        @if($claim->status == 'in_progress')
                             <span class="badge bg-warning">Pending</span>
-                        @elseif($claim->status == 'resolved')
+                        @elseif($claim->status == 'seen')
                             <span class="badge bg-success">Resolved</span>
                         @else
                             <span class="badge bg-secondary">Unknown</span>

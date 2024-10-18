@@ -57,13 +57,13 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="attachment" class="form-label">Attachment (optional)</label>
-                <input type="file" name="attachment" class="form-control @error('attachment') is-invalid @enderror">
-                @error('attachment')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+    <div class="mb-3">
+        <label for="attachment" class="form-label">Attachment (optional)</label>
+        <input type="file" name="attachment" class="form-control @error('attachment') is-invalid @enderror">
+        @error('attachment')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
             <button type="button" class="btn btn-secondary" onclick="previousStep()">Previous</button>
             <button type="submit" class="btn btn-success">Submit</button>

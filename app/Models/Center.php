@@ -23,4 +23,8 @@ class Center extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function Claims()
+    {
+        return $this->hasMany(Claim::class);
+    }
 }

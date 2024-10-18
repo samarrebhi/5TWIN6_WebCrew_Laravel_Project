@@ -85,7 +85,9 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
     Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
     
-
+    Route::get('/admin/claims', [ClaimController::class, 'adminIndex'])->name('admin.claims.index');
+    Route::get('/admin/claims/{id}', [ClaimController::class, 'adminShow'])->name('admin.claims.show');
+    Route::post('/admin/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('admin.claims.updateStatus');
 
     
     });
