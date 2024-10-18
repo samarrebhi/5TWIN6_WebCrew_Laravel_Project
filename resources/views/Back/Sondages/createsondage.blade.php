@@ -35,7 +35,6 @@
                             </div>
                         </div>
 
-
                         <div class="mb-3">
                             <label class="form-label" for="poll-description">Description</label>
                             <div class="input-group input-group-merge">
@@ -51,16 +50,28 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="poll-category">Category</label>
+                            <label class="form-label" for="guide-category">Category</label>
+                            <select id="guide-category" name="category" class="form-select" >
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="Recycling">Recycling</option>
+                                <option value="Waste Management">Waste Management</option>
+                                <option value="Environmental Awareness">Environmental Awareness</option>
+                                <option value="Composting">Composting</option>
+                                <option value="Upcycling">Upcycling</option>
+                                <option value="E-Waste Management">E-Waste Management</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="guide-bp">To Which best practices guide does this poll belong?</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-category"></i></span>
-                                <input
-                                    type="text"
-                                    id="poll-category"
-                                    name="category"
-                                    class="form-control"
-                                    placeholder="Enter category"
-                                />
+                                <select id="guide-bp" name="guide_bp_id" class="form-select">
+                                    <option value="">Select a guide</option>
+                                    @foreach($guides as $guide)
+                                        <option value="{{ $guide->id }}">{{ $guide->title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

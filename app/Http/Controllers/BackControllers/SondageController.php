@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\GuideBP;
 use App\Models\Sondage;
 use Illuminate\Http\Request;
 
@@ -22,20 +23,23 @@ class SondageController extends Controller
     }
 /// pour add
     public function create()
-    {
-        return view('Back.Sondages.createsondage');
+    {  $guides = GuideBP::all();
+        return view('Back.Sondages.createsondage',compact('guides'));
     }
 
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
-            'title' => 'required|string|max:15',
-            'description' => 'required|string|min:20',
-            'category' => 'required|alpha',
+            'title' => 'required|string|max:30',
+            'description' => 'required|string|min:50',
+            'category' => 'required',
             'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:start_date',
             'questions' => 'required|string',
+            'guide_bp_id' => 'required|exists:guide_b_p_s,id',
+
         ]);
 
         $validatedData['user_id'] = auth()->id();
@@ -111,7 +115,16 @@ class SondageController extends Controller
             ->with('success','Sondage deleted successuflly');
 
     }
-    ////for the front  polls listing
+    public function showguide($id)
+    {
+        $poll = Sondage::with('guide')->find($id);
 
+        // Handle the case where the poll is not found
+        if (!$poll) {
+            abort(404);
+        }
+
+        return view('sondages.show', compact('poll'));
+    }
 
 }

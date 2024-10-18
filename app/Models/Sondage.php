@@ -21,8 +21,13 @@ class Sondage extends Model
         'start_date',
         'end_date',
         'category',
-        'user_id'
-
-
+        'user_id',
+        'guide_bp_id'
     ];
+    protected $table = 'sondages';
+    public function guide()
+    {
+        return $this->belongsTo(GuideBP::class,'guide_bp_id','id');
+    }
+
 }

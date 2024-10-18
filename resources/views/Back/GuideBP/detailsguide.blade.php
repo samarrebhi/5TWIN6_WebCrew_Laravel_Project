@@ -23,6 +23,13 @@
                             <li>{{ $tag }}</li>
                         @endforeach
                     </ul>
+                    @if ($guide->sondage)
+                        <h2>Related Poll</h2>
+                        <p>Title: {{ $guide->sondage->title }}</p>
+                        <p>Description: {{ $guide->sondage->description }}</p>
+                    @else
+                        <p>No related poll available.</p>
+                    @endif
                 </div>
 
                 <div class="col-md-4 text-center"> <!-- Right Column for Image -->

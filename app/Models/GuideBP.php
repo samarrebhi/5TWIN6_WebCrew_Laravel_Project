@@ -9,10 +9,7 @@ class GuideBP extends Model
 {
     use HasFactory;
     public $timestamps = true;
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
     protected $fillable = [
         'title',
         'body',
@@ -20,6 +17,19 @@ class GuideBP extends Model
        'image',
         'external_links',
         'tags',
-        'user_id'
+        'user_id',
+
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    protected $table = 'guide_b_p_s';
+    public function sondages()
+    {
+        return $this->hasMany(Sondage::class);
+    }
+
+
 }

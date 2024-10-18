@@ -27,6 +27,11 @@ return new class extends Migration
 
 
         $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+
+           // $table->foreignId('guide_bp_id')->constrained()->onDelete('cascade');
+
+           // $table->foreignId('guide_bp_id')->constrained('guide_b_p_s')->onDelete('cascade'); // Add nullable here
+            $table->foreignId('guide_bp_id')->nullable()->references('id')->on('guide_b_p_s')->onDelete('cascade');
         });
 
     }

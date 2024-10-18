@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('image')->nullable();
 
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+           // $table->foreignId('sondage_id')->constrained('sondages')->onDelete('cascade');
             });
 
     }

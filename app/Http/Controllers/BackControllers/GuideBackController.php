@@ -117,5 +117,16 @@ class GuideBackController extends Controller
         return redirect()->route('guide.index')->with('success', 'Guide updated successfully.');
     }
 
+    public function showpoll($id)
+    {
+        $guide = GuideBP::with('sondage')->find($id);
+
+        // Handle the case where the guide is not found
+        if (!$guide) {
+            abort(404);
+        }
+
+        return view('guides.show', compact('guide'));
+    }
 
 }
