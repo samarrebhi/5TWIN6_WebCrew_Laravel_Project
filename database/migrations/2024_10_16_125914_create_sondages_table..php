@@ -19,7 +19,7 @@ return new class extends Migration
             //$table->string('location', 255);  // or any length you want
 
             $table->text('category');
-            $table->text('questions',255);
+            $table->json('questions')->nullable();
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');

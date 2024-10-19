@@ -16,12 +16,28 @@
                 <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($sondage->end_date)->format('d/m/Y H:i') }}</p>
 
                 <p><strong>Created by user:</strong>{{ $sondage->user_id }}</p>
-                <p><strong>Questions:</strong></p>
+                <p><strong>Questions and options:</strong></p>
                 <ul>
-                    @foreach(explode(',', $sondage->questions) as $question)
-                        <li>{{ $question }}</li>
-                    @endforeach
+
+
+                    @if($questions)
+                        @foreach($questions as $question)
+                        <li>
+                            <strong>{{ $question['text'] }}</strong>
+                            <ul>
+                                @foreach($question['options'] as $option)
+                                    <li>{{ $option }}</li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        @endforeach
+                    @else
+                        <li>No questions available</li>
+                    @endif
+
                 </ul>
+
+
 
             </div>
         </div>
@@ -30,3 +46,4 @@
 
 
 @endsection
+

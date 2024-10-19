@@ -37,12 +37,23 @@ class SondageController extends Controller
             'category' => 'required',
             'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:start_date',
-            'questions' => 'required|string',
+
             'guide_bp_id' => 'required|exists:guide_b_p_s,id',
+
+            'questions' => 'required',
+            'questions.*.text' => 'required|string', // Each question text is required
+            'questions.*.options' => 'required|array|min:2', // Each question must have at least 2 options
+            'questions.*.options.*' => 'required',
 
         ]);
 
         $validatedData['user_id'] = auth()->id();
+
+
+
+
+// // Store the questions as JSON in the 'questions' column
+  $validatedData['questions'] = json_encode($request->questions);
 
         $sondage = Sondage::create($validatedData);
 
@@ -52,6 +63,33 @@ class SondageController extends Controller
     }
 
 
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:15',
+            'description' => 'required|string|min:20',
+            'category' => 'required',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',
+            'guide_bp_id' => 'required|exists:guide_b_p_s,id',
+
+            'questions' => 'required',
+            'questions.*.text' => 'required|string', // Each question text is required
+            'questions.*.options' => 'required|array|min:2', // Each question must have at least 2 options
+            'questions.*.options.*' => 'required',
+        ]);
+
+
+        // Encode the questions to JSON
+        $validatedData['questions'] = json_encode($request->questions);
+
+        // Update the sondage with the new data
+        $sondage = Sondage::findOrFail($id);
+
+        $sondage->update($validatedData);
+
+        return redirect()->route('sondage.index');
+    }
 
     /**
      * Display the specified resource.
@@ -62,7 +100,9 @@ class SondageController extends Controller
     public function show($id)
     {
         $sondage=sondage::find($id);
-        return view('Back.Sondages.showsondage',compact('sondage'));
+       // logger()->info('Fetched Questions:', $sondage->questions);
+        $questions = json_decode($sondage->questions, true);
+        return view('Back.Sondages.showsondage',compact('sondage','questions'));
     }
 
     /**
@@ -72,9 +112,11 @@ class SondageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $sondage =Sondage::find($id);
-        return view ('Back.Sondages.editsondage',compact('sondage'));
+    {$guides = GuideBP::all();
+
+        $sondage = Sondage::findOrFail($id);
+        $questions = json_decode($sondage->questions, true);
+        return view ('Back.Sondages.editsondage',compact('sondage','guides','questions'));
     }
 
     /**
@@ -84,21 +126,6 @@ class SondageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:15',
-            'description' => 'required|string|min:20',
-            'category' => 'required|alpha',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after:start_date',
-            'questions' => 'required|string',
-        ]);
-
-        Sondage::whereId($id)->update($validatedData);
-
-        return redirect()->route('sondage.index');
-    }
 
 
     /**

@@ -22,7 +22,12 @@ class Sondage extends Model
         'end_date',
         'category',
         'user_id',
-        'guide_bp_id'
+        'guide_bp_id',
+
+    ];
+    protected $casts = [
+        'questions' => 'array', // Cast to array for easier access
+
     ];
     protected $table = 'sondages';
     public function guide()
