@@ -157,16 +157,37 @@ class CenterController extends Controller
         $center->delete();
         return response()->json(['message' => 'Center deleted successfully']);
     }
-
     public function search(Request $request)
-{
-    $query = $request->input('query');
-
-    // Chercher les centres où le nom correspond à la requête
-    $centers = Center::where('name', 'like', '%' . $query . '%')->get();
-
-    // Retourner la vue avec les résultats de recherche
-    return view('centers.index', compact('centers'));
-}
+    {
+        $query = $request->input('query');
+    
+        // Filtrer les centres par l'utilisateur connecté et par le nom
+        $centers = Center::where('user_id', auth()->id())  // Filtrer par utilisateur connecté
+                        ->where('name', 'LIKE', "%$query%")
+                        ->get();
+    
+        // Construire les lignes HTML
+        $output = '';
+        foreach ($centers as $center) {
+            $output .= '
+            <tr data-id="' . $center->id . '">
+                <td>' . $center->name . '</td>
+                <td>' . $center->address . '</td>
+                <td>' . $center->description . '</td>
+                <td>' . $center->phone . '</td>
+                <td>' . $center->email . '</td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <a href="' . route('center.show.details', $center->id) . '" class="btn btn-outline-secondary btn-sm">Details</a>
+                        <a href="' . route('center.edit', $center->id) . '" class="btn btn-outline-warning btn-sm">Edit</a>
+                        <button class="btn btn-outline-danger btn-sm delete-center" data-id="' . $center->id . '">Delete</button>
+                    </div>
+                </td>
+            </tr>';
+        }
+    
+        return response()->json($output);
+    }
+    
     
 }
