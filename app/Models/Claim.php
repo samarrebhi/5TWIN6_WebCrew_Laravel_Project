@@ -5,26 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Center extends Model
+class Claim extends Model
 {
+
     use HasFactory;
     protected $fillable = [
-        'name',
+        'title',
         'description',
-        'email',
-        'phone',
-        'address',
-        'image',
+        'category',
+        'center_id',
+        'attachment',
+        'status',
         'user_id',
     ];
-
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function Claims()
+    public function Center()
     {
-        return $this->hasMany(Claim::class);
+        return $this->belongsTo(Center::class);
     }
 }
