@@ -27,7 +27,7 @@
                         <p class="card-text"><strong>Capacity:</strong> {{ $equipment->capacite }}</p>
                         <p class="card-text"><strong>Location:</strong> {{ $equipment->emplacement }}</p>
 
-                        <a href="{{ route('equipments.show', $equipment->id) }}" class="btn btn-primary mt-2">View Details</a>
+                        <a href="{{ route('front.equipments.show', $equipment->id) }}"  class="btn btn-primary mt-2">View Details</a>
                     </div>
                 </div>
             </div>

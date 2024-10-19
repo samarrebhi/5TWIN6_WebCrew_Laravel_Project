@@ -45,9 +45,10 @@
                             <td>{{ $equipment->capacite }}</td>
                             <td>{{ $equipment->emplacement }}</td>
                             <td>
-                                <a href="{{ route('equipments.show', $equipment->id) }}" class="btn btn-info btn-sm">
-                                    <i class="bx bx-show"></i> View
-                                </a>
+                            <a href="{{ route('equipments.show', $equipment->id) }}" class="btn btn-info btn-sm">
+    <i class="bx bx-show"></i> View
+</a>
+
                                 <a href="{{ route('equipments.edit', $equipment->id) }}" class="btn btn-warning btn-sm">
                                     <i class="bx bx-edit"></i> Update
                                 </a>
