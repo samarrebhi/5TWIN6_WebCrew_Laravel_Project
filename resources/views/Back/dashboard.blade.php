@@ -242,6 +242,12 @@
               <div data-i18n="Basic">Blog</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="{{ route('admin.claims.index') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div data-i18n="Basic">Claims</div>
+              </a>
+            </li>
 
               <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
@@ -264,6 +270,7 @@
               <div data-i18n="Basic">Bad Reviews Users</div>
               </a>
             </li>
+
                 
               </ul>
             </li>

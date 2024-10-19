@@ -116,11 +116,11 @@ class ClaimController extends Controller
         return redirect()->route('claim.index')->with('success', 'Claim deleted successfully.');
     }
 
-        public function adminIndex()
+     /*   public function adminIndex()
         {
             $claims = Claim::all(); 
             return view('Back.Claims.claims', compact('claims'));
-        }
+        }*/
 
         // Afficher les détails d'une réclamation
         public function adminShow($id)
@@ -144,4 +144,39 @@ class ClaimController extends Controller
 
             return redirect()->route('admin.claims.index')->with('success', 'Claim status updated successfully.');
         }
+        public function adminIndex(Request $request)
+        {
+            // Récupérer les filtres depuis la requête
+            $status = $request->input('status');
+            $center_id = $request->input('center_id');
+            $category = $request->input('category');
+        
+            // Construire la requête de base
+            $query = Claim::query();
+        
+            // Appliquer les filtres si ils existent
+            if ($status) {
+                $query->where('status', $status);
+            }
+        
+            if ($center_id) {
+                $query->where('center_id', $center_id);
+            }
+        
+            if ($category) {
+                $query->where('category', $category);
+            }
+        
+            // Récupérer les réclamations filtrées
+            $claims = $query->with('center')->get();
+        
+            // Récupérer les centres disponibles pour le filtre
+            $centers = Center::all();
+        
+            // Retourner les données à la vue
+            return view('Back.Claims.claims', compact('claims', 'centers'));
+        }
+        
+    
+        
 }

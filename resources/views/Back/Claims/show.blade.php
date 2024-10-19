@@ -23,7 +23,7 @@
             <textarea name="admin_note" class="form-control" rows="4">{{ old('admin_note', $claim->admin_note) }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-success">Update Claim</button>
+        <button type="submit" class="btn " style="background-color: #006400; color: white;">Add a note</button>
     </form>
 </div>
 @endsection

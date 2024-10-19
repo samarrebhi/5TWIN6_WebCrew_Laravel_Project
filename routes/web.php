@@ -88,6 +88,7 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::get('/admin/claims', [ClaimController::class, 'adminIndex'])->name('admin.claims.index');
     Route::get('/admin/claims/{id}', [ClaimController::class, 'adminShow'])->name('admin.claims.show');
     Route::post('/admin/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('admin.claims.updateStatus');
+    Route::get('/admin/claims/filter', [ClaimController::class, 'filterClaims'])->name('admin.claims.filterClaims');
 
     
     });
