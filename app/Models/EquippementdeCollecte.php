@@ -15,5 +15,6 @@ class EquippementdeCollecte extends Model
         'statut',       // Statut de l'équipement (actif, en maintenance, hors service)
         'capacite',     // Capacité de l'équipement (ex. en litres ou kilogrammes)
         'emplacement',   // Emplacement actuel de l'équipement
+          'image',
     ];
 }

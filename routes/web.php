@@ -6,10 +6,13 @@ use App\Http\Controllers\BackControllers\HomeControllerBack;
 
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
+use App\Http\Controllers\FrontControllers\EquippementControllerF;
+
 use App\Http\Controllers\FrontControllers\EventController; // Adjust the controller path as needed
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EquippementController;
 
 
 // Home page routes
@@ -110,5 +113,8 @@ Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->nam
 Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
 
+
+Route::resource('admin/equipments', EquippementController::class);
+Route::resource('equipments', EquippementControllerF::class);
 
 
