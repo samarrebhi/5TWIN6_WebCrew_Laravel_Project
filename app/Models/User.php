@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Blog;
 use App\Models\Reservation;
 
+use App\Models\Category;
+use App\Models\EquippementdeCollecte;
 
 class User extends Authenticatable
 {
@@ -74,6 +77,7 @@ class User extends Authenticatable
       {
           return $this->hasMany(Review::class);
       }
+
        // Relationship with Center
        public function Centers()
        {
@@ -84,4 +88,17 @@ class User extends Authenticatable
        {
            return $this->hasMany(Claim::class);
        }
+
+    public function equippementdecollectes()
+    {
+        return $this->hasMany(EquippementdeCollecte::class);
+    }
+
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+
 }

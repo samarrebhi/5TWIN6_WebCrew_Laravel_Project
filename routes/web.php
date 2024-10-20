@@ -15,7 +15,13 @@ use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BackControllers\ReservationBackController;
 use App\Http\Controllers\FrontControllers\ReservationController;
+
 use App\Http\Controllers\FrontControllers\PaymentController;
+use App\Http\Controllers\EquippementController;
+use App\Http\Controllers\FrontControllers\EquippementControllerF;
+use App\Http\Controllers\FrontCategController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +65,13 @@ Route::post('/event/{id}/participate', [EventController::class, 'participate'])-
         Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
 
 
+
+
+        Route::resource('Categories', CategoryController::class);
+
+        Route::prefix('backEquipment')->group(function () {
+          Route::resource('equipments', EquippementController::class);
+          });
         // Route to view blocked users
         Route::get('/admin/blocked-users', [UserController::class, 'index'])->name('users.blocked');
         
@@ -160,8 +173,6 @@ Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontCon
 ]);
 
 
-Route::resource('Categories', CategoryController::class);
-Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 
 
 
@@ -192,4 +203,17 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 
 
 });
+
+//Route::prefix('backEquipment')->group(function () {
+  //  Route::resource('equipments', EquippementController::class);
+//});
+Route::resource('allCateg', FrontCategController::class);
+
+// Routes du front-office
+Route::prefix('front')->group(function () {
+    Route::get('equipments', [EquippementControllerF::class, 'index'])->name('front.equipments.index');
+    Route::get('equipments/{id}', [EquippementControllerF::class, 'show'])->name('front.equipments.show');
+});
 require __DIR__.'/auth.php';
+
+

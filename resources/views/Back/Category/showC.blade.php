@@ -1,27 +1,21 @@
-<head>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<div class="container my-5">
-    <div class="card shadow-lg border-success">
-        <div class="card-header bg-success text-white text-center">
-            <h2 class="mb-0">Details of the Waste Category</h2>
-        </div>
+@extends('Back.dashboard')
+
+@section('content')
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Détails de la Catégorie de Déchet</h4>
+
+    <div class="card shadow-sm">
         <div class="card-body">
-            <h4 class="card-title text-success">{{ $Category->name }}</h4>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <strong>Quantity:</strong> {{ $Category->quantity }}
-                </li>
-                <li class="list-group-item">
-                    <strong>State:</strong> {{ ucfirst($Category->state) }}
-                </li>
-                <li class="list-group-item">
-                    <strong>Environmental Impact:</strong> {{ ucfirst($Category->environmental_impact) }}
-                </li>
-            </ul>
-        </div>
-        <div class="card-footer text-center bg-white">
-            <a href="{{ route('Categories.index') }}" class="btn btn-success">Back to Categories</a>
+            <h5 class="mb-3 text-primary">Nom : {{ $Category->name }}</h5>
+            
+            <p><strong>Quantité :</strong> {{ $Category->quantity }}</p>
+            <p><strong>État :</strong> {{ ucfirst($Category->state) }}</p>
+            <p><strong>Impact Environnemental :</strong> {{ ucfirst($Category->environmental_impact) }}</p>
+
+            <div class="text-center mt-4">
+                <a href="{{ route('Categories.index') }}" class="btn btn-primary">Retour aux Catégories</a>
+            </div>
         </div>
     </div>
 </div>
+@endsection

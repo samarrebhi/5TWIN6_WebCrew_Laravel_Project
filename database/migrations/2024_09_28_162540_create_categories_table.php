@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('state');
             $table->string('environmental_impact');
             $table->timestamps();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
         });
     }
 
