@@ -112,5 +112,13 @@ Route::get('/Category', [CategoryController::class, 'index'])->name('Category.in
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
 
 
-Route::resource('equipments', EquippementController::class);
 
+Route::prefix('admin')->group(function () {
+    Route::resource('equipments', EquippementController::class);
+});
+
+// Routes du front-office
+Route::prefix('front')->group(function () {
+    Route::get('equipments', [EquippementControllerF::class, 'index'])->name('front.equipments.index');
+    Route::get('equipments/{id}', [EquippementControllerF::class, 'show'])->name('front.equipments.show');
+});
