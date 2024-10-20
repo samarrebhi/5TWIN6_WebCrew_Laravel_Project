@@ -13,7 +13,17 @@ class Category extends Model
         'quantity',      
         'state' , //whether it's solid,liquid,electronic.....    
         'environmental_impact',        //whether it's low,moderate,high,polluting,biodegradable
-    
+        'user_id',
+
 
     ];
+
+ // Relationship with User
+ public function user()
+ {
+     return $this->belongsTo(User::class);
+ }
+
+
+    
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Center;
 
 class EquippementdeCollecte extends Model
 {
@@ -16,5 +17,18 @@ class EquippementdeCollecte extends Model
         'capacite',     // Capacité de l'équipement (ex. en litres ou kilogrammes)
         'emplacement',   // Emplacement actuel de l'équipement
           'image',
+          'user_id',
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function center()
+    {
+        return $this->belongsTo(Center::class);
+    }
+   
 }

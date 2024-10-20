@@ -12,11 +12,21 @@ class EquippementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+      $this->middleware( 'role:admin');
+     }
+
+
     public function index()
-    {
-        $equippements=EquippementdeCollecte::all();
-        return view('Back.EquippementdeRecyclageB.showallEquipments',compact('equippements'));
-    }
+{
+    // Filtrer les équipements créés par l'utilisateur connecté
+    $equippements = EquippementdeCollecte::where('user_id', auth()->id())->get();
+    
+    return view('Back.EquippementdeRecyclageB.showallEquipments', compact('equippements'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,32 +43,54 @@ class EquippementController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
-public function store(Request $request)
-    {
-        // Validation de la requête
-        $request->validate([
-            'nom' => 'required',
-            'statut' => 'required',
-            'capacite' => 'required|numeric',
-            'emplacement' => 'required',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+     */public function store(Request $request)
+{
+    // Validation avec messages personnalisés
+    $request->validate([
+        'nom' => 'required|string|max:100', // Maximum length of 100 characters
+        'statut' => 'required|in:active,maintenance,out_of_service', // Ensure valid status options
+        'capacite' => 'required|numeric|min:1|max:1000', // Capacity must be a number between 1 and 10,000
+        'emplacement' => 'required|string|max:255', // Maximum length of 255 characters
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Image rules
+    ], [
+        'nom.required' => 'Le nom de l\'équipement est obligatoire.',
+        'nom.string' => 'Le nom doit être une chaîne de caractères.',
+        'nom.max' => 'Le nom ne doit pas dépasser 100 caractères.',
+        'statut.required' => 'Le statut est obligatoire.',
+        'statut.in' => 'Le statut doit être actif, en maintenance ou hors service.',
+        'capacite.required' => 'La capacité est obligatoire.',
+        'capacite.numeric' => 'La capacité doit être un nombre.',
+        'capacite.min' => 'La capacité doit être d\'au moins 1.',
+        'capacite.max' => 'La capacité ne doit pas dépasser 1000.',
+        'emplacement.required' => 'L\'emplacement est obligatoire.',
+        'emplacement.string' => 'L\'emplacement doit être une chaîne de caractères.',
+        'emplacement.max' => 'L\'emplacement ne doit pas dépasser 255 caractères.',
+        'image.image' => 'Le fichier doit être une image.',
+        'image.mimes' => 'L\'image doit être au format jpg, jpeg ou png.',
+        'image.max' => 'L\'image ne doit pas dépasser 2 Mo.',
+    ]);
 
-        // Créer un nouvel équipement sans l'image pour l'instant
-        $equippement = EquippementdeCollecte::create($request->except('image'));
+   // $equippement = EquippementdeCollecte::create($request->except('image'));
 
-        // Gérer l'upload de l'image si elle est présente
-        if ($request->hasFile('image')) {
-            $equippement->image = $this->uploadImage($request->file('image')); // Appel de la méthode pour uploader l'image
-            $equippement->save(); // Sauvegarde après l'attribution du chemin de l'image
-        }
+    // Ajouter l'utilisateur connecté comme créateur
+    $equippement = EquippementdeCollecte::create([
+        'nom' => $request->nom,
+        'statut' => $request->statut,
+        'capacite' => $request->capacite,
+        'emplacement' => $request->emplacement,
+        'user_id' => auth()->id(), // Ajout de l'ID de l'utilisateur connecté
+    ]);
 
-        return redirect()->route('equipments.index')
-                         ->with('success', 'Équipement ajouté avec succès.');
+
+
+    if ($request->hasFile('image')) {
+        $equippement->image = $this->uploadImage($request->file('image'));
+        $equippement->save();
     }
 
-    
+    return redirect()->route('equipments.index')->with('success', 'Équipement ajouté avec succès.');
+}
+
     private function uploadImage($image)
     {
         // Stocke l'image et renvoie son chemin
@@ -104,44 +136,43 @@ public function store(Request $request)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        // Validation
-        $request->validate([
-            'nom' => 'required',
-            'statut' => 'required',
-            'capacite' => 'required|numeric',
-            'emplacement' => 'required',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-    
-        // Retrieve the equipment by ID
-        $equippement = EquippementdeCollecte::findOrFail($id);
-    
-        // Update the fields
-        $equippement->nom = $request->input('nom');
-        $equippement->statut = $request->input('statut');
-        $equippement->capacite = $request->input('capacite');
-        $equippement->emplacement = $request->input('emplacement');
-    
-        // If a new image is uploaded, handle it
-        if ($request->hasFile('image')) {
-            // Optionally delete the old image if you want
-            if ($equippement->image) {
-                $this->deleteOldImage($equippement->image);
-            }
-            
-            // Upload the new image
-            $equippement->image = $this->uploadImage($request->file('image'));
-        }
-    
-        // Save the updated equipment
-        $equippement->save();
-    
-        return redirect()->route('equipments.index')
-                         ->with('success', 'Équipement mis à jour avec succès.');
-    }
-    
+  
+  
+  
+  
+     public function update(Request $request, $id)
+     {
+         $request->validate([
+             'nom' => 'required|string|max:100',
+             'statut' => 'required|in:active,maintenance,out_of_service',
+             'capacite' => 'required|numeric|min:1|max:1000',
+             'emplacement' => 'required|string|max:255',
+             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+         ]);
+     
+         $equippement = EquippementdeCollecte::findOrFail($id);
+     
+         // Mettre à jour les champs
+         $equippement->update([
+             'nom' => $request->nom,
+             'statut' => $request->statut,
+             'capacite' => $request->capacite,
+             'emplacement' => $request->emplacement,
+             'updated_by' => auth()->id(), // Stocke l'utilisateur qui a fait la mise à jour
+         ]);
+     
+         // Gérer l'image
+         if ($request->hasFile('image')) {
+             if ($equippement->image) {
+                 $this->deleteOldImage($equippement->image);
+             }
+             $equippement->image = $this->uploadImage($request->file('image'));
+         }
+     
+         return redirect()->route('equipments.index')
+                          ->with('success', 'Équipement mis à jour avec succès.');
+     }
+     
     /**
      * Delete the old image if it exists.
      *
@@ -162,16 +193,29 @@ public function store(Request $request)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $equipment = EquippementdeCollecte::find($id); // Find the equipment by ID
-    
-        if ($equipment) {
-            $equipment->delete(); // Delete the equipment
-            return redirect()->route('equipments.index')->with('success', 'Equipment deleted successfully.');
-        }
-    
-        return redirect()->route('equipments.index')->with('error', 'Equipment not found.');
-    }
+  
+  
+  
+  
+     public function destroy($id)
+     {
+         $equipment = EquippementdeCollecte::findOrFail($id);
+     
+         // Vérifier si l'utilisateur connecté est autorisé à supprimer l'équipement
+         if ($equipment->user_id !== auth()->id()) {
+             return redirect()->route('equipments.index')
+                              ->with('error', 'Vous n\'êtes pas autorisé à supprimer cet équipement.');
+         }
+     
+         if ($equipment->image) {
+             $this->deleteOldImage($equipment->image);
+         }
+     
+         $equipment->delete();
+     
+         return redirect()->route('equipments.index')
+                          ->with('success', 'Équipement supprimé avec succès.');
+     }
+     
     
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Category;
+use App\Models\EquippementdeCollecte;
 
 class User extends Authenticatable
 {
@@ -41,4 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function equippementdecollectes()
+    {
+        return $this->hasMany(EquippementdeCollecte::class);
+    }
+
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

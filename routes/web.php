@@ -6,8 +6,6 @@ use App\Http\Controllers\BackControllers\HomeControllerBack;
 
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
-use App\Http\Controllers\FrontControllers\EquippementControllerF;
-
 use App\Http\Controllers\FrontControllers\EventController; // Adjust the controller path as needed
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
@@ -114,15 +112,5 @@ Route::get('/Category', [CategoryController::class, 'index'])->name('Category.in
 Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
 
 
-//Route::resource('admin/equipments', EquippementController::class);
-//Route::resource('equipments', EquippementControllerF::class);
-Route::prefix('admin')->group(function () {
-    Route::resource('equipments', EquippementController::class);
-});
-
-// Routes du front-office
-Route::prefix('front')->group(function () {
-    Route::get('equipments', [EquippementControllerF::class, 'index'])->name('front.equipments.index');
-    Route::get('equipments/{id}', [EquippementControllerF::class, 'show'])->name('front.equipments.show');
-});
+Route::resource('equipments', EquippementController::class);
 

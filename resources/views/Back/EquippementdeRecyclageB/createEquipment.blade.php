@@ -20,23 +20,29 @@
                                 type="text" 
                                 id="equipment-name" 
                                 name="nom" 
-                                class="form-control" 
+                                class="form-control @error('nom') is-invalid @enderror" 
                                 placeholder="Enter equipment name" 
                                 required 
                             />
                         </div>
+                        @error('nom')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="equipment-status">Status</label>
                         <div class="input-group input-group-merge">
                             <span class="input-group-text"><i class="bx bx-toggle-left"></i></span>
-                            <select id="equipment-status" name="statut" class="form-control" required>
+                            <select id="equipment-status" name="statut" class="form-control @error('statut') is-invalid @enderror" required>
                                 <option value="active">Active</option>
                                 <option value="maintenance">In Maintenance</option>
                                 <option value="out_of_service">Out of Service</option>
                             </select>
                         </div>
+                        @error('statut')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -47,11 +53,14 @@
                                 type="number" 
                                 id="equipment-capacity" 
                                 name="capacite" 
-                                class="form-control" 
+                                class="form-control @error('capacite') is-invalid @enderror" 
                                 placeholder="Enter capacity (e.g., in liters or kg)" 
                                 required 
                             />
                         </div>
+                        @error('capacite')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -62,11 +71,14 @@
                                 type="text" 
                                 id="equipment-location" 
                                 name="emplacement" 
-                                class="form-control" 
+                                class="form-control @error('emplacement') is-invalid @enderror" 
                                 placeholder="Enter current location" 
                                 required 
                             />
                         </div>
+                        @error('emplacement')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -77,11 +89,14 @@
                                 type="file" 
                                 id="equipment-image" 
                                 name="image" 
-                                class="form-control" 
+                                class="form-control @error('image') is-invalid @enderror" 
                                 accept="image/*" 
                                 required 
                             />
                         </div>
+                        @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary">Add Equipment</button>

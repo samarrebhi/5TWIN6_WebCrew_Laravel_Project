@@ -20,7 +20,9 @@ return new class extends Migration
             $table->integer('capacite'); // Capacité en litres ou kilogrammes
             $table->string('emplacement'); // Emplacement actuel
             $table->string('image')->nullable(); // Image nullable
-            $table->timestamps(); // Champs created_at et updated_at
+          //  $table->foreignId('center_id')->constrained()->onDelete('cascade'); // Ajoutez cette ligne
+          $table->foreignId('user_id')->constrained()->onDelete('cascade');  
+          $table->timestamps(); // Champs created_at et updated_at
         });
     }
 
