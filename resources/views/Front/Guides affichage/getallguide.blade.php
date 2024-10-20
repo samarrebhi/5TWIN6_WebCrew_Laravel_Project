@@ -7,7 +7,9 @@
             <h4 class="text-primary">Our Best Practices Guides</h4>
             <h1 class="display-5 text-dark" style="font-weight: bold; margin-top: 10px;">Follow Our Guides</h1>
         </div>
-
+        <div class="text-center mb-5">
+        <h3 class="text-green " style="font-weight: bold; margin-top: 10px;">Follow Our Best Practises Guides</h3>
+        </div>
         <!-- Search Bar and Pagination Start -->
         <div class="row mb-3 align-items-center">
             <div class="col-md-6">
@@ -57,7 +59,8 @@
                                 <p class="card-text mb-4">{{ Str::limit($guide->body, 200) }}</p>
 
                                 <div class="mt-auto">
-                                    <a href="{{ route('guide.details', $guide->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-eye me-2 text-primary"></i>  Display Guide</a>
+                                    <a href="{{ route('guide.details', $guide->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-eye me-2 text-primary"></i>  Display Guide</a>
 
                                 </div>
                             </div>

@@ -56,13 +56,15 @@
 
 
                     <div class="d-flex justify-content-end mb-3">
+                        <a href="{{route('guide.sondages',$guide->id)}}" class="btn border border-secondary rounded-pill px-3 text-primary ms-2">
+                            <i class="fa fa-pencil-alt me-2 text-primary"></i>  Take related polls
+                        </a>
+
                         <a href="{{ route('guide.listing') }}" class="btn border border-secondary
              rounded-pill px-3 text-primary">
                             <i class="fa fa-list me-2 text-primary"></i> Go back to guides list
                         </a>
-                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary ms-2">
-                            <i class="fa fa-pencil-alt me-2 text-primary"></i>  Take related poll
-                        </a>
+
                     </div>
 
 

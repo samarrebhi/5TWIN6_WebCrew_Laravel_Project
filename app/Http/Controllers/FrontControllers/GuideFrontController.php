@@ -24,4 +24,12 @@ class GuideFrontController extends Controller
         // Return the view with event data
         return view('Front.Guides affichage.displayguide', compact('guide'));
     }
+    public function showbypoll($id)
+    {
+        // Find the guide by ID and load related sondages using the relationship
+        $guide = GuideBP::with('sondages')->findOrFail($id);
+
+        // Pass the guide and its sondages to the view
+        return view('Front.Guides affichage.displayguide', compact('guide'));
+    }
 }

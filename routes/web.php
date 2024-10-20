@@ -3,8 +3,10 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BackControllers\GuideBackController;
 use App\Http\Controllers\BackControllers\ReservationBackController;
+use App\Http\Controllers\FrontControllers\GuideFrontController;
 use App\Http\Controllers\FrontControllers\PaymentController;
 use App\Http\Controllers\FrontControllers\ReservationController;
+use App\Http\Controllers\FrontControllers\SondageFrontController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
@@ -182,10 +184,16 @@ Route::resource('/guides',GuideBackController::class)->names([
     'destroy'=>'guide.destroy',
     'update' => 'guide.update',
 ]);
+
 //frontoffice
 Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
     'index' => 'guide.listing',
     'show'=>'guide.details',
 ]);
+///display between guide and poll
+Route::get('books/{id}', [GuideFrontController::class, 'showbypoll'])->name('guide.bypoll');
+
+Route::get('books/{guideId}/sondages', [SondageFrontController::class, 'getSondagesByGuide'])->name('guide.sondages');
+
 
 require __DIR__.'/auth.php';

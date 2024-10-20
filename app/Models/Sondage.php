@@ -26,7 +26,7 @@ class Sondage extends Model
 
     ];
     protected $casts = [
-        'questions' => 'array', // Cast to array for easier access
+        'questions' => 'array',
 
     ];
     protected $table = 'sondages';
