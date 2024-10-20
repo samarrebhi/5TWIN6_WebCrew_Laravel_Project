@@ -15,7 +15,7 @@ class CenterController extends Controller
      */
     public function index()
     {
-        $centers=Center::all();
+        $centers = Center::paginate(3); 
         return view('Front.Centers.centers',compact('centers'));
     }
 
