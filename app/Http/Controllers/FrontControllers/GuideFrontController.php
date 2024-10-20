@@ -12,7 +12,8 @@ class GuideFrontController extends Controller
 
     public function index()
     {
-        $guides=GuideBP::all();
+        //$guides=GuideBP::all();
+        $guides = GuideBP::paginate(6);
         return view('Front.Guides affichage.getallguide',compact('guides'));
     }
 

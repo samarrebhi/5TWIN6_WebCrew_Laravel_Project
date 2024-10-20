@@ -13,7 +13,10 @@ class SondageFrontController extends Controller
 
     public function index()
     {
-        $sondages=sondage::all();
+       // $sondages=sondage::all();
+        // Fetch polls with pagination
+        $sondages = Sondage::paginate(6);
+
         return view('Front.Sondages affichage.getallsondage',compact('sondages'));
     }
 

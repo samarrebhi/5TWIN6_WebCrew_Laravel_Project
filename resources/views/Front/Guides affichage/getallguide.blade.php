@@ -8,8 +8,9 @@
             <h1 class="display-5 text-dark" style="font-weight: bold; margin-top: 10px;">Follow Our Guides</h1>
         </div>
         <div class="text-center mb-5">
-        <h3 class="text-green " style="font-weight: bold; margin-top: 10px;">Follow Our Best Practises Guides</h3>
+            <h3 class="text-green" style="font-weight: bold; margin-top: 10px;">Follow Our Best Practices Guides</h3>
         </div>
+
         <!-- Search Bar and Pagination Start -->
         <div class="row mb-3 align-items-center">
             <div class="col-md-6">
@@ -19,20 +20,15 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="pagination d-flex justify-content-end mt-3">
-                    <a href="#" class="rounded pagination-button">&laquo;</a>
-                    <a href="#" class="active rounded">1</a>
-                    <a href="#" class="rounded pagination-button">2</a>
-                    <a href="#" class="rounded">3</a>
-                    <a href="#" class="rounded">4</a>
-                    <a href="#" class="rounded">5</a>
-                    <a href="#" class="rounded">6</a>
-                    <a href="#" class="rounded">&raquo;</a>
+                <div class="d-flex justify-content-end mt-3">
+                    <div class="pagination">
+                        {{ $guides->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
+
         </div>
         <!-- Search Bar and Pagination End -->
-
 
         <div class="row">
             @if($guides->isEmpty())
@@ -42,26 +38,24 @@
                     </div>
                 </div>
             @else
+
+
                 @foreach($guides as $guide)
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card poll-card shadow-sm h-100">
                             <div class="card-body d-flex flex-column">
-
-
                                 @if($guide->image)
                                     <img src="{{ asset('storage/' . $guide->image) }}" alt="{{ $guide->title }}" class="img-fluid rounded"
                                          style="width: 300px; height: 300px; object-fit: cover; margin: 0 auto 15px;">
                                 @else
                                     <p>No image available</p>
                                 @endif
-                                    <h5 class="card-title">{{ $guide->title }}</h5>
-                                    <p class="card-text mb-4"><strong>Guide's Category: </strong> {{ $guide->category }}</p>
+                                <h5 class="card-title">{{ $guide->title }}</h5>
+                                <p class="card-text mb-4"><strong>Guide's Category: </strong> {{ $guide->category }}</p>
                                 <p class="card-text mb-4">{{ Str::limit($guide->body, 200) }}</p>
-
                                 <div class="mt-auto">
                                     <a href="{{ route('guide.details', $guide->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-eye me-2 text-primary"></i>  Display Guide</a>
-
+                                        <i class="fa fa-eye me-2 text-primary"></i> Display Guide</a>
                                 </div>
                             </div>
                         </div>
@@ -107,11 +101,35 @@
         .input-group .form-control {
             border: 2px solid darkgray; /* Orange border for search input */
         }
-        .pagination-button {
 
-            color: green; /* Text color for pagination buttons */
+        /* Custom styles for pagination */
+        .pagination {
+            display: flex; /* Use flexbox to arrange items in a row */
+            list-style: none; /* Remove default list styling */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+        }
 
+        .pagination li {
+            margin: 0 5px; /* Add some space between items */
+        }
+
+        .pagination a, .pagination span {
+            color: green; /* Change color of pagination links */
+            text-decoration: none; /* Remove underline */
+            padding: 8px 12px; /* Add padding for better touch targets */
+            border: 1px solid #ddd; /* Border for the pagination buttons */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .pagination a:hover {
+            background-color: #f0f0f0; /* Change background on hover */
+        }
+
+        .pagination .active {
+            background-color: #007bff; /* Active link background */
+            color: white; /* Active link text color */
+            border: 1px solid #007bff; /* Active link border */
         }
     </style>
-
 @endsection
