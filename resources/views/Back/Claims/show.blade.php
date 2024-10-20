@@ -4,7 +4,20 @@
 <div class="container">
     <h2>Claim Details</h2>
     <p><strong>Title:</strong> {{ $claim->title }}</p>
+    <p><strong>Title:</strong> {{ $claim->category }}</p>
     <p><strong>Description:</strong> {{ $claim->description }}</p>
+    @if($claim->attachment)
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <strong>Attachment:</strong>
+                </div>
+                <div class="col-sm-8">
+                    <a href="{{ asset('storage/' . $claim->attachment) }}" target="_blank" class="btn btn-info btn-sm">
+                        View Attachment
+                    </a>
+                </div>
+            </div>
+            @endif
     <p><strong>Status:</strong> {{ $claim->status }}</p>
     <p><strong>Admin Note:</strong> {{ $claim->admin_note }}</p>
 

@@ -70,6 +70,14 @@
                 </div>
             </div>
             @endif
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <strong>Note :</strong>
+                </div>
+                <div class="col-sm-8">
+                    <p>{{ $claim->admin_note }}</p>
+                </div>
+            </div>
 
             <div class="text-center">
                 <a href="{{ route('claim.index') }}" class="btn btn-secondary">Back to Claims</a>

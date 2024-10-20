@@ -2,6 +2,7 @@
 @section('content') 
 
 <div class="container my-5" style="padding-top: 120px;"> 
+
     <div class="row justify-content-center">
         @foreach($centers as $center)
             <div class="col-md-4 mb-4">
