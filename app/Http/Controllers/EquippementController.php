@@ -12,6 +12,11 @@ class EquippementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+     // Appliquer la permission "manage blogBack" à toutes les actions de ce contrôleur
+     $this->middleware( 'role:admin');
+    }
     public function index()
     {
         // Get all equipment associated with the logged-in user

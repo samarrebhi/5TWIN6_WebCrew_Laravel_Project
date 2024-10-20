@@ -45,11 +45,12 @@
                     </p>
 
                     <a href="{{ route('front.equipments.index') }}" 
-   class="btn btn-primary d-inline-flex align-items-center gap-2 px-3 py-2"
-   style="color: white; font-weight: 500; font-size: 16px; text-decoration: none;">
+   class="btn btn-primary d-inline-flex align-items-center gap-2 px-3 py-2 text-white" 
+   style="font-weight: 500; font-size: 16px; text-decoration: none;">
     <i class="bi bi-arrow-left-circle" style="font-size: 1.2rem;"></i> 
     Back to Equipments List
 </a>
+
 
                 </div>
             </div>

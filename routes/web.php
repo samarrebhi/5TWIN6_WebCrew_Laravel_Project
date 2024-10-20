@@ -65,6 +65,13 @@ Route::post('/event/{id}/participate', [EventController::class, 'participate'])-
         Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
 
 
+
+
+        Route::resource('Categories', CategoryController::class);
+
+        Route::prefix('backEquipment')->group(function () {
+          Route::resource('equipments', EquippementController::class);
+          });
         // Route to view blocked users
         Route::get('/admin/blocked-users', [UserController::class, 'index'])->name('users.blocked');
         
@@ -160,7 +167,6 @@ Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontCon
 ]);
 
 
-Route::resource('Categories', CategoryController::class);
 
 
 
@@ -191,9 +197,10 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 
 
 });
-Route::prefix('backEquipment')->group(function () {
-    Route::resource('equipments', EquippementController::class);
-});
+
+//Route::prefix('backEquipment')->group(function () {
+  //  Route::resource('equipments', EquippementController::class);
+//});
 Route::resource('allCateg', FrontCategController::class);
 
 // Routes du front-office

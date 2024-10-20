@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+     // Appliquer la permission "manage blogBack" à toutes les actions de ce contrôleur
+     $this->middleware( 'role:admin');
+    }
     public function index()
     {
         // Fetch categories belonging to the logged-in user
