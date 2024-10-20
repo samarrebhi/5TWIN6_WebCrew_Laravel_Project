@@ -61,6 +61,23 @@ Route::group(['middleware' => ['auth']], function () {
 Route::post('/event/{id}/participate', [EventController::class, 'participate'])->name('event.participate');
 
 
+//frontoffice polls and guides
+    Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
+        'index' => 'guide.listing',
+        'show'=>'guide.details',
+    ]);
+///display between guide and poll
+    Route::get('books/{id}', [GuideFrontController::class, 'showbypoll'])->name('guide.bypoll');
+
+    Route::get('books/{guideId}/sondages', [SondageFrontController::class, 'getSondagesByGuide'])->name('guide.sondages');
+
+    //frontoffice
+    Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
+        'index' => 'sondage.listing',
+        'show'=>'sondage.details',
+    ]);
+    ////////////////////////////////////
+
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('/admin/reviews', [ReviewController::class, 'adminIndex'])->name('admin.reviews.index');
         Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
@@ -220,11 +237,7 @@ Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageControl
     'store' => 'sondage.store',
 
 ]);
-//frontoffice
-Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
-    'index' => 'sondage.listing',
-    'show'=>'sondage.details',
-]);
+
 //////routes for guideBP entity
 /// backoffice
 Route::resource('/guides',GuideBackController::class)->names([
@@ -239,16 +252,6 @@ Route::resource('/guides',GuideBackController::class)->names([
 //
 Route::get('/guides', [GuideBackController::class, 'index'])->name('guide.index');
 
-
-//frontoffice
-Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
-    'index' => 'guide.listing',
-    'show'=>'guide.details',
-]);
-///display between guide and poll
-Route::get('books/{id}', [GuideFrontController::class, 'showbypoll'])->name('guide.bypoll');
-
-Route::get('books/{guideId}/sondages', [SondageFrontController::class, 'getSondagesByGuide'])->name('guide.sondages');
 
 
 require __DIR__.'/auth.php';
