@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\EquippementdeCollecte;
 
 class Center extends Model
 {
@@ -16,4 +17,9 @@ class Center extends Model
         'address',
         'image',
     ];
+
+     public function equipements()
+    {
+        return $this->hasMany(EquippementdeCollecte::class);
+    }
 }
