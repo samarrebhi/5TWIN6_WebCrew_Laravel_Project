@@ -15,57 +15,55 @@ class ReservationController extends Controller
    
 public function shop($id)
 {
-    // Récupérer la catégorie en fonction de l'ID
     $category = Category::findOrFail($id);
-
-    // Retourner la vue avec les détails de la catégorie
     return view('Front.Panier.buy', compact('category'));
 }
 
 public function store(Request $request)
 {
-    // Valider les données du formulaire
     $validatedData = $request->validate([
         'category_id' => 'required|exists:categories,id',
-        'quantity' => 'required|integer|min:1',
-        'prix' => 'required|numeric|min:0',  // Le prix est associé à la réservation
+        'quantity' => 'required|integer|min:1|max:100', 
+        'prix' => 'required|numeric|min:0|max:1000', 
+    ], [
+        'category_id.required' => 'La catégorie est obligatoire.',
+        'category_id.exists' => 'La catégorie sélectionnée est invalide.',
+        'quantity.required' => 'La quantité est obligatoire.',
+        'quantity.integer' => 'La quantité doit être un entier.',
+        'quantity.min' => 'La quantité doit être au moins de 1.',
+        'quantity.max' => 'La quantité ne peut pas dépasser 100.', 
+        'prix.required' => 'Le prix est obligatoire.',
+        'prix.numeric' => 'Le prix doit être un nombre.',
+        'prix.min' => 'Le prix doit être au moins de 0.',
+        'prix.max' => 'Le prix ne peut pas dépasser 1000.', 
     ]);
 
-    // Créer une nouvelle réservation et enregistrer le prix
     $reservation = new Reservation();
     $reservation->quantity = $validatedData['quantity'];
     $reservation->prix = $validatedData['prix'];
-    $reservation->user_id = Auth::id(); 
+    $reservation->user_id = Auth::id();
     $reservation->save();
 
-    // Associer la catégorie à la réservation via la table pivot en insérant la quantité
     $reservation->categories()->attach($validatedData['category_id'], [
         'quantity' => $validatedData['quantity'],
     ]);
 
-      // Attribuer des points de fidélité si le prix dépasse 50 euros
-      if ($validatedData['prix'] > 50) {
-        // Calculer le nombre de points de fidélité
+    if ($validatedData['prix'] > 50) {
         $extraAmount = $validatedData['prix'] - 50;
         $points = floor($extraAmount / 10);
 
-        // Mettre à jour les points de fidélité de l'utilisateur
         $user = User::find(Auth::id());
         $user->fidelity_points += $points;
         $user->save();
     }
 
-    return redirect()->route('cart')->with('success', 'Product added to cart!');
+    return redirect()->route('cart')->with('success', 'Produit ajouté au panier !');
 }
-
-
 
 public function showCart()
 {
-    // Récupérer les réservations avec les catégories associées
     $reservations = Reservation::with('categories')->where('user_id', Auth::id())->get();
 
-    // Passer les données à la vue
     return view('Front.Panier.cart', compact('reservations'));
 }
 

@@ -11,17 +11,14 @@ class ReservationBackController extends Controller
 {
     
     public function listCommande(Request $request) {
-        // Récupérer les réservations avec les catégories associées
         $query = Reservation::with('categories');
     
-        // Recherche par nom de catégorie
         if ($request->has('category_name') && $request->input('category_name') != '') {
             $query->whereHas('categories', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->input('category_name') . '%');
             });
         }
     
-        // Recherche par état
         if ($request->has('status') && $request->input('status') != '') {
             $status = $request->input('status');
     
@@ -36,7 +33,6 @@ class ReservationBackController extends Controller
     
         $reservations = $query->get();
     
-        // Passer les données à la vue
         return view('Back.Commande.listcomm', compact('reservations'));
     }
     
@@ -45,8 +41,8 @@ class ReservationBackController extends Controller
     public function confirm($id)
 {
     $reservation = Reservation::findOrFail($id);
-    $reservation->confirmed_at = now(); // Met à jour la date de confirmation
-    $reservation->refused_at = null; // Réinitialise le refus
+    $reservation->confirmed_at = now(); 
+    $reservation->refused_at = null; 
     $reservation->save();
 
     return redirect()->route('commandeList')->with('success', 'Réservation confirmée avec succès.');
@@ -55,8 +51,8 @@ class ReservationBackController extends Controller
 public function refuse($id)
 {
     $reservation = Reservation::findOrFail($id);
-    $reservation->refused_at = now(); // Met à jour la date de refus
-    $reservation->confirmed_at = null; // Réinitialise la confirmation
+    $reservation->refused_at = now(); 
+    $reservation->confirmed_at = null; 
     $reservation->save();
 
     return redirect()->route('commandeList')->with('success', 'Réservation refusée avec succès.');

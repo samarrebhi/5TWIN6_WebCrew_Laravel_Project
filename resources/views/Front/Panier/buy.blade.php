@@ -29,6 +29,16 @@
                         <p class="mb-4">Your product will be added to the cart, and once the administration confirms your order, you can proceed to payment.</p>
                         <p class="mb-4">Thank you.</p>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
                         <!-- Formulaire pour ajouter une réservation -->
                         <form action="{{ route('reservations.store') }}" method="post" id="reservationForm">
     @csrf
