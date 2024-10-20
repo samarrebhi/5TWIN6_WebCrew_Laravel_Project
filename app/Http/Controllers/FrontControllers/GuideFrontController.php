@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class GuideFrontController extends Controller
 {
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware( 'role:client');
-    }
+    }*/
     public function index()
     {
         //$guides=GuideBP::all();

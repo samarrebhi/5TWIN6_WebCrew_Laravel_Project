@@ -15,12 +15,28 @@ class SondageController extends Controller
         $this->middleware( 'role:admin');
     }
     ////pour get all
-    public function index()
+
+    public function index(Request $request)
     {
-        $sondages=Sondage::all();
-        return view('Back.Sondages.listsondage',compact('sondages'));
+        // Fetch all distinct categories for the dropdown filter
+        $categories = Sondage::select('category')->distinct()->pluck('category');
+
+        // Get the selected category from the request (if any)
+        $selectedCategory = $request->input('category');
+
+        // If a category is selected, filter guides by that category
+        if ($selectedCategory) {
+            $sondages = Sondage::where('category', $selectedCategory)->paginate(10);
+        } else {
+            // If no category is selected, fetch all guides
+            $sondages = Sondage::paginate(8);
+        }
+
+        // Return the view with both the guides and categories data
+        return view('Back.Sondages.listsondage',compact('sondages', 'categories', 'selectedCategory'));
 
     }
+
 /// pour add
     public function create()
     {  $guides = GuideBP::all();

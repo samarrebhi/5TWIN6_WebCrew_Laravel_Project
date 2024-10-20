@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 class SondageFrontController extends Controller
 {
 
-    public function __construct()
+    /*public function __construct()
     {
-        $this->middleware( 'role:client');
-    }
+        $this->middleware( 'role:admin');
+    }*/
     public function index()
     {
        // $sondages=sondage::all();

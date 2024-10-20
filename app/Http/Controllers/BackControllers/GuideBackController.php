@@ -13,12 +13,27 @@ class GuideBackController extends Controller
     {
         $this->middleware( 'role:admin');
     }
-    public function index()
-    {
-        $guides=GuideBP::all();
-        return view('Back.GuideBP.listguide',compact('guides'));
 
+    public function index(Request $request)
+    {
+        // Fetch all distinct categories for the dropdown filter
+        $categories = GuideBP::select('category')->distinct()->pluck('category');
+
+        // Get the selected category from the request (if any)
+        $selectedCategory = $request->input('category');
+
+        // If a category is selected, filter guides by that category
+        if ($selectedCategory) {
+            $guides = GuideBP::where('category', $selectedCategory)->paginate(10);
+        } else {
+            // If no category is selected, fetch all guides
+            $guides = GuideBP::paginate(8);
+        }
+
+        // Return the view with both the guides and categories data
+        return view('Back.GuideBP.listguide', compact('guides', 'categories', 'selectedCategory'));
     }
+
     public function create()
     {
         return view('Back.GuideBP.createguide');

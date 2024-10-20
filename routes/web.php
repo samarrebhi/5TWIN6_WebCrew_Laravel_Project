@@ -184,6 +184,9 @@ Route::resource('/guides',GuideBackController::class)->names([
     'destroy'=>'guide.destroy',
     'update' => 'guide.update',
 ]);
+//
+Route::get('/guides', [GuideBackController::class, 'index'])->name('guide.index');
+
 
 //frontoffice
 Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
