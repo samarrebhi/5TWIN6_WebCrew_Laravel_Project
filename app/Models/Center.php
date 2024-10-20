@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\EquippementdeCollecte;
 
 class Center extends Model
 {
@@ -19,6 +20,7 @@ class Center extends Model
     ];
 
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,5 +28,10 @@ class Center extends Model
     public function Claims()
     {
         return $this->hasMany(Claim::class);
+    }
+    
+        public function equipements()
+    {
+        return $this->hasMany(EquippementdeCollecte::class);
     }
 }

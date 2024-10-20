@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
+use Spatie\Permission\Traits\HasRoles;
+use App\Models\Blog;
+use App\Models\Reservation;
+
+use App\Models\Category;
+use App\Models\EquippementdeCollecte;
 
 class User extends Authenticatable
 {
@@ -24,6 +29,22 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
+    public function likedBlogs()
+    {
+        return $this->belongsToMany(Blog::class, 'blog_likes', 'user_id', 'blog_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,12 +71,14 @@ class User extends Authenticatable
       {
           return $this->hasMany(EvenementCollecte::class);
       }
-  
+
       // Relationship with Review
       public function reviews()
       {
           return $this->hasMany(Review::class);
       }
+
+
        // Relationship with Center
        public function Centers()
        {
@@ -66,4 +89,26 @@ class User extends Authenticatable
        {
            return $this->hasMany(Claim::class);
        }
+
+    public function equippementdecollectes()
+    {
+        return $this->hasMany(EquippementdeCollecte::class);
+    }
+
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+///relatio with sondage et guide
+    public function sondages()
+    {
+        return $this->hasMany(Sondage::class);
+    }
+    public function guide()
+    {
+        return $this->hasMany(GuideBP::class);
+    }
+
 }

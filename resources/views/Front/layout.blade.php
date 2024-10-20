@@ -44,19 +44,25 @@
     <div class="container topbar bg-primary d-none d-lg-block">
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Ghazela, Tunisie</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">WebCrew@Esprit.tn</a></small>
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Ghazela, Tunsia</a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email us :WebCrew@Esprit.tn</a></small>
             </div>
             <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Recycling Tips</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Organic Products</small></a>
+                <a href="{{ route('center.index') }}" class="text-white"><small class="text-white mx-2">Recycling Centers</small>/</a>
+                <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Recycling Tips</small>/</a>
+                <a href="{{route('sondage.listing')}} " class="text-white"><small class="text-white ms-2">Available Polls</small>/</a>
+                <a href="{{route('Front.Blog.list')}} " class="text-white"><small class="text-white ms-2">Our blog</small></a>
             </div>
         </div>
     </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">WebCrew</h1></a>
+            <a href="index.html" class="navbar-brand">
+                <h1 class="text-primary display-6">
+                    <i class="fas fa-recycle"></i> GreenCycle
+                </h1>
+            </a>
+
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars text-primary"></span>
             </button>
@@ -65,7 +71,7 @@
                     <a href="{{ route('homepage')}}" class="nav-item nav-link active">Home</a>
 
                     <a href="{{ route('register')}}" class="nav-item nav-link"  >Register</a>
-                   
+
                     <a href="{{ route('login')}}" class="nav-item nav-link">Login</a>
                     <a href="{{route('Front.Blog.list')}}" class="nav-item nav-link">Blog</a>
                     <a href="{{route('claim.index')}}" class="nav-item nav-link">Claims</a>

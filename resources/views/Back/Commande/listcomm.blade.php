@@ -35,8 +35,9 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>FPU</th>
                             <th>Actions</th>
-                            <th>Status</th> <!-- Nouvelle colonne pour l'état de la commande -->
+                            <th>Status</th> 
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -55,7 +56,8 @@
                                     <td>{{ $reservation->prix }} Dt</td>
                                     <!-- Quantité de la réservation -->
                                     <td>{{ $category->pivot->quantity }}</td>
-                                       <!-- Actions pour confirmer ou refuser -->
+                                    <td>{{ $reservation->fidelity_points_used ?? '0' }} point</td>
+                                    <!-- Actions pour confirmer ou refuser -->
                                        <td>
                                         @if(is_null($reservation->confirmed_at) && is_null($reservation->refused_at))
                                             <form action="{{ route('admin.reservations.confirm', $reservation->id) }}" method="POST" style="display:inline;">

@@ -87,13 +87,20 @@
                             <i class="fas fa-poll fa-3x text-white"></i>
                         </div>
                         <div class="featurs-content text-center">
-                            <a href="{{route('sondage.listing')}}" title="Check Event List">
+                            <a href="{{route('sondage.listing')}}" title="Check Polls List">
                                 <h5>
                                     Available Polls
                                 </h5>
                             </a>
 
-                            <p class="mb-0"> Lets users create and join waste collection events with key details like title, date, and location.</p>
+                            <p class="mb-0"> Explore our available polls on the website and share your opinion on important topics to make your voice heard!"
+
+
+
+
+
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-              
+
                 <div class="col-md-6 col-lg-3">
                     <div class="featurs-item text-center rounded bg-light p-4">
                         <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
@@ -127,7 +134,7 @@
     <!-- Featurs Section End -->
 
 
- 
+
 
     <!-- Fruits Shop End-->
 

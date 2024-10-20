@@ -1,32 +1,30 @@
 @extends('Front/layout')
-@section('content') 
 
-<div class="container my-5" style="padding-top: 120px;"> 
+@section('content')
+
+<div class="container my-5" style="padding-top: 120px;">
     <div class="row justify-content-center">
         @foreach($Categories as $category)
             <div class="col-md-4 mb-4">
-                <div class="card border-success shadow-sm">
+                <div class="card border-0 shadow-lg rounded-3">
                     <div class="card-body">
-                        <h5 class="card-title text-success">{{ $category->name }}</h5>
-                        <p class="card-text text-muted">
-                            Quantity: {{ $category->quantity }} <br>
-                            State: {{ ucfirst($category->state) }} <br>
-                            Environmental Impact: {{ ucfirst($category->environmental_impact) }}
+                        <h5 class="card-title text-primary fw-bold">
+                            <i class="fas fa-box-open me-2"></i>{{ $category->name }}
+                        </h5>
+                        <p class="card-text text-muted mb-4">
+                            <i class="fas fa-cubes me-2"></i>Quantity: {{ $category->quantity }} <br>
+                            <i class="fas fa-info-circle me-2"></i>State: {{ ucfirst($category->state) }} <br>
+                            <i class="fas fa-leaf me-2"></i>Environmental Impact: {{ ucfirst($category->environmental_impact) }}
                         </p>
-                        <div class="d-flex justify-content-center"> 
-                            <a href="{{ route('Categories.show', $category->id) }}" class="btn btn-outline-success btn-sm">Details</a>
-                            <a href="{{ route('Categories.edit', $category->id) }}" class="btn btn-primary btn-sm ms-2">Edit</a>
-
-                            <!-- Delete Button -->
-                            <form action="{{ route('Categories.destroy', $category->id) }}" method="POST" class="ms-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
-                            </form>
-                        </div>
-                         <!-- Bouton Buy -->
-                         <div class="d-flex justify-content-center mt-3">
-                            <a href="{{ route('buy', $category->id) }}" class="btn btn-success btn-sm">Buy</a>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('allCateg.show', $category->id) }}" 
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-info-circle me-1"></i>Details
+                            </a>
+                            <a href="{{ route('buy', $category->id) }}" 
+                               class="btn btn-success btn-sm">
+                                <i class="fas fa-shopping-cart me-1"></i>Buy
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -34,8 +32,6 @@
         @endforeach
     </div>
 </div>
-<!-- Go back to the form Button -->
-<div class="mb-4">
-    <a href="{{ route('Categories.create') }}" class="btn btn-primary text-white" style="left;">Go back to the form</a>
-</div>
+
+
 @endsection

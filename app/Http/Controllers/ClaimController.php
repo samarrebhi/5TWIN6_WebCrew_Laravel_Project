@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\ClaimCreated; 
+use Illuminate\Support\Facades\Mail;
 use App\Models\Claim;
 use App\Models\Center;
 use Illuminate\Http\Request;
@@ -23,38 +24,40 @@ class ClaimController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:50',
-            'description' => 'required|string|max:1000',
-            'center_id' => 'required|exists:centers,id',
-            'category' => 'required|in:service,quality,time,other', 
-            'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:50',
+        'description' => 'required|string|max:1000',
+        'center_id' => 'required|exists:centers,id',
+        'category' => 'required|in:service,quality,time,other', 
+        'attachment' => 'nullable|file|mimes:jpeg,png,pdf,docx|max:2048',
+    ]);
 
-        $attachmentPath = null; 
+    $attachmentPath = null; 
 
-        if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
-            \Log::info('File stored at: ' . $attachmentPath);
-        } else {
-            \Log::warning('No file uploaded.');
-        }
-    
-        Claim::create([
-            'title' => $request->title,
-            'category' => $request->category,
-            'description' => $request->description,
-            'status' => 'in_progress',
-            'center_id' => $request->center_id,
-            'attachment' => $attachmentPath, 
-            'user_id' => auth()->id(),
-        ]);
-
-    
-        return redirect()->route('claim.index')->with('success', 'Claim created successfully.');
+    if ($request->hasFile('attachment')) {
+        $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+        \Log::info('File stored at: ' . $attachmentPath);
+    } else {
+        \Log::warning('No file uploaded.');
     }
-    
+
+    // Créez la réclamation et stockez-la dans une variable
+    $claim = Claim::create([
+        'title' => $request->title,
+        'category' => $request->category,
+        'description' => $request->description,
+        'status' => 'in_progress',
+        'center_id' => $request->center_id,
+        'attachment' => $attachmentPath, 
+        'user_id' => auth()->id(),
+    ]);
+
+    // Envoyez l'e-mail avec la réclamation créée
+   // Mail::to(auth()->user()->email)->send(new ClaimCreated($claim));
+
+    return redirect()->route('claim.index')->with('success', 'Claim created successfully.');
+}
 
     // Afficher les details d'une reclamation pour le client
     public function show($id)
