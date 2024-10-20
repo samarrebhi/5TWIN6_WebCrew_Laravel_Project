@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
@@ -82,10 +82,15 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
     Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
     Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+    Route::get('/center/map', [CenterController::class, 'showMap'])->name('center.map');
+    Route::get('/center/search', [CenterController::class, 'search'])->name('center.search');
     Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
     Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
     
-
+    Route::get('/admin/claims', [ClaimController::class, 'adminIndex'])->name('admin.claims.index');
+    Route::get('/admin/claims/{id}', [ClaimController::class, 'adminShow'])->name('admin.claims.show');
+    Route::post('/admin/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('admin.claims.updateStatus');
+    Route::get('/admin/claims/filter', [ClaimController::class, 'filterClaims'])->name('admin.claims.filterClaims');
 
     
     });
@@ -135,6 +140,7 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
 
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::resource('/center',CenterController::class);
+Route::resource('/claim',ClaimController::class);
 
 
 

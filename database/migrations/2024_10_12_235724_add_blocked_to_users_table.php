@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->boolean('blocked')->default(false);
+        if (!Schema::hasColumn('users', 'blocked')) {
+            $table->boolean('blocked')->default(false);
+        }
     });
 }
 
