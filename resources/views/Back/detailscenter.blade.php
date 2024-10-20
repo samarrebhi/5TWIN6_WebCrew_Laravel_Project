@@ -15,8 +15,8 @@
             <p><strong>Phone:</strong> {{ $center->phone }}</p>
             <p><strong>Email:</strong> {{ $center->email }}</p>
             @if($center->image)
-                <div class="text-center"> 
-                    <img src="{{ asset('storage/' . $center->image) }}" class="img-fluid" alt="{{ $center->name }}" style="max-width: 200px; height: auto;" />
+                <div class="text-center">
+                    <img src="{{ asset('storage/' . $center->image) }}" class="img-fluid " alt="{{ $center->name }}" style="max-width: 200px; height: auto;" />
                 </div>
             @endif
             <a href="{{ route('centers.index') }}" class="btn btn-success mt-3">Back to Centers</a>

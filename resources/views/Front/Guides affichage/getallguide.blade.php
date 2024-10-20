@@ -4,11 +4,11 @@
     <!-- Polls Page Start -->
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h4 class="text-primary">Our Polls</h4>
-            <h1 class="display-5 text-dark" style="font-weight: bold; margin-top: 10px;">Our Polls</h1>
+            <h4 class="text-primary">Our Best Practices Guides</h4>
+            <h1 class="display-5 text-dark" style="font-weight: bold; margin-top: 10px;">Follow Our Guides</h1>
         </div>
-        <div class="text-center mb-">
-            <h3 class="text-green" style="font-weight: bold; margin-top: 10px;">GreenCycle available Polls</h3>
+        <div class="text-center mb-5">
+            <h3 class="text-green" style="font-weight: bold; margin-top: 10px;">Follow Our Best Practices Guides</h3>
         </div>
 
         <!-- Search Bar and Pagination Start -->
@@ -22,31 +22,40 @@
             <div class="col-md-6">
                 <div class="d-flex justify-content-end mt-3">
                     <div class="pagination">
-                        {{ $sondages->links('pagination::bootstrap-4') }}
+                        {{ $guides->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- Search Bar and Pagination End -->
 
         <div class="row">
-            @if($sondages->isEmpty())
+            @if($guides->isEmpty())
                 <div class="col-12">
                     <div class="alert alert-warning text-center">
-                        No polls available at the moment.
+                        No guides available at the moment.
                     </div>
                 </div>
             @else
-                @foreach($sondages as $sondage)
+
+
+                @foreach($guides as $guide)
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card poll-card shadow-sm h-100">
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $sondage->title }}</h5>
-                                <p class="card-text mb-4">{{ Str::limit($sondage->description, 200) }}</p>
-                                <p class="card-text mb-4"><strong>Poll's Category: </strong> {{ $sondage->category }}</p>
+                                @if($guide->image)
+                                    <img src="{{ asset('storage/' . $guide->image) }}" alt="{{ $guide->title }}" class="img-fluid rounded"
+                                         style="width: 300px; height: 300px; object-fit: cover; margin: 0 auto 15px;">
+                                @else
+                                    <p>No image available</p>
+                                @endif
+                                <h5 class="card-title">{{ $guide->title }}</h5>
+                                <p class="card-text mb-4"><strong>Guide's Category: </strong> {{ $guide->category }}</p>
+                                <p class="card-text mb-4">{{ Str::limit($guide->body, 200) }}</p>
                                 <div class="mt-auto">
-                                    <a href="{{ route('sondage.details', $sondage->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-pencil-alt me-2 text-primary"></i> Take Poll</a>
+                                    <a href="{{ route('guide.details', $guide->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-eye me-2 text-primary"></i> Display Guide</a>
                                 </div>
                             </div>
                         </div>

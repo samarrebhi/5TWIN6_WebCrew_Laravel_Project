@@ -1,21 +1,24 @@
 @extends('Back/dashboard')
 @section('content')
 
-    <title>Table - List of Polls</title>
+    <title>Table - List of Best Practices Guides</title>
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Polls /</span> List </h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Guides /</span> List </h4>
 
         <div class="card">
 
-            <!-- Add Poll Button and Filter Form -->
+            <!-- Add Category Filter Form -->
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Created Polls</h5>
+                <!-- Left Side: Title -->
+                <h5 class="mb-0">Created Best Practices Guides</h5>
+
+                <!-- Right Side: Add Guide Button and Filter Form -->
                 <div class="d-flex align-items-left">
-                    <!-- Add Poll Button -->
-                    <a href="{{ route('sondage.create.form') }}" class="btn btn-success ms-2">+ Add Poll</a>
+                    <!-- Add Guide Button -->
+                    <a href="{{ route('guide.create.form') }}" class="btn btn-success ms-2">+ Add Guide</a>
 
                     <!-- Category Filter Form -->
-                    <form action="{{ route('sondage.index') }}" method="GET" class="d-flex align-items-center ms-3">
+                    <form action="{{ route('guide.index') }}" method="GET" class="d-flex align-items-center ms-3">
                         <select name="category" class="form-select me-2">
                             <option value="">All Categories</option>
                             @foreach($categories as $category)
@@ -29,31 +32,35 @@
                 </div>
             </div>
 
-            <!-- Poll Table -->
+
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Category</th>
+                        <th>Body</th>
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @foreach($sondages as $sondage)
+                    @foreach($guides as $guide)
                         <tr>
-                            <td><strong>{{ Str::limit($sondage->title, 20) }}</strong></td>
-                            <td>{{ Str::limit($sondage->description, 30) }}</td>
-                            <td>{{ $sondage->category }}</td>
+                            <td><strong>{{Str::limit($guide->title , 20)}}</strong></td>
+                            <td>{{ $guide->category }}</td>
+                            <td>{{ Str::limit($guide->body, 20) }}</td>
+                            <td>
+                                <img src="{{ asset('storage/' . $guide->image) }}" alt="{{ $guide->title }}" class="img-fluid rounded" style="width: 120px; height: 80px;">
+                            </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <a href="{{ route('sondage.show', $sondage->id) }}" class="btn btn-info btn-sm me-2">Details</a>
-                                    <a href="{{ route('sondage.edit', $sondage->id) }}" class="btn btn-warning btn-sm me-2">Edit</a>
-                                    <form method="post" action="{{ route('sondage.destroy', $sondage->id) }}" style="display:inline;">
+                                    <a href="{{ route('guide.show', $guide->id) }}" class="btn btn-info btn-sm me-2">Details</a>
+                                    <a href="{{ route('guide.edit', $guide->id) }}" class="btn btn-warning btn-sm me-2">Edit</a>
+                                    <form method="post" action="{{ route('guide.destroy', $guide->id) }}" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this poll?')">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this guide?')">Delete</button>
                                     </form>
                                 </div>
                             </td>
@@ -64,9 +71,8 @@
             </div>
 
             <!-- Pagination Links (optional) -->
-            {{ $sondages->links() }}
+            {{ $guides->links() }}
 
         </div>
     </div>
-
 @endsection
