@@ -29,7 +29,6 @@
                 @error('comment')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-                <small class="text-muted">{{ strlen(old('comment')) }} / 250 characters</small>
             </div>
 
             <!-- Rating -->
