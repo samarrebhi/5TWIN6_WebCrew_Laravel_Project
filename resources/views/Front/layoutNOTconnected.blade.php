@@ -68,31 +68,23 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
+                    <a href="{{ route('homepage')}}" class="nav-item nav-link active">Home</a>
 
 
-                    <a href="{{ route('homepage')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route('Front.Blog.list')}}" class="nav-item nav-link">Blog</a>
                     <a href="{{route('claim.index')}}" class="nav-item nav-link">Claims</a>
 
                 </div>
                 <div class="d-flex m-3 me-0">
+                    <a href="{{ route('register')}}" class="nav-item nav-link"  >Register</a>
 
+                    <a href="{{ route('login')}}" class="nav-item nav-link">Login</a>
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-
                     <a href="{{route('cart')}}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
                     </a>
 
                 </div>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-dropdown-link :href="route('logout')"
-                                     onclick="event.preventDefault();
-                                          this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link>
-                </form>
             </div>
         </nav>
     </div>
@@ -148,7 +140,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                <span class="text-light"><a href="#" c><i class="fas fa-copyright text-light me-2"></i>GrennCycle</a>, All right reserved.</span>
+                <span class="text-light"><a href="#" class="text-light"><i class="fas fa-copyright text-light me-2"></i>GrennCycle</a>, All right reserved.</span>
             </div>
             <div class="col-md-6 my-auto text-center text-md-end text-white">
                 <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
