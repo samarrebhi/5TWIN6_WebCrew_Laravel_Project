@@ -15,14 +15,15 @@
         <div class="row mb-3 align-items-center">
             <div class="col-md-6">
                 <div class="input-group">
-                    <input type="search" class="form-control" placeholder="Keywords" aria-describedby="search-icon-1">
+                    <input type="search" id="search" name="search" class="form-control"  value="{{ request('search') }}"
+                           placeholder="Search by category or title" aria-describedby="search-icon-1">
                     <span id="search-icon-1" class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="d-flex justify-content-end mt-3">
                     <div class="pagination">
-                        {{ $sondages->links('pagination::bootstrap-4') }}
+                        {{ $sondages->appends(['search' => request()->get('search')])->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
@@ -123,4 +124,16 @@
             border: 1px solid #007bff; /* Active link border */
         }
     </style>
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            const searchQuery = this.value;
+
+            // If the search query is empty, reload the page without the search parameter
+            if (searchQuery === '') {
+                window.location.href = '?';
+            } else {
+                window.location.href = `?search=${searchQuery}`;
+            }
+        });
+    </script>
 @endsection

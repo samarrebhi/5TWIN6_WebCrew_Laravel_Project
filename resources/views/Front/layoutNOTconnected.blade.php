@@ -49,7 +49,7 @@
             </div>
             <div class="top-link pe-2">
                 <a href="{{ route('center.index') }}" class="text-white"><small class="text-white mx-2">Recycling Centers</small>/</a>
-                <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Recycling Tips</small>/</a>
+                <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Best Practices Guides</small>/</a>
                 <a href="{{route('sondage.listing')}} " class="text-white"><small class="text-white ms-2">Available Polls</small>/</a>
                 <a href="{{route('Front.Blog.list')}} " class="text-white"><small class="text-white ms-2">Our blog</small></a>
             </div>
@@ -72,7 +72,7 @@
 
 
                     <a href="{{route('Front.Blog.list')}}" class="nav-item nav-link">Blog</a>
-                    <a href="{{route('claim.index')}}" class="nav-item nav-link">Claims</a>
+
 
                 </div>
                 <div class="d-flex m-3 me-0">

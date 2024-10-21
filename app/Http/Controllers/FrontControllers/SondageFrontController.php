@@ -14,11 +14,15 @@ class SondageFrontController extends Controller
     {
         $this->middleware( 'role:client');
     }*/
-    public function index()
+    public function index(Request $request)
     {
-       // $sondages=sondage::all();
-        // Fetch polls with pagination
-        $sondages = Sondage::paginate(6);
+        $search = $request->input('search');
+
+        // Search by title or category if the search keyword is present
+        $sondages = Sondage::when($search, function ($query, $search) {
+            return $query->where('title', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%");
+        })->paginate(6); // Adjust the number of items per page
 
         return view('Front.Sondages affichage.getallsondage',compact('sondages'));
     }
@@ -31,11 +35,21 @@ class SondageFrontController extends Controller
         // Return the view with event data
         return view('Front.Sondages affichage.detailssondage', compact('sondage'));
     }
-    public function getSondagesByGuide($guideId)
+    public function getSondagesByGuide($guideId,Request $request)
     {
 
         $guide = GuideBP::findOrFail($guideId);
-        $sondages = Sondage::where('guide_bp_id', $guideId)->get();
+
+        $search = $request->input('search');
+
+// Retrieve and filter sondages by guide_bp_id and search criteria, then paginate
+        $sondages = Sondage::where('guide_bp_id', $guideId)
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('category', 'like', "%{$search}%");
+            })
+            ->paginate(6); // Adjust the number of items per page
+
 
 
         return view('Front.Sondages affichage.sondagesByGuide', compact('guide', 'sondages'));

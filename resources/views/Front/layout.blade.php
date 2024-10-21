@@ -51,7 +51,7 @@
             <a href="{{ route('event.listevent')  }}" class="text-white"><small class="text-white mx-2">Collect Events</small>/</a>
 
                 <a href="{{ route('center.index') }}" class="text-white"><small class="text-white mx-2">Recycling Centers</small>/</a>
-                <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Recycling Tips</small>/</a>
+                <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Best Practices Guides</small>/</a>
                 <a href="{{route('sondage.listing')}} " class="text-white"><small class="text-white ms-2">Available Polls</small>/</a>
                 <a href="{{route('Front.Blog.list')}} " class="text-white"><small class="text-white ms-2">Our blog</small></a>
             </div>
