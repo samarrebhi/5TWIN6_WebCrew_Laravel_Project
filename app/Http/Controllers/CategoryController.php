@@ -23,19 +23,29 @@ class CategoryController extends Controller
     {
         return view('Back.Category.createC');
     }
-
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:100',
             'quantity' => 'required|integer|min:1',
-            'state' => 'required|string',
-            'environmental_impact' => 'required|string',
+            'state' => 'required|string|in:solid,liquid,electronic,gas,other',
+            'environmental_impact' => 'required|string|in:low,moderate,high,polluting,biodegradable',
+        ], [
+            'name.required' => 'The category name is required.',
+            'name.string' => 'The category name must be a string.',
+            'name.max' => 'The category name must not exceed 100 characters.',
+            'quantity.required' => 'The quantity is required.',
+            'quantity.integer' => 'The quantity must be an integer.',
+            'quantity.min' => 'The quantity must be at least 1.',
+            'state.required' => 'The state is required.',
+            'state.in' => 'The state must be one of the valid options.',
+            'environmental_impact.required' => 'The environmental impact is required.',
+            'environmental_impact.in' => 'The environmental impact must be one of the valid options.',
         ]);
-
+    
         // Create a new category with the logged-in user's ID
-        Category::create(array_merge($request->all(), ['user_id' => Auth::id()]));
-
+        Category::create(array_merge($request->all(), ['user_id' => auth()->id()]));
+    
         return redirect()->route('Categories.index')->with('success', 'Category added successfully!');
     }
 
