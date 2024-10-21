@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EquippementdeCollecte;
+use App\Models\Center;
 
 class EquippementController extends Controller
 {
@@ -19,6 +20,7 @@ class EquippementController extends Controller
     }
     public function index()
     {
+
         // Get all equipment associated with the logged-in user
         $equippements = EquippementdeCollecte::where('user_id', auth()->id())->get();
         return view('Back.EquippementdeRecyclageB.showallEquipments', compact('equippements'));
@@ -31,7 +33,8 @@ class EquippementController extends Controller
      */
     public function create()
     {
-        return view('Back.EquippementdeRecyclageB.createEquipment');
+        $centers = Center::all(); 
+        return view('Back.EquippementdeRecyclageB.createEquipment', compact('centers'));
     }
 
     /**
@@ -48,6 +51,8 @@ class EquippementController extends Controller
             'statut' => 'required|in:active,maintenance,out_of_service',
             'capacite' => 'required|numeric|min:1|max:1000',
             'emplacement' => 'required|string|max:255',
+            'center_id' => 'required|exists:centers,id', // Validation pour center_id
+
         ], [
             'nom.required' => 'Le nom de l\'équipement est obligatoire.',
             'nom.string' => 'Le nom doit être une chaîne de caractères.',
@@ -92,8 +97,10 @@ class EquippementController extends Controller
     public function show($id)
     {
         // Get the equipment only if it belongs to the logged-in user
-        $equipment = EquippementdeCollecte::where('id', $id)->where('user_id', auth()->id())->first();
-
+        $equipment = EquippementdeCollecte::with('center') 
+        ->where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
         if (!$equipment) {
             return redirect()->route('equipments.index')->with('error', 'Équipement non trouvé ou vous n\'êtes pas autorisé à le voir.');
         }

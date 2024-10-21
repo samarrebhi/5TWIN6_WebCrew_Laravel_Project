@@ -13,6 +13,19 @@
                     @csrf
 
                     <div class="mb-3">
+                        <label class="form-label" for="center_id">Select Center</label>
+                        <select id="center_id" name="center_id" class="form-control @error('center_id') is-invalid @enderror" required>
+                            <option value="">Choose a center</option>
+                            @foreach($centers as $center)
+                                <option value="{{ $center->id }}">{{ $center->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('center_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label" for="equipment-name">Name</label>
                         <div class="input-group input-group-merge">
                             <span class="input-group-text"><i class="bx bx-cube"></i></span>
