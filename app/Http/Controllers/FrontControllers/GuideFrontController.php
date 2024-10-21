@@ -13,10 +13,17 @@ class GuideFrontController extends Controller
     {
         $this->middleware( 'role:client');
     }*/
-    public function index()
+    public function index(Request $request)
     {
-        //$guides=GuideBP::all();
-        $guides = GuideBP::paginate(6);
+
+        $search = $request->input('search');
+
+        // Search by title or category if the search keyword is present
+        $guides = GuideBP::when($search, function ($query, $search) {
+            return $query->where('title', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%");
+        })->paginate(6); // Adjust the number of items per page
+
         return view('Front.Guides affichage.getallguide',compact('guides'));
     }
 
