@@ -124,7 +124,7 @@
                         <div class="featurs-content text-center">
                             <a href="{{route('categories.index')}}" title="Check waste List">
                                 <h5>
-                                   Waste Categories
+                                   Types of recycled waste 
                                 </h5>
                             </a>
 

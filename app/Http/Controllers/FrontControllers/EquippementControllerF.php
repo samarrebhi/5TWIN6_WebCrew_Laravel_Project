@@ -12,7 +12,7 @@ class EquippementControllerF extends Controller
 
     public function index()
     {
-        $equippements=EquippementdeCollecte::all();
+        $equippements = EquippementdeCollecte::with('center')->get(); // Load equipment with center details
         return view('Front.EquippementdeRecyclageF.showallEquipmentsF',compact('equippements'));
     }
 

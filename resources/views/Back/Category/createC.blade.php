@@ -6,7 +6,7 @@
 </head>
 
 <div class="container my-5" style="padding-top: 120px;">
-    <h1 class="mb-4">Add a New Waste Category</h1>
+    <h1 class="mb-4">Add a New Waste Type</h1>
 
     <form method="post" action="{{ route('Categories.store') }}">
         @csrf
@@ -19,7 +19,7 @@
                 id="name" 
                 class="form-control @error('name') is-invalid @enderror" 
                 value="{{ old('name') }}" 
-                required 
+                
             />
             @error('name')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -34,7 +34,7 @@
                 id="quantity" 
                 class="form-control @error('quantity') is-invalid @enderror" 
                 value="{{ old('quantity') }}" 
-                required 
+                
             />
             @error('quantity')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -47,7 +47,7 @@
                 name="state" 
                 id="state" 
                 class="form-select @error('state') is-invalid @enderror" 
-                required
+                
             >
                 <option value="">Select a state</option>
                 <option value="solid" {{ old('state') == 'solid' ? 'selected' : '' }}>Solid</option>
@@ -67,7 +67,7 @@
                 name="environmental_impact" 
                 id="environmental_impact" 
                 class="form-select @error('environmental_impact') is-invalid @enderror" 
-                required
+                
             >
                 <option value="">Select impact level</option>
                 <option value="low" {{ old('environmental_impact') == 'low' ? 'selected' : '' }}>Low</option>
@@ -81,7 +81,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Category</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 @endsection

@@ -124,7 +124,7 @@
                         <div class="featurs-content text-center">
                             <a href="{{route('categories.index')}}" title="Check waste List">
                                 <h5>
-                                    Waste Categories
+                                    Waste types that we recycle
                                 </h5>
                             </a>
                             <p class="mb-0"> Choose your waste category in GreenCycle to ensure proper disposal and recycling practices!
@@ -148,13 +148,14 @@
         <div class="container py-5">
             <div class="row g-4 justify-content-center">
                 <div class="col-md-6 col-lg-4">
-                    <a href="#">
+                     <a href="#">
                         <div class="service-item bg-secondary rounded border border-secondary">
-                            <img src="img/collect.jpg" class="img-fluid rounded-top w-100" alt="">
+                            <img src="img/ka.jpg" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-primary text-center p-4 rounded">
-                                    <h5 class="text-white">Collect </h5>
-                                    <h3 class="mb-0">dechets</h3>
+                                    <a href="{{route('front.equipments.index')}}"><h5  class="text-white">Various</h5> </a>
+                                   <a href="{{route('front.equipments.index')}}"><h3 class="mb-0 text-white">recycling equiments</h3>  </a>
+
                                 </div>
                             </div>
                         </div>
