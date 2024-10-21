@@ -50,7 +50,7 @@ class EquippementController extends Controller
             'nom' => 'required|string|max:100',
             'statut' => 'required|in:active,maintenance,out_of_service',
             'capacite' => 'required|numeric|min:1|max:1000',
-            'emplacement' => 'required|string|max:255',
+            'emplacement' => 'required|string|min:3|max:20', // Mise à jour ici
             'center_id' => 'required|exists:centers,id', // Validation pour center_id
 
         ], [
@@ -65,8 +65,8 @@ class EquippementController extends Controller
             'capacite.max' => 'La capacité ne doit pas dépasser 1000.',
             'emplacement.required' => 'L\'emplacement est obligatoire.',
             'emplacement.string' => 'L\'emplacement doit être une chaîne de caractères.',
-            'emplacement.max' => 'L\'emplacement ne doit pas dépasser 255 caractères.',
-        ]);
+            'emplacement.min' => 'L\'emplacement doit contenir au moins 3 caractères.',
+            'emplacement.max' => 'L\'emplacement ne doit pas dépasser 20 caractères.',        ]);
 
         $equippement = EquippementdeCollecte::create(array_merge($request->except('image'), [
             'user_id' => auth()->id(), // Set the user ID
