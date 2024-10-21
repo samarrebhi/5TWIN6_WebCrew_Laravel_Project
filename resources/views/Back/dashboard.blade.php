@@ -229,21 +229,21 @@
               <li class="menu-item ">
     <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-category"></i>
-        <div data-i18n="Layouts">Waste Categories Management</div>
+        <div data-i18n="Layouts">Types of recycled waste </div>
     </a>
 
     <ul class="menu-sub">
         <!-- List Waste Categories -->
         <li class="menu-item">
             <a href="{{ route('Categories.index') }}" class="menu-link">
-                <div data-i18n="Without menu">List of Waste Categories</div>
+                <div data-i18n="Without menu">List of Waste Types</div>
             </a>
         </li>
 
         <!-- Create New Waste Category -->
         <li class="menu-item">
             <a href="{{ route('Categories.create') }}" class="menu-link">
-                <div data-i18n="Without navbar">Create Waste Category</div>
+                <div data-i18n="Without navbar">Create Waste type</div>
             </a>
         </li>
     </ul>

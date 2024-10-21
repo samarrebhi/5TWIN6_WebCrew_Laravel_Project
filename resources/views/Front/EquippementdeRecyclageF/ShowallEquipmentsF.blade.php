@@ -1,5 +1,4 @@
-@extends('Front/layout')
-
+@extends('Front.layout')
 
 @section('content')
 <div class="container py-5">
@@ -22,13 +21,27 @@
                     @endif
 
                     <div class="card-body">
-                        <h5 class="card-title">{{ $equipment->nom }}</h5>
-                        <p class="card-text"><strong>Status:</strong> {{ ucfirst($equipment->statut) }}</p>
-                        <p class="card-text"><strong>Capacity:</strong> {{ $equipment->capacite }}</p>
-                        <p class="card-text"><strong>Location:</strong> {{ $equipment->emplacement }}</p>
+                    <h5 class="card-title">
+                    <h5 class="card-title mb-3">
+    <i class="fas fa-recycle"></i> {{ $equipment->nom }}
+</h5>
+</h5>
+<p class="card-text">
+    <i class="fas fa-info-circle"></i> <strong>Status:</strong> {{ ucfirst($equipment->statut) }}
+</p>
+<p class="card-text">
+    <i class="fas fa-battery-full"></i> <strong>Capacity:</strong> {{ $equipment->capacite }}
+</p>
+<p class="card-text">
+    <i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ $equipment->emplacement }}
+</p>
+<p class="card-text">
+    <i class="fas fa-building"></i> <strong>Located Center:</strong> 
+    {{ $equipment->center ? $equipment->center->name : 'Not Assigned' }}
+</p>
 
                         <a href="{{ route('front.equipments.show', $equipment->id) }}" 
-   class="btn btn-primary mt-2 text-white">View Details</a>
+                           class="btn btn-primary mt-2 text-white">View Details</a>
                     </div>
                 </div>
             </div>

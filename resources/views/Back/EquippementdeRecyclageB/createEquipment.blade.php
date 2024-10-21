@@ -16,7 +16,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="center_id">Select Center</label>
                         <select id="center_id" name="center_id" 
-                                class="form-control @error('center_id') is-invalid @enderror" required>
+                                class="form-control @error('center_id') is-invalid @enderror" >
                             <option value="">Choose a center</option>
                             @foreach($centers as $center)
                                 <option value="{{ $center->id }}">{{ $center->name }}</option>
@@ -36,7 +36,7 @@
                             name="nom" 
                             class="form-control @error('nom') is-invalid @enderror" 
                             placeholder="Enter equipment name" 
-                            required 
+                            
                         />
                         @error('nom')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -66,7 +66,7 @@
                             name="capacite" 
                             class="form-control @error('capacite') is-invalid @enderror" 
                             placeholder="Enter capacity (e.g., in liters or kg)" 
-                            required 
+                            
                         />
                         @error('capacite')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -82,7 +82,7 @@
                             name="emplacement" 
                             class="form-control @error('emplacement') is-invalid @enderror" 
                             placeholder="Enter current location" 
-                            required 
+                            
                         />
                         @error('emplacement')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -98,7 +98,7 @@
                             name="image" 
                             class="form-control @error('image') is-invalid @enderror" 
                             accept="image/*" 
-                            required 
+                            
                         />
                         @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>

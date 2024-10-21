@@ -47,7 +47,7 @@ class EquippementController extends Controller
     {
         // Validation avec messages personnalisés
         $request->validate([
-            'nom' => 'required|string|max:100',
+            'nom' => 'required|string|max:50',
             'statut' => 'required|in:active,maintenance,out_of_service',
             'capacite' => 'required|numeric|min:1|max:1000',
             'emplacement' => 'required|string|min:3|max:20', // Mise à jour ici
@@ -56,7 +56,7 @@ class EquippementController extends Controller
         ], [
             'nom.required' => 'Le nom de l\'équipement est obligatoire.',
             'nom.string' => 'Le nom doit être une chaîne de caractères.',
-            'nom.max' => 'Le nom ne doit pas dépasser 100 caractères.',
+            'nom.max' => 'Le nom ne doit pas dépasser 50 caractères.',
             'statut.required' => 'Le statut est obligatoire.',
             'statut.in' => 'Le statut doit être actif, en maintenance ou hors service.',
             'capacite.required' => 'La capacité est obligatoire.',
