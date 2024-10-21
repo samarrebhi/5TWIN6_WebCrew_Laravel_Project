@@ -34,30 +34,34 @@
                             </th>
                             <td class="align-middle">{{ $category->name }}</td>
                             <td class="align-middle">{{ $reservation->prix }} Dt</td>
-                            <td class="align-middle">{{ $category->pivot->quantity }}</td> <!-- Quantité du pivot -->
+                            <td class="align-middle">{{ $category->pivot->quantity }}</td> 
                             <td class="align-middle">
-                                <!-- Icône pour supprimer l'article -->
                                 <form action="{{ route('reservations.remove', $reservation->id) }}" method="POST" style="display:inline;">
                                     @csrf
-                                    @method('DELETE') <!-- Spécifie que c'est une requête DELETE -->
+                                    @method('DELETE') 
                                     <button type="submit" class="btn btn-link text-danger p-0">
-                                        <i class="fas fa-times"></i> <!-- Icône de croix -->
+                                        <i class="fas fa-times"></i> 
                                     </button>
                                 </form>
+
+                                @if(is_null($reservation->confirmed_at) && is_null($reservation->paid_at))
+        <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-link text-primary p-0">
+            <i class="fas fa-edit"></i> 
+        </a>
+    @else
+        <button class="btn btn-link text-muted p-0" disabled>
+            <i class="fas fa-edit"></i> 
+        </button>
+    @endif
                             </td>
                             <td class="align-middle">
-                                <!-- Vérification des états de confirmation et de refus -->
                                 @if($reservation->refused_at)
-                                    <!-- Si la commande est refusée -->
                                     <span class="text-danger">Commande refusée</span>
                                 @elseif($reservation->paid_at)
-                                    <!-- Si la commande est déjà payée, afficher "Déjà payé" -->
                                     <span class="text-success">Déjà payé</span>
                                 @elseif($reservation->confirmed_at)
-                                    <!-- Si la commande est confirmée mais pas encore payée, afficher le bouton payer -->
                                     <a href="{{ route('reservations.pay', $reservation->id) }}" class="btn btn-success">Payer</a>
                                 @else
-                                    <!-- Si la commande est en attente de confirmation -->
                                     <button class="btn btn-secondary" disabled>En attente de confirmation</button>
                                 @endif
                             </td>

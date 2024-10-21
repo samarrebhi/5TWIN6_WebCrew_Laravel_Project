@@ -136,6 +136,9 @@ Route::get('/admin/participants', [EventController::class, 'allParticipants'])->
     Route::delete('/home/reservations/{id}/remove', [ReservationController::class, 'remove'])->name('reservations.remove');
     Route::get('home/reservations/{id}/pay', [ReservationController::class, 'pay'])->name('reservations.pay');
     Route::post('/home/reservations/{id}/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm');  
+    Route::put('/home/reservation/update/{id}', [ReservationController::class, 'update'])->name('reservation.update');
+    Route::get('/home/reservations/edit/{id}', [ReservationController::class, 'edit'])->name('reservations.edit');
     Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); //
 
 
@@ -216,6 +219,8 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
   //  Route::resource('equipments', EquippementController::class);
 //});
 Route::resource('allCateg', FrontCategController::class);
+////
+Route::get('/categories', [FrontCategController::class, 'index'])->name('categories.index');
 
 // Routes du front-office
 Route::prefix('front')->group(function () {

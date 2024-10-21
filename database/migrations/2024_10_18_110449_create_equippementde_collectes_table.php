@@ -21,8 +21,11 @@ return new class extends Migration
             $table->string('emplacement'); // Emplacement actuel
             $table->string('image')->nullable(); // Image nullable
           //  $table->foreignId('center_id')->constrained()->onDelete('cascade'); // Ajoutez cette ligne
-          $table->foreignId('user_id')->constrained()->onDelete('cascade');  
-          $table->timestamps(); // Champs created_at et updated_at
+       //   $table->foreignId('user_id')->constrained()->onDelete('cascade');  
+       $table->foreignId('center_id')->constrained('centers')->onDelete('cascade');
+       $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+       $table->timestamps(); // Champs created_at et updated_at
+    
         });
     }
 

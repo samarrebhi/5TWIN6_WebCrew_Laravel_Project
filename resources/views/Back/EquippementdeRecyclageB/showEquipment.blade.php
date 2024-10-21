@@ -11,6 +11,9 @@
             <p>Capacité : {{ $equipment->capacite }}</p>
             <p>Emplacement : {{ $equipment->emplacement }}</p>
 
+            <!-- Afficher le nom du centre -->
+            <p>Centre : {{ $equipment->center ? $equipment->center->name : 'N/A' }}</p>
+
             @if ($equipment->image)
                 <img src="{{ asset('uploads/Equipments/' . $equipment->image) }}" 
                      alt="Image de {{ $equipment->nom }}" 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EquippementdeCollecte;
+use App\Models\Center;
 
 class EquippementController extends Controller
 {
@@ -19,6 +20,7 @@ class EquippementController extends Controller
     }
     public function index()
     {
+
         // Get all equipment associated with the logged-in user
         $equippements = EquippementdeCollecte::where('user_id', auth()->id())->get();
         return view('Back.EquippementdeRecyclageB.showallEquipments', compact('equippements'));
@@ -31,7 +33,8 @@ class EquippementController extends Controller
      */
     public function create()
     {
-        return view('Back.EquippementdeRecyclageB.createEquipment');
+        $centers = Center::all(); 
+        return view('Back.EquippementdeRecyclageB.createEquipment', compact('centers'));
     }
 
     /**
@@ -47,7 +50,9 @@ class EquippementController extends Controller
             'nom' => 'required|string|max:100',
             'statut' => 'required|in:active,maintenance,out_of_service',
             'capacite' => 'required|numeric|min:1|max:1000',
-            'emplacement' => 'required|string|max:255',
+            'emplacement' => 'required|string|min:3|max:20', // Mise à jour ici
+            'center_id' => 'required|exists:centers,id', // Validation pour center_id
+
         ], [
             'nom.required' => 'Le nom de l\'équipement est obligatoire.',
             'nom.string' => 'Le nom doit être une chaîne de caractères.',
@@ -60,8 +65,8 @@ class EquippementController extends Controller
             'capacite.max' => 'La capacité ne doit pas dépasser 1000.',
             'emplacement.required' => 'L\'emplacement est obligatoire.',
             'emplacement.string' => 'L\'emplacement doit être une chaîne de caractères.',
-            'emplacement.max' => 'L\'emplacement ne doit pas dépasser 255 caractères.',
-        ]);
+            'emplacement.min' => 'L\'emplacement doit contenir au moins 3 caractères.',
+            'emplacement.max' => 'L\'emplacement ne doit pas dépasser 20 caractères.',        ]);
 
         $equippement = EquippementdeCollecte::create(array_merge($request->except('image'), [
             'user_id' => auth()->id(), // Set the user ID
@@ -92,8 +97,10 @@ class EquippementController extends Controller
     public function show($id)
     {
         // Get the equipment only if it belongs to the logged-in user
-        $equipment = EquippementdeCollecte::where('id', $id)->where('user_id', auth()->id())->first();
-
+        $equipment = EquippementdeCollecte::with('center') 
+        ->where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
         if (!$equipment) {
             return redirect()->route('equipments.index')->with('error', 'Équipement non trouvé ou vous n\'êtes pas autorisé à le voir.');
         }

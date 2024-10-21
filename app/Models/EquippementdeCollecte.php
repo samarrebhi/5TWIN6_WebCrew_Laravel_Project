@@ -18,6 +18,8 @@ class EquippementdeCollecte extends Model
         'emplacement',   // Emplacement actuel de l'équipement
           'image',
           'user_id',
+          'center_id', // Assurez-vous que cela est inclus si ce n'est pas déjà fait
+
     ];
 
 

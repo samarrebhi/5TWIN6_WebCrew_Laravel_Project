@@ -69,7 +69,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="6">Aucune réclamation trouvée</td>
+                    <td colspan="6" class="text-center items-center flex">No Claims found .</td>
                 </tr>
             @endif
         </tbody>

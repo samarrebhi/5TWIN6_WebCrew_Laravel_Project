@@ -39,7 +39,6 @@
                 <div class="input-group">
                     <textarea id="comment" name="comment" class="form-control border border-secondary rounded @error('comment') is-invalid @enderror" rows="5" placeholder="Update your thoughts about this event..." >{{ old('comment', $review->comment) }}</textarea>
                 </div>
-                <small id="charCount" class="text-muted mt-1">{{ strlen(old('comment', $review->comment)) }} / 250 characters</small>
                 @error('comment')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
