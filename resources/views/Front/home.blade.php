@@ -238,6 +238,7 @@
         <div class="container py-5">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
+                    
                     <div class="py-4">
                         <h1 class="display-3 text-green">Recycling Centers</h1>
                         <p class="fw-normal display-3 text-dark mb-4">in Your Area</p>
