@@ -76,6 +76,8 @@ class ReviewController extends Controller
 
         return view('Front.reviews.edit', compact('review', 'evenement'));
     }
+
+    
     public function update(Request $request, $id)
     {
         $request->validate([

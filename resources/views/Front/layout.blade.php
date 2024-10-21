@@ -48,6 +48,8 @@
                 <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email us :WebCrew@Esprit.tn</a></small>
             </div>
             <div class="top-link pe-2">
+            <a href="{{ route('event.listevent')  }}" class="text-white"><small class="text-white mx-2">Collect Events</small>/</a>
+
                 <a href="{{ route('center.index') }}" class="text-white"><small class="text-white mx-2">Recycling Centers</small>/</a>
                 <a href="{{ route('guide.listing') }}" class="text-white"><small class="text-white mx-2">Best Practices Guides</small>/</a>
                 <a href="{{route('sondage.listing')}} " class="text-white"><small class="text-white ms-2">Available Polls</small>/</a>

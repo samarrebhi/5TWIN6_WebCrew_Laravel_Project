@@ -53,29 +53,27 @@ class CenterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string','min:2','max:40'],
-            'address' => ['required','min:2'],
-            'description' => ['required','min:10','max:200'],
-            'phone' => 'required|integer',
-            'email' => 'required|email',
+            'name' => ['required', 'string', 'min:2', 'max:40'],
+            'address' => ['required', 'min:2'],
+            'description' => ['required', 'min:10', 'max:200'],
+            'phone' => ['required', 'digits:8'],
+            'email' => 'required|email|unique:centers,email',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+    
         Center::create([
-            
-            'name' =>$request->name,
+            'name' => $request->name,
             'address' => $request->address,
-            'description' =>  $request->description,
-            'phone' =>  $request->phone,
-            'email' =>  $request->email,
+            'description' => $request->description,
+            'phone' => $request->phone,
+            'email' => $request->email,
             'image' => $request->file('image')->store('img', 'public'),
             'user_id' => auth()->id(),
         ]);
-
-
-        return redirect()->route('centers.index')->with('success', 'Center created successfully!');;
+    
+        return redirect()->route('centers.index')->with('success', 'Center created successfully!');
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -114,7 +112,7 @@ class CenterController extends Controller
             'name' => [ 'string','min:2','max:40'],
             'address' => ['min:2'],
             'description' => ['min:10','max:200'],
-            'phone' => 'integer',
+            'phone' => 'digits:8',
             'email' => 'email',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);

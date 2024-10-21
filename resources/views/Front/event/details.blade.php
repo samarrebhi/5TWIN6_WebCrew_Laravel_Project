@@ -25,13 +25,16 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Event Details</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Details Available</li>
-        </ol>
-    </div>
+            <h1 class="text-center text-white display-6">Event Details</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+     
+
+                <li class="breadcrumb-item"><a href="{{ route('homepage')}}" >Home</a></li>
+
+                <li class="breadcrumb-item"><a href="{{route('Front.Blog.list')}}" >Blog</a></li>
+                <li class="breadcrumb-item active text-white">Collect Events Available</li>
+            </ol>
+        </div>
     <div class="container d-flex justify-content-center align-items-center min-vh-100 mt-5">
         <div class="col-lg-8 col-xl-9">
             <div class="row g-4">

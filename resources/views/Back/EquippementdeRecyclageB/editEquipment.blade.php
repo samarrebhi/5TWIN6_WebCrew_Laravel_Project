@@ -33,10 +33,15 @@
                         </div>
 
                         <!-- Statut Field -->
-                        <div class="mb-1">
+                      <!-- Statut Field -->
+                      <div class="mb-1">
                             <label class="form-label" for="statut">Statut</label>
-                            <input type="text" class="form-control" id="statut" name="statut" value="{{ old('statut', $equipment->statut) }}" 
-                                   required placeholder="Entrez le statut">
+                            <select id="statut" name="statut" class="form-control @error('statut') is-invalid @enderror" required>
+                                <option value="">Choisissez un statut</option>
+                                <option value="active" {{ old('statut', $equipment->statut) == 'active' ? 'selected' : '' }}>Actif</option>
+                                <option value="maintenance" {{ old('statut', $equipment->statut) == 'maintenance' ? 'selected' : '' }}>En Maintenance</option>
+                                <option value="out_of_service" {{ old('statut', $equipment->statut) == 'out_of_service' ? 'selected' : '' }}>Hors Service</option>
+                            </select>
                             <div class="invalid-feedback">Le statut est requis.</div>
                         </div>
 

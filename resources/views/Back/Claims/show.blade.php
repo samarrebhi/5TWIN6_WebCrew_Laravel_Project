@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Claim Details</h2>
     <p><strong>Title:</strong> {{ $claim->title }}</p>
-    <p><strong>Title:</strong> {{ $claim->category }}</p>
+    <p><strong>Category:</strong> {{ $claim->category }}</p>
     <p><strong>Description:</strong> {{ $claim->description }}</p>
     @if($claim->attachment)
             <div class="row mb-3">
