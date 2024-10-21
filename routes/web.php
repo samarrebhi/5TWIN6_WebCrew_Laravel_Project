@@ -1,10 +1,18 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\BackControllers\GuideBackController;
+use App\Http\Controllers\BackControllers\ReservationBackController;
+use App\Http\Controllers\FrontControllers\GuideFrontController;
+use App\Http\Controllers\FrontControllers\PaymentController;
+use App\Http\Controllers\FrontControllers\ReservationController;
+use App\Http\Controllers\FrontControllers\SondageFrontController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontControllers\HomeController;
 use App\Http\Controllers\BackControllers\HomeControllerBack;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BackControllers\BlogController;
 use App\Http\Controllers\FrontControllers\BlogControllerFront;
@@ -12,9 +20,13 @@ use App\Http\Controllers\FrontControllers\EventController; // Adjust the control
 use App\Http\Controllers\EvenementCollecteController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\BackControllers\ReservationBackController;
-use App\Http\Controllers\FrontControllers\ReservationController;
-use App\Http\Controllers\FrontControllers\PaymentController;
+
+
+use App\Http\Controllers\EquippementController;
+use App\Http\Controllers\FrontControllers\EquippementControllerF;
+use App\Http\Controllers\FrontCategController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,16 +37,10 @@ use App\Http\Controllers\FrontControllers\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('home', [HomeController::class, 'index'])->name('homepage');
-
-
-
-
-Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('register', [RegisteredUserController::class, 'store']);
 
 // Login
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -46,10 +52,48 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('home', [HomeController::class, 'index'])->name('homepage');
+// routes/web.php
 
+Route::post('/event/{id}/participate', [EventController::class, 'participate'])->name('event.participate');
+
+
+//frontoffice polls and guides
+    Route::resource('/books', \App\Http\Controllers\FrontControllers\GuideFrontController::class)->names([
+        'index' => 'guide.listing',
+        'show'=>'guide.details',
+    ]);
+///display between guide and poll
+    Route::get('books/{id}', [GuideFrontController::class, 'showbypoll'])->name('guide.bypoll');
+
+    Route::get('books/{guideId}/sondages', [SondageFrontController::class, 'getSondagesByGuide'])->name('guide.sondages');
+
+    //frontoffice
+    Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
+        'index' => 'sondage.listing',
+        'show'=>'sondage.details',
+    ]);
+    ////////////////////////////////////
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
+        Route::get('/admin/reviews', [ReviewController::class, 'adminIndex'])->name('admin.reviews.index');
+        Route::post('/users/block/{id}', [UserController::class, 'block'])->name('users.block');
 
+
+
+
+        Route::resource('Categories', CategoryController::class);
+
+        Route::prefix('backEquipment')->group(function () {
+          Route::resource('equipments', EquippementController::class);
+          });
+        // Route to view blocked users
+        Route::get('/admin/blocked-users', [UserController::class, 'index'])->name('users.blocked');
+
+        // Route to unblock a user
+        Route::post('/admin/unblock-user/{id}', [UserController::class, 'unblock'])->name('users.unblock');
+
+Route::get('/admin/participants', [EventController::class, 'allParticipants'])->name('admin.participants');
 
 
     Route::get('admin', [HomeControllerBack::class, 'index'])->name('admin.home');
@@ -66,16 +110,25 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/admin/reservations/{id}/refuse', [ReservationBackController::class, 'refuse'])->name('admin.reservations.refuse');
     Route::get('/centers', [CenterController::class, 'showCenters'])->name('centers.index');
     Route::get('/centers/{id}', [CenterController::class, 'showDetails'])->name('center.show.details');
+    Route::get('/center/map', [CenterController::class, 'showMap'])->name('center.map');
+    Route::get('/center/search', [CenterController::class, 'search'])->name('center.search');
     Route::get('/Categoriess', [CategoryController::class, 'showCategories'])->name('Categories.index');
     Route::get('/categoriess/{id}', [CategoryController::class, 'showdetails'])->name('Category.show.details');
-    
 
 
-    
+    Route::get('/admin/claims', [ClaimController::class, 'adminIndex'])->name('admin.claims.index');
+    Route::get('/admin/claims/{id}', [ClaimController::class, 'adminShow'])->name('admin.claims.show');
+    Route::post('/admin/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('admin.claims.updateStatus');
+    Route::get('/admin/claims/filter', [ClaimController::class, 'filterClaims'])->name('admin.claims.filterClaims');
+
+
+
+
+
     });
 
     Route::get('home/blogs', [BlogControllerFront::class, 'indexFront'])->name('Front.Blog.list');
-    Route::post('/like-blog/{id}', [BlogControllerFront::class, 'likeBlog'])->middleware('auth');   
+    Route::post('/like-blog/{id}', [BlogControllerFront::class, 'likeBlog'])->middleware('auth');
     Route::get('home/blog/search', [BlogController::class, 'search'])->name('blog.search');
     Route::get('home/shop/{id}', [ReservationController::class, 'shop'])->name('buy');
     Route::post('home/reservations', [ReservationController::class, 'store'])->name('reservations.store');
@@ -86,6 +139,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm');  
     Route::put('/home/reservation/update/{id}', [ReservationController::class, 'update'])->name('reservation.update');
     Route::get('/home/reservations/edit/{id}', [ReservationController::class, 'edit'])->name('reservations.edit');
+    Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); //
 
 
 
@@ -121,31 +175,16 @@ Route::prefix('evenement_collectes')->name('evenement_collecte.')->group(functio
 
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::resource('/center',CenterController::class);
+Route::resource('/claim',ClaimController::class);
 
 
 
 
-/////routees for sondages entity
 
 
-Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
-    'index' => 'sondage.index',
-    'create' => 'sondage.create.form',
-    'store' => 'sondage.store',
-
-]);
-Route::resource('/polls', \App\Http\Controllers\FrontControllers\SondageFrontController::class)->names([
-    'index' => 'sondage.listing',
-'show'=>'sondage.details',
-]);
 
 
-Route::resource('Categories', CategoryController::class);
-Route::get('/Category', [CategoryController::class, 'index'])->name('Category.index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -168,9 +207,54 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
   Route::post('/reviews/store/{evenementId}', [ReviewController::class, 'store'])->name('reviews.store');
   Route::get('reviews/{evenementId}/edit/{review}', [ReviewController::class, 'edit'])->name('reviews.edit');
   Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
-  Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
   Route::get('reviews/{evenementId}/edit/{id}', [ReviewController::class, 'edit'])->name('reviews.edit');
+  Route::delete('reviews/{evenementId}/{reviewId}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
 
 
 });
+
+
+//Route::prefix('backEquipment')->group(function () {
+  //  Route::resource('equipments', EquippementController::class);
+//});
+Route::resource('allCateg', FrontCategController::class);
+////
+Route::get('/categories', [FrontCategController::class, 'index'])->name('categories.index');
+
+// Routes du front-office
+Route::prefix('front')->group(function () {
+    Route::get('equipments', [EquippementControllerF::class, 'index'])->name('front.equipments.index');
+    Route::get('equipments/{id}', [EquippementControllerF::class, 'show'])->name('front.equipments.show');
+});
 require __DIR__.'/auth.php';
+
+
+
+////routees for sondages entity
+
+Route::resource('/sondage', \App\Http\Controllers\BackControllers\SondageController::class)->names([
+    'index' => 'sondage.index',
+    'create' => 'sondage.create.form',
+    'store' => 'sondage.store',
+
+]);
+
+//////routes for guideBP entity
+/// backoffice
+Route::resource('/guides',GuideBackController::class)->names([
+    'index' => 'guide.index',
+    'create' => 'guide.create.form',
+    'store' => 'guide.store',
+    'show' =>  'guide.show',
+    'edit'=>  'guide.edit',
+    'destroy'=>'guide.destroy',
+    'update' => 'guide.update',
+]);
+//
+Route::get('/guides', [GuideBackController::class, 'index'])->name('guide.index');
+
+
+
+require __DIR__.'/auth.php';
+

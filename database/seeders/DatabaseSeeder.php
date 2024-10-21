@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SondageSeeder::class);
       // samar $this->call(GuideBPSeeder::class);
 
-
+        $this->call(GuideBPSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

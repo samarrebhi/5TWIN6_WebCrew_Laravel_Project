@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Blog;
 use App\Models\Reservation;
 
+use App\Models\Category;
+use App\Models\EquippementdeCollecte;
 
 class User extends Authenticatable
 {
@@ -25,7 +28,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        
     ];
 
 
@@ -64,15 +66,49 @@ class User extends Authenticatable
     ];
 
 
-    // A user can create many events.
-    public function evenements()
+      // Relationship with EvenementCollecte
+      public function evenementCollectes()
+      {
+          return $this->hasMany(EvenementCollecte::class);
+      }
+
+      // Relationship with Review
+      public function reviews()
+      {
+          return $this->hasMany(Review::class);
+      }
+
+
+       // Relationship with Center
+       public function Centers()
+       {
+           return $this->hasMany(Center::class);
+       }
+       // Relationship with reclamation
+       public function Claims()
+       {
+           return $this->hasMany(Claim::class);
+       }
+
+    public function equippementdecollectes()
     {
-        return $this->hasMany(EvenementCollecte::class);
+        return $this->hasMany(EquippementdeCollecte::class);
     }
 
-    // A user can write many reviews.
-    public function reviews()
+
+    public function categories()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Category::class);
     }
+
+///relatio with sondage et guide
+    public function sondages()
+    {
+        return $this->hasMany(Sondage::class);
+    }
+    public function guide()
+    {
+        return $this->hasMany(GuideBP::class);
+    }
+
 }

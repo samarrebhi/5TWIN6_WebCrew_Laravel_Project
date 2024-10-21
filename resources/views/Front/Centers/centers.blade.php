@@ -2,6 +2,7 @@
 @section('content') 
 
 <div class="container my-5" style="padding-top: 120px;"> 
+
     <div class="row justify-content-center">
         @foreach($centers as $center)
             <div class="col-md-4 mb-4">
@@ -24,5 +25,33 @@
             </div>
         @endforeach
     </div>
+
+    <div class="d-flex justify-content-center mt-4">
+    {{ $centers->links('pagination::bootstrap-4') }}
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination li {
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .pagination li a, .pagination li span {
+        color: #155724;
+        padding: 8px 12px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .pagination li a:hover {
+        background-color: #e9ecef;
+    }
+</style>
+
 </div>
 @endsection

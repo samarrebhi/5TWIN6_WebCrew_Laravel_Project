@@ -25,23 +25,31 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Attempt to authenticate the user
         $request->authenticate();
+
+        // Check if the authenticated user is blocked
+        if (Auth::user()->blocked) {
+            // Logout the user and redirect with an error message
+            Auth::logout(); // Log the user out
+            return redirect()->route('login')->withErrors([
+                'blocked' => 'Your account has been blocked. Please contact support.',
+            ]);
+        }
 
         $request->session()->regenerate();
 
-        // return redirect()->intended(RouteServiceProvider::HOME);
-        // Vérifie si l'utilisateur a le rôle 'admin'
-    if (Auth::user()->hasRole('admin')) {
-        return redirect('/admin');
-    }
+        // Redirect based on user role
+        if (Auth::user()->hasRole('admin')) {
+            return redirect('/admin');
+        }
 
-    // Vérifie si l'utilisateur a le rôle 'client'
-    if (Auth::user()->hasRole('client')) {
+        if (Auth::user()->hasRole('client')) {
+            return redirect('/home');
+        }
+
+        // Default redirect
         return redirect('/home');
-    }
-
-    // Par défaut, redirige vers la page home
-    return redirect('/home');
     }
 
     /**

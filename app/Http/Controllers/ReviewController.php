@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Rules\NoBadWords;
 
 use App\Models\Review;
 use App\Models\EvenementCollecte;
@@ -8,16 +9,20 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+     public function adminIndex()
+     {
 
+         $reviews = Review::with(['evenementCollecte', 'user'])->get();
+ 
+         return view('back.reviews.index', compact('reviews'));
+     }
     public function index($evenementId)
-{
-    $evenement = EvenementCollecte::findOrFail($evenementId);
-    // Retrieve only reviews created by the logged-in user
-    $reviews = $evenement->reviews()->where('user_id', auth()->id())->get();
+    {
+        $evenement = EvenementCollecte::findOrFail($evenementId);
+        $reviews = $evenement->reviews()->where('user_id', auth()->id())->get();
 
-    return view('Front.reviews.index', compact('evenement', 'reviews'));
-}
-
+        return view('Front.reviews.index', compact('evenement', 'reviews'));
+    }
 
     public function create($evenementId)
     {
@@ -25,61 +30,91 @@ class ReviewController extends Controller
         return view('Front.reviews.create', compact('evenement'));
     }
 
+    public function approve($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->update(['status' => 'approved']);
+
+        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review approved successfully.');
+    }
+
+    public function reject($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->update(['status' => 'rejected']);
+
+        return redirect()->route('reviews.index', $review->event_id)->with('success', 'Review rejected successfully.');
+    }
+
     public function store(Request $request, $evenementId)
     {
-        // Validate input
         $request->validate([
-            'comment' => 'required|string|max:1000',
-            'rating' => 'required|integer|between:1,5',
-        ], [
-            'comment.required' => 'Le commentaire est obligatoire.',
-            'comment.string' => 'Le commentaire doit être une chaîne de caractères.',
-            'comment.max' => 'Le commentaire ne doit pas dépasser 1000 caractères.',
-            'rating.required' => 'La note est obligatoire.',
-            'rating.integer' => 'La note doit être un nombre entier.',
-            'rating.between' => 'La note doit être comprise entre 1 et 5.',
-        ]);
+            'comment' => ['required', 'string','min:3','max:40' ,new NoBadWords], 
 
-        // Create the review
+            'rating' => 'required|integer|between:1,5',
+            'would_recommend' => 'required|boolean',
+        ]);
+        
         Review::create([
             'evenement_collecte_id' => $evenementId,
             'comment' => $request->comment,
             'rating' => $request->rating,
-            'user_id' => auth()->id(),  // Attach the logged-in user's ID
+            'would_recommend' => $request->would_recommend,
+            'anonymous' => $request->anonymous,
+            'user_id' => auth()->id(),
         ]);
-     
-
+    
         return redirect()->route('reviews.index', $evenementId)->with('success', 'Review created successfully!');
     }
     
     
-  public function edit($evenementId, $id)
-{
-    $review = Review::findOrFail($id);
-    $evenement = EvenementCollecte::findOrFail($evenementId); // Fetch the associated event by ID
-    return view('Front.reviews.edit', compact('review', 'evenement'));
-}
 
+    public function edit($evenementId, $id)
+    {
+        $review = Review::findOrFail($id);
+        $evenement = EvenementCollecte::findOrFail($evenementId);
+
+        return view('Front.reviews.edit', compact('review', 'evenement'));
+    }
 
     
     public function update(Request $request, $id)
     {
         $request->validate([
-            'comment' => 'required|string|max:1000',
+            'comment' => ['required', 'string','min:3','max:40' ,new NoBadWords],  
+
             'rating' => 'required|integer|between:1,5',
+            'would_recommend' => 'required|boolean',
         ]);
-
+    
         $review = Review::findOrFail($id);
-        $review->update($request->only('comment', 'rating'));
-
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review updated successfully.');
+    
+        $review->update($request->only('comment', 'rating', 'would_recommend'));
+    
+        return redirect()->route('reviews.index', ['evenementId' => $review->evenement_collecte_id])
+                         ->with('success', 'Review updated successfully.');
     }
-
-    public function destroy($id)
+    
+    public function destroy($evenementId, $reviewId)
     {
-        $review = Review::findOrFail($id);
+        $review = Review::findOrFail($reviewId);
         $review->delete();
 
-        return redirect()->route('reviews.index', $review->evenement_collecte_id)->with('success', 'Review deleted successfully.');
+        return response()->json(['message' => 'Review deleted successfully']);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $reviews = Review::whereHas('user', function($q) use ($query) {
+            $q->where('name', 'like', '%' . $query . '%');
+        })->orWhereHas('evenementCollecte', function($q) use ($query) {
+            $q->where('titre', 'like', '%' . $query . '%');
+        })->get();
+    
+        return view('reviews.partials.review_table', compact('reviews'));
+    }
+    
+    
+
 }

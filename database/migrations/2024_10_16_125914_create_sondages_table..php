@@ -19,12 +19,21 @@ return new class extends Migration
             //$table->string('location', 255);  // or any length you want
 
             $table->text('category');
-            $table->text('questions',255);
+            $table->json('questions')->nullable();
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+
+
+        $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+
+           // $table->foreignId('guide_bp_id')->constrained()->onDelete('cascade');
+
+           // $table->foreignId('guide_bp_id')->constrained('guide_b_p_s')->onDelete('cascade'); // Add nullable here
+            $table->foreignId('guide_bp_id')->nullable()->references('id')->on('guide_b_p_s')->onDelete('cascade');
         });
+
     }
 
     /**

@@ -27,6 +27,8 @@
         <div class="container py-5">
             <div class="row g-5 align-items-center">
                 <div class="col-md-12 col-lg-7">
+
+
                     <h4 class="mb-3 text-secondary">100% Eco-Friendly Products</h4>
                     <h3 class="mb-5 display-3 text-primary">Eco-Friendly Living & Recycling </h3>
                     <div class="position-relative mx-auto">
@@ -84,50 +86,65 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="featurs-item text-center rounded bg-light p-4">
                         <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-book fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <a href="{{route('guide.listing')}}" title="Check Event List">
+                                <h5>
+                                    Best Practices Guides
+                                </h5>
+                            </a>
+
+                            <p class="mb-0">
+                                Discover our  best practices guides to enhance your knowledge and manage your recycling efforts!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
                             <i class="fas fa-poll fa-3x text-white"></i>
                         </div>
                         <div class="featurs-content text-center">
-                            <a href="{{route('sondage.listing')}}" title="Check Event List">
+                            <a href="{{route('sondage.listing')}}" title="Check polls List">
                                 <h5>
                                     Available Polls
                                 </h5>
                             </a>
 
-                            <p class="mb-0"> Lets users create and join waste collection events with key details like title, date, and location.</p>
+                            <p class="mb-0"> Explore our available polls on GreenCycle and share your opinion to make your voice heard!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-trash fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <a href="{{route('categories.index')}}" title="Check waste List">
+                                <h5>
+                                   Waste Categories
+                                </h5>
+                            </a>
+
+                            <p class="mb-0"> Choose your waste category in GreenCycle to ensure proper disposal and recycling practices!
+                               </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fas fa-user-shield fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>Secure Payment</h5>
-                            <p class="mb-0">100% secure online payments for organic products and recycling services</p>
-                        </div>
-                    </div>
-                </div>
-              
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fa fa-phone-alt fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>24/7 Support</h5>
-                            <p class="mb-0">Need help? Our support team is available anytime for recycling advice</p>
-                        </div>
-                    </div>
-                </div>
+
+
+
             </div>
         </div>
+    </div>
     </div>
     <!-- Featurs Section End -->
 
 
- 
+
 
     <!-- Fruits Shop End-->
 
@@ -182,37 +199,37 @@
 
 
     <!-- Vesitable Shop Start-->
- <!-- Vesitable Shop Start-->
-<!-- Vesitable Shop Start -->
-<div class="container-fluid vesitable py-5">
-    <div class="container py-5">
-        <h1 class="mb-0">Our Collect Events</h1>
-        <div class="owl-carousel vegetable-carousel justify-content-center">
+    <!-- Vesitable Shop Start-->
+    <!-- Vesitable Shop Start -->
+    <div class="container-fluid vesitable py-5">
+        <div class="container py-5">
+            <h1 class="mb-0">Our Collect Events</h1>
+            <div class="owl-carousel vegetable-carousel justify-content-center">
 
-            <!-- Carousel Items for Events -->
-            @foreach($evenements as $evenement)
-                <div class="item"> <!-- Ensure each event is wrapped in an item for the carousel -->
-                    <div class="col-md-10 col-lg-8 fruite-item" data-title="{{ $evenement->titre }}">
-                        <div class="rounded position-relative">
-                            <div class="fruite-img" style="overflow: hidden;">
-                                <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
-                            </div>
-                            <div class="p-4 border-secondary border-top-0 rounded-bottom">
-                                <h4 class="text-primary">{{ $evenement->titre }}</h4>
+                <!-- Carousel Items for Events -->
+                @foreach($evenements as $evenement)
+                    <div class="item"> <!-- Ensure each event is wrapped in an item for the carousel -->
+                        <div class="col-md-10 col-lg-8 fruite-item" data-title="{{ $evenement->titre }}">
+                            <div class="rounded position-relative">
+                                <div class="fruite-img" style="overflow: hidden;">
+                                    <img src="{{ asset('uploads/evenements/' . $evenement->image) }}" class="img-fluid w-100 rounded-top img-clickable" alt="Image">
+                                </div>
+                                <div class="p-4 border-secondary border-top-0 rounded-bottom">
+                                    <h4 class="text-primary">{{ $evenement->titre }}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-            
-        </div>
+                @endforeach
 
-        <!-- Pagination Links -->
-        <div class="d-flex justify-content-center mt-4">
-            {{ $evenements->links() }} <!-- This generates the pagination links -->
+            </div>
+
+            <!-- Pagination Links -->
+            <div class="d-flex justify-content-center mt-4">
+                {{ $evenements->links() }} <!-- This generates the pagination links -->
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Vesitable Shop End -->
 

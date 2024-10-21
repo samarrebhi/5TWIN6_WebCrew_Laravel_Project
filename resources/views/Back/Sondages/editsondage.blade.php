@@ -12,6 +12,15 @@
                         @method('PUT')
 
                         <div class="mb-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="poll-title">Title</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-title"></i></span>
@@ -22,7 +31,7 @@
                                     class="form-control"
                                     value="{{ $sondage->title }}"
                                     placeholder="Enter poll title"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -38,24 +47,32 @@
                                     name="description"
                                     class="form-control"
                                     placeholder="Enter a brief description"
-                                    required
+
                                 >{{ $sondage->description }}</textarea>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="poll-category">Category</label>
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text"><i class="bx bx-category"></i></span>
-                                <input
-                                    type="text"
-                                    id="poll-category"
-                                    name="category"
-                                    class="form-control"
-                                    value="{{ $sondage->category }}"
-                                    placeholder="Enter category"
-                                />
-                            </div>
+                            <label class="form-label" for="guide-category">Category</label>
+                            <select id="guide-category" name="category" class="form-select">
+                                <option value="{{ $sondage->category }}"  selected>{{ $sondage->category }}</option>
+                                <option value="Recycling">Recycling</option>
+                                <option value="Waste Management">Waste Management</option>
+                                <option value="Environmental Awareness">Environmental Awareness</option>
+                                <option value="Composting">Composting</option>
+                                <option value="Upcycling">Upcycling</option>
+                                <option value="E-Waste Management">E-Waste Management</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="guide-bp">Guide of Best Practices</label>
+                            <select id="guide-bp" name="guide_bp_id" class="form-select">
+                                <option value="{{ $sondage->guide_bp_id }}" selected>{{ $sondage->guide->title  }}</option>
+                                @foreach($guides as $guide)
+                                    <option value="{{ $guide->id }}">{{ $guide->title }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
@@ -68,7 +85,7 @@
                                     name="start_date"
                                     class="form-control"
                                     value="{{ $sondage->start_date }}"
-                                    required
+
                                 />
                             </div>
                         </div>
@@ -83,31 +100,142 @@
                                     name="end_date"
                                     class="form-control"
                                     value="{{ $sondage->end_date }}"
-                                    required
+
                                 />
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="questions-container">
                             <label class="form-label" for="poll-questions">Poll Questions</label>
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text"><i class="bx bx-question-mark"></i></span>
-                                <textarea
-                                    id="poll-questions"
-                                    name="questions"
-                                    class="form-control"
-                                    placeholder="Enter your poll questions, separated by commas or new lines..."
-                                    required
-                                >{{ $sondage->questions }}</textarea>
+
+
+
+                            @foreach ($questions as $index => $question)
+                                <div id="question{{ $index }}" class="question mb-4">
+                                    <label>Question:</label>
+                                    <div class="input-group input-group-merge mb-2">
+                                        <span class="input-group-text"><i class="bx bx-question-mark"></i></span>
+                                        <input type="text" name="questions[{{ $index }}][text]" class="form-control" value="{{ $question['text'] }}" placeholder="Enter your poll question" />
+                                        <button type="button" class="btn btn-danger btn-sm me-2 remove-question">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="options-container">
+                                        <label>Options:</label>
+                                        @foreach ($question['options'] as $optionIndex => $option)
+                                            <div class="option-group mb-2">
+                                                <div class="input-group input-group-merge mb-2">
+                                                    <input type="text" name="questions[{{ $index }}][options][]" class="form-control" value="{{ $option }}" placeholder="Enter an option" />
+                                                    <button type="button" class="btn btn-danger btn-sm me-2 remove-option">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="d-flex align-items-center mb-3">
+                                            <button type="button" class="btn btn-info btn-sm me-2 add-option">Add Option</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <!-- Container for adding new questions -->
+                            <div class="d-flex align-items-center mb-3">
+                                <button type="button" class="btn btn-warning btn-sm me-2 add-question">Add Question</button>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Edit Poll</button>
+                        <button type="submit" class="btn btn-success">Edit Poll</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let questionCount = {{ count($questions) }}; // Initialize question count from existing questions
+
+            // Function to add a new question
+            document.querySelector('.add-question').addEventListener('click', function () {
+                const questionContainer = document.createElement('div');
+                questionContainer.setAttribute('id', `question${questionCount}`);
+                questionContainer.classList.add('question', 'mb-4');
+                questionContainer.innerHTML = `
+                <label>Question:</label>
+                <div class="input-group input-group-merge mb-2">
+                    <span class="input-group-text"><i class="bx bx-question-mark"></i></span>
+                    <input type="text" name="questions[${questionCount}][text]" class="form-control" placeholder="Enter your poll question" />
+                    <button type="button" class="btn btn-danger btn-sm me-2 remove-question">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="options-container">
+                    <label>Options:</label>
+                    <div class="option-group mb-2">
+                        <input type="text" name="questions[${questionCount}][options][]" class="form-control" placeholder="Enter an option" />
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <button type="button" class="btn btn-info btn-sm me-2 add-option">Add Option</button>
+                    </div>
+                </div>
+
+
+            `;
+                document.getElementById('questions-container').appendChild(questionContainer);
+                questionCount++;
+                attachEventListeners(); // Reattach event listeners for the newly added buttons
+            });
+
+            // Function to attach event listeners to dynamic buttons
+            function attachEventListeners() {
+                document.querySelectorAll('.add-option').forEach(button => {
+                    button.removeEventListener('click', addOption);
+                    button.addEventListener('click', addOption);
+                });
+
+                document.querySelectorAll('.remove-option').forEach(button => {
+                    button.removeEventListener('click', removeOption);
+                    button.addEventListener('click', removeOption);
+                });
+
+                document.querySelectorAll('.remove-question').forEach(button => {
+                    button.removeEventListener('click', removeQuestion);
+                    button.addEventListener('click', removeQuestion);
+                });
+            }
+
+            // Function to add a new option within a question
+            function addOption() {
+                const optionsContainer = this.closest('.options-container');
+                const optionGroup = document.createElement('div');
+                optionGroup.classList.add('option-group', 'mb-2');
+                optionGroup.innerHTML = `
+                <div class="input-group input-group-merge mb-2">
+                    <input type="text" name="questions[${questionCount-1}][options][]" class="form-control" placeholder="Enter an option" />
+                    <button type="button" class="btn btn-danger btn-sm me-2 remove-option">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+                optionsContainer.appendChild(optionGroup);
+                attachEventListeners(); // Reattach the listeners to the newly created option
+            }
+
+            // Function to remove an option
+            function removeOption() {
+                this.closest('.option-group').remove();
+            }
+
+            // Function to remove a question
+            function removeQuestion() {
+                this.closest('.question').remove();
+            }
+
+            // Initialize event listeners on the first load
+            attachEventListeners();
+        });
+    </script>
 
 
 @endsection

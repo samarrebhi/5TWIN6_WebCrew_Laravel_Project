@@ -1,39 +1,55 @@
 @extends('Front/layout')
 
 @section('content')
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="col-md-6">
-        <h1 class="text-center">Write a Review for {{ $evenement->titre }}</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 130vh;">
+    <div class="col-md-6 bg-light p-5 shadow rounded" style="border-radius: 15px;">
+        <h1 class="text-center text-dark mb-4">Review for <span style="color: green;">{{ $evenement->titre }}</span></h1>
 
         <form action="{{ route('reviews.store', $evenement->id) }}" method="POST">
             @csrf
-            <div class="form-group">
-                <label for="comment">Comment</label>
-                <textarea id="comment" name="comment" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="rating">Rating</label>
-                <select id="rating" name="rating" class="form-control" required>
-                    <option value="">Select Rating</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+
+            <!-- Would Recommend -->
+            <div class="form-group mb-4">
+                <label for="would_recommend">Would you recommend this event?</label>
+                <select id="would_recommend" name="would_recommend" class="form-control @error('would_recommend') is-invalid @enderror">
+                    <option value="1" {{ old('would_recommend') == '1' ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('would_recommend') == '0' ? 'selected' : '' }}>No</option>
                 </select>
+                @error('would_recommend')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Submit Review</button>
+
+
+            <!-- Comment -->
+            <div class="form-group mb-4">
+                <label for="comment">Your Comment</label>
+                <textarea id="comment" name="comment" class="form-control @error('comment') is-invalid @enderror" rows="5"  >{{ old('comment') }}</textarea>
+                @error('comment')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Rating -->
+            <div class="form-group mb-4">
+                <label for="rating">Your Rating</label>
+                <select id="rating" name="rating" class="form-control @error('rating') is-invalid @enderror" >
+                    <option value="" disabled selected>Choose a rating</option>
+                    <option value="1" {{ old('rating') == '1' ? 'selected' : '' }}>1 - Poor</option>
+                    <option value="2" {{ old('rating') == '2' ? 'selected' : '' }}>2 - Fair</option>
+                    <option value="3" {{ old('rating') == '3' ? 'selected' : '' }}>3 - Good</option>
+                    <option value="4" {{ old('rating') == '4' ? 'selected' : '' }}>4 - Very Good</option>
+                    <option value="5" {{ old('rating') == '5' ? 'selected' : '' }}>5 - Excellent</option>
+                </select>
+                @error('rating')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
         </form>
     </div>
 </div>
-@endsection 
+
+@endsection

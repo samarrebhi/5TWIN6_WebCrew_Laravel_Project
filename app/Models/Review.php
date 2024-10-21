@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,18 +9,23 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'evenement_collecte_id',
+        'evenement_collecte_id', // Add this field if it's not already there
         'comment',
         'rating',
-        'user_id',
+        'would_recommend',
+        'anonymous',
+        'user_id'
     ];
 
-    public function evenement()
-    {
-        return $this->belongsTo(EvenementCollecte::class);
-    }
-
+    // Relationship with User
     public function user()
     {
         return $this->belongsTo(User::class);
-    }}
+    }
+
+    // Relationship with EvenementCollecte
+    public function evenementCollecte()
+    {
+        return $this->belongsTo(EvenementCollecte::class);
+    }
+}
