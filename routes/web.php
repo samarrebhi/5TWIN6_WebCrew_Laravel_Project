@@ -83,7 +83,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/home/reservations/{id}/remove', [ReservationController::class, 'remove'])->name('reservations.remove');
     Route::get('home/reservations/{id}/pay', [ReservationController::class, 'pay'])->name('reservations.pay');
     Route::post('/home/reservations/{id}/process', [PaymentController::class, 'processPayment'])->name('payment.process');
-    Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm'); // 
+    Route::post('/home/reservations/{id}/confirm', [ReservationController::class, 'confirmPayment'])->name('reservations.confirm');  
+    Route::put('/home/reservation/update/{id}', [ReservationController::class, 'update'])->name('reservation.update');
+    Route::get('/home/reservations/edit/{id}', [ReservationController::class, 'edit'])->name('reservations.edit');
 
 
 

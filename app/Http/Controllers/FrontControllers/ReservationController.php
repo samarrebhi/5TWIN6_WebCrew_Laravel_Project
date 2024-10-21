@@ -67,13 +67,49 @@ public function showCart()
     return view('Front.Panier.cart', compact('reservations'));
 }
 
+public function edit($id) {
+
+    $reservation = Reservation::findOrFail($id);
+    $category = $reservation->categories()->first();
+    return view('Front.Panier.editReserv', compact('reservation', 'category'));
+}
+
+public function update(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'quantity' => 'sometimes|integer|min:1|max:100',  
+        'prix' => 'sometimes|numeric|min:0|max:1000', 
+    ]);
+
+    $reservation = Reservation::findOrFail($id);
+
+    if ($request->has('quantity')) {
+        $reservation->quantity = $validatedData['quantity'];
+        $reservation->categories()->updateExistingPivot($request->input('category_id'), [
+            'quantity' => $validatedData['quantity'],
+        ]);
+    }
+
+    if ($request->has('prix')) {
+        $reservation->prix = $validatedData['prix'];
+    }
+
+    $reservation->save();
+
+    \Log::info('Reservation updated:', [
+        'id' => $reservation->id,
+        'quantity' => $reservation->quantity,
+        'prix' => $reservation->prix,
+    ]);
+
+    return redirect()->route('cart')->with('success', 'La réservation a été mise à jour avec succès !');
+}
+
 
 public function remove($id)
 {
-    // Trouver la réservation et la supprimer
     $reservation = Reservation::findOrFail($id);
     
-    // Supprimer la réservation ou une catégorie spécifique de la réservation
     $reservation->delete();
 
     return redirect()->route('cart')->with('success', 'Item removed from cart');
@@ -82,10 +118,8 @@ public function remove($id)
 
 public function pay($id)
 {
-    // Récupérer la réservation en fonction de l'ID
     $reservation = Reservation::findOrFail($id);
 
-    // Retourner la vue avec les détails de la réservation
     return view('Front.Panier.payement', compact('reservation'));
 }
 
