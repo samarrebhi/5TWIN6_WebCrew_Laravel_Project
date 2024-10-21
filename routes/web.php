@@ -216,6 +216,8 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
   //  Route::resource('equipments', EquippementController::class);
 //});
 Route::resource('allCateg', FrontCategController::class);
+////
+Route::get('/categories', [FrontCategController::class, 'index'])->name('categories.index');
 
 // Routes du front-office
 Route::prefix('front')->group(function () {
