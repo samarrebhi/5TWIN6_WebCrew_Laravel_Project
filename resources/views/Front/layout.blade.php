@@ -70,7 +70,11 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
+            
 
+                    
+                        <a href="{{ route('front.equipments.index')}}" class="nav-item nav-link">Equipment</a>
+                        <a href="{{ route('categories.index')}}" class="nav-item nav-link">category Dechets</a>
 
                     <a href="{{ route('homepage')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route('Front.Blog.list')}}" class="nav-item nav-link">Blog</a>
